@@ -20,12 +20,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Grad implements Serializable {
 
-    private Long ppt_broj;
+    private Long postanskiBroj;
     private String naziv;
 
     @Override
     public String toString() {
-        return ppt_broj + ", " + naziv;
+        return postanskiBroj + ", " + naziv;
     }
 
 }

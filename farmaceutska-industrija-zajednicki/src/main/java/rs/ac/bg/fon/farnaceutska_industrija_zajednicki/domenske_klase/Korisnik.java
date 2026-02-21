@@ -21,19 +21,19 @@ import lombok.Setter;
 public class Korisnik implements Serializable {
 
     private Long id;
-    private String korisnicko_ime;
+    private String korisnickoIme;
     private String sifra;
     private String ime;
     private String prezime;
 
-    public Korisnik(String korisnicko_ime, String sifra) {
-        this.korisnicko_ime = korisnicko_ime;
+    public Korisnik(String korisnickoIme, String sifra) {
+        this.korisnickoIme = korisnickoIme;
         this.sifra = sifra;
     }
 
     @Override
     public String toString() {
-        return ime + " " + prezime + ", korisnicko ime: " + korisnicko_ime;
+        return ime + " " + prezime + ", korisnicko ime: " + korisnickoIme;
     }
 
 }
