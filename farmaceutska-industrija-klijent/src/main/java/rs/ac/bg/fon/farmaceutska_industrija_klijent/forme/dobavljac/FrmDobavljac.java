@@ -6,6 +6,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac;
 
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
@@ -61,6 +62,11 @@ public class FrmDobavljac extends javax.swing.JPanel {
         jLabel3.setText("Grad:");
 
         btnDodaj.setText("Dodaj Dobavljaca");
+        btnDodaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajActionPerformed(evt);
+            }
+        });
 
         btnIzmeni.setText("Izmeni Dobavljaca");
 
@@ -116,6 +122,39 @@ public class FrmDobavljac extends javax.swing.JPanel {
                 .addContainerGap(101, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
+        Dobavljac dobavljac = new Dobavljac();
+
+        if (txtIme.getText().isEmpty() || txtIme.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Morate uneti ime za dobavljaca!", "Dodavanje dobavljaca", JOptionPane.ERROR_MESSAGE);
+        }
+        if (txtPrezime.getText().isEmpty() || txtPrezime.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Morate uneti prezime za dobavljaca!", "Dodavanje dobavljaca", JOptionPane.ERROR_MESSAGE);
+        }
+        if (cmbGradovi.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Morate izabrati neki od gradova!", "Dodavanje dobavljaca", JOptionPane.ERROR_MESSAGE);
+        }
+
+        dobavljac.setIme(txtIme.getText().trim());
+        dobavljac.setPrezime(txtPrezime.getText().trim());
+        dobavljac.setGrad((Grad) cmbGradovi.getSelectedItem());
+
+        try {
+            KontrolerKlijent.vratiInstancu().dodajDobavljaca(dobavljac);
+            JOptionPane.showMessageDialog(this, "Dobavljac dodat!\nGenerisani ID: " + dobavljac.getId(), "Dodavanje Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
+            int izbor = JOptionPane.showConfirmDialog(this, "Da li zelite da nastavite sa dodavanjem dobavljaca?", "Dodavanje Dobavljaca", JOptionPane.YES_NO_OPTION);
+            if (izbor == JOptionPane.YES_OPTION) {
+                txtIme.setText("");
+                txtPrezime.setText("");
+                cmbGradovi.setSelectedIndex(-1);
+            }else{
+                this.getTopLevelAncestor().setVisible(false);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Dobavljac nije dodat!\n" + e.getMessage(), "Dodavanje Dobavljaca", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDodajActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

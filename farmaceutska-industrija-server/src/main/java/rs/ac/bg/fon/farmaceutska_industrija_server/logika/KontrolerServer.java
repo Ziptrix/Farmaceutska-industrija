@@ -6,8 +6,10 @@ package rs.ac.bg.fon.farmaceutska_industrija_server.logika;
 
 import java.util.List;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstaktnaSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.DodajDobavljacaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.grad.UcitajSveGradoveSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.korisnik.PrijavaSO;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 
@@ -41,5 +43,10 @@ public class KontrolerServer {
         ApstaktnaSO ucitajSve = new UcitajSveGradoveSO();
         ucitajSve.izvrsi(grad);
         return ((UcitajSveGradoveSO) ucitajSve).getGradovi();
+    }
+
+    public void dodajDobavljaca(Dobavljac dobavljac) throws Exception {
+        ApstaktnaSO dodaj = new DodajDobavljacaSO();
+        dodaj.izvrsi(dobavljac);
     }
 }

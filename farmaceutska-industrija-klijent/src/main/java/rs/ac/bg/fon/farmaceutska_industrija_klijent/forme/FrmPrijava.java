@@ -103,8 +103,8 @@ public class FrmPrijava extends javax.swing.JPanel {
 
     private void btnPrijavaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrijavaActionPerformed
         try {
-            if(txtKorisnickoIme.getText().isEmpty() || txtKorisnickoIme.getText() == ""){
-                JOptionPane.showMessageDialog(this, "Korisnicko ime ne sme biti prazno!", "Prijava", JOptionPane.ERROR_MESSAGE);
+            if(txtKorisnickoIme.getText().isEmpty() || txtKorisnickoIme.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "Morate uneti korisnicko ime!", "Prijava", JOptionPane.ERROR_MESSAGE);
             }
             Korisnik korisnik = new Korisnik(txtKorisnickoIme.getText(), new String(txtSifra.getPassword()));
             korisnik = KontrolerKlijent.vratiInstancu().prijava(korisnik);

@@ -6,6 +6,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler;
 
 import java.net.Socket;
 import java.util.List;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.OdgovorServera;
@@ -58,6 +59,18 @@ public class KontrolerKlijent {
         if (odgovor.getIzuzetak() == null) {
             return (List<Grad>) odgovor.getRezultat();
         } else {
+            throw odgovor.getIzuzetak();
+        }
+    }
+
+    public void dodajDobavljaca(Dobavljac dobavljac) throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.DODAJ_DOBAVLJACA, dobavljac);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() == null) {
+            dobavljac.setId(((Dobavljac) odgovor.getRezultat()).getId());
+        }else{
             throw odgovor.getIzuzetak();
         }
     }

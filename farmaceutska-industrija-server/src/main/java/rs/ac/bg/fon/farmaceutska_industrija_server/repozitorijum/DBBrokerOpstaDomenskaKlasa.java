@@ -57,26 +57,51 @@ public class DBBrokerOpstaDomenskaKlasa {
         }
     }
 
-    public List<OpstaDomenskaKlasa> ucitajSve(OpstaDomenskaKlasa opstaKlasa) throws Exception{
+    public List<OpstaDomenskaKlasa> ucitajSve(OpstaDomenskaKlasa opstaKlasa) throws Exception {
         List<OpstaDomenskaKlasa> objekti = new ArrayList<>();
         String upit = "SELECT * FROM " + opstaKlasa.vratiNazivTabele();
         System.out.println("UPIT " + upit);
-        
+
         try {
             konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
             Statement st = konekcija.createStatement();
             ResultSet rs = st.executeQuery(upit);
-            
+
             objekti = opstaKlasa.vratiListu(rs);
-            
+
             st.close();
             rs.close();
-            
+
             return objekti;
         } catch (SQLException e) {
             System.out.println("Objekti nisu uspesno ucitani iz baze!");
         }
         return null;
+    }
+
+    public void dodaj(OpstaDomenskaKlasa objekat) throws Exception {
+        String upit = "INSERT INTO "
+                + objekat.vratiNazivTabele() + " ("
+                + objekat.vratiNaziveKolonaZaInsertUpit() + ") VALUES ("
+                + objekat.vratiVrednostiInsertUpita() + ")";
+        System.out.println("UPIT " + upit);
+        try {
+            konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
+            Statement st = konekcija.createStatement();
+            st.executeUpdate(upit, Statement.RETURN_GENERATED_KEYS);
+
+            ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                objekat.postaviId(rs.getLong(1));
+            }
+
+            st.close();
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Objekat nije uspesno dodat u bazu!");
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 }

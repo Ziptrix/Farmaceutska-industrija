@@ -22,7 +22,7 @@ public class UcitajSveGradoveSO extends ApstaktnaSO {
 
     @Override
     protected void preduslovi(Object objekat) throws Exception {
-        if (!(objekat instanceof Grad)) {
+        if (objekat == null || !(objekat instanceof Grad)) {
             throw new Exception("Prosledjen objekat mora biti tipa Grad!");
         }
     }

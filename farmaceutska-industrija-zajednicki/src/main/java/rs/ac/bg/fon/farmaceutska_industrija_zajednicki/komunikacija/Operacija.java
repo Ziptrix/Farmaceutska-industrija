@@ -9,5 +9,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija;
  * @author milos
  */
 public enum Operacija {
-    LOGIN, PRIKAZI_SVE_GRADOVE
+    LOGIN,
+    PRIKAZI_SVE_GRADOVE,
+    DODAJ_DOBAVLJACA
 }
