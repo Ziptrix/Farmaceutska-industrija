@@ -64,20 +64,17 @@ public class FrmPrijava extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtKorisnickoIme, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnPrijava)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnIzlaz))
-                            .addComponent(txtSifra))))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtKorisnickoIme, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnPrijava)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnIzlaz))
+                        .addComponent(txtSifra, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,6 +103,9 @@ public class FrmPrijava extends javax.swing.JPanel {
 
     private void btnPrijavaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrijavaActionPerformed
         try {
+            if(txtKorisnickoIme.getText().isEmpty() || txtKorisnickoIme.getText() == ""){
+                JOptionPane.showMessageDialog(this, "Korisnicko ime ne sme biti prazno!", "Prijava", JOptionPane.ERROR_MESSAGE);
+            }
             Korisnik korisnik = new Korisnik(txtKorisnickoIme.getText(), new String(txtSifra.getPassword()));
             korisnik = KontrolerKlijent.vratiInstancu().prijava(korisnik);
             JOptionPane.showMessageDialog(this, korisnik.getIme() + " je uspesno prijavljen!", "Prijava", JOptionPane.INFORMATION_MESSAGE);

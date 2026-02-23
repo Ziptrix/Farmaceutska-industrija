@@ -4,6 +4,13 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac.FrmDobavljac;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 
 /**
@@ -33,7 +40,55 @@ public class FrmPocetna extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mnLek = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        mnNarudzbenica = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        mnDobavljac = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        mnLek.setText("Lek");
+
+        jMenuItem1.setText("Dodavanje novog leka");
+        mnLek.add(jMenuItem1);
+
+        jMenuItem2.setText("Pretraga lekova");
+        mnLek.add(jMenuItem2);
+
+        jMenuBar1.add(mnLek);
+
+        mnNarudzbenica.setText("Narudzbenica");
+
+        jMenuItem3.setText("Dodavanje nove narudzbenice");
+        mnNarudzbenica.add(jMenuItem3);
+
+        jMenuItem4.setText("Pretraga narudzbenica");
+        mnNarudzbenica.add(jMenuItem4);
+
+        jMenuBar1.add(mnNarudzbenica);
+
+        mnDobavljac.setText("Dobavljac");
+
+        jMenuItem5.setText("Dodavanje novog dobavljaca");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        mnDobavljac.add(jMenuItem5);
+
+        jMenuItem6.setText("Pretraga dobavljaca");
+        mnDobavljac.add(jMenuItem6);
+
+        jMenuBar1.add(mnDobavljac);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -43,16 +98,39 @@ public class FrmPocetna extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 334, Short.MAX_VALUE)
+            .addGap(0, 311, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        JDialog dijalog = new JDialog((JFrame) null, "Dobavljac", true);
+        try {
+            JPanel panel = new FrmDobavljac(null, FrmModovi.FORMA_MOD_DODAVANJE);
+            dijalog.add(panel);
+            dijalog.pack();
+            dijalog.setLocationRelativeTo(null);
+            dijalog.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenu mnDobavljac;
+    private javax.swing.JMenu mnLek;
+    private javax.swing.JMenu mnNarudzbenica;
     // End of variables declaration//GEN-END:variables
 }

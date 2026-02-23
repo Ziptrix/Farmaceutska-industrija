@@ -19,36 +19,34 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Korisnik implements OpstaDomenskaKlasa {
+public class Dobavljac implements OpstaDomenskaKlasa{
 
     private Long id;
-    private String korisnickoIme;
-    private String sifra;
     private String ime;
     private String prezime;
-
-    public Korisnik(String korisnickoIme, String sifra) {
-        this.korisnickoIme = korisnickoIme;
-        this.sifra = sifra;
-    }
+    private Grad grad;
 
     @Override
     public String toString() {
-        return ime + " " + prezime + ", korisnicko ime: " + korisnickoIme;
+        return ime + " " + prezime + ", iz grada: " + grad.getNaziv();
     }
 
+    @Override
     public String vratiNazivTabele() {
-        return "user";
+        return "supplier";
     }
 
+    @Override
     public String vratiNaziveKolonaZaInsertUpit() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "first_name, last_name, city";
     }
 
+    @Override
     public String vratiVrednostiInsertUpita() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "'" + ime + "', '" + prezime + "', " + grad.getPostanskiBroj();
     }
 
+    @Override
     public void postaviId(long id) {
         this.id = id;
     }

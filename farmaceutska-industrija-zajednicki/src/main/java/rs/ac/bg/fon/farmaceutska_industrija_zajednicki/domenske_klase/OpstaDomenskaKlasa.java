@@ -5,7 +5,8 @@
 package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase;
 
 import java.io.Serializable;
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
 
 /**
  *
@@ -20,5 +21,7 @@ public interface OpstaDomenskaKlasa extends Serializable {
     String vratiVrednostiInsertUpita();
 
     void postaviId(long id);
+    
+    List<OpstaDomenskaKlasa> vratiListu (ResultSet rs) throws Exception;
 
 }

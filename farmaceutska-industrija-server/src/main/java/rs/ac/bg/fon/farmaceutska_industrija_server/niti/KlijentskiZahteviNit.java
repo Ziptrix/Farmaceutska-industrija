@@ -60,6 +60,9 @@ public class KlijentskiZahteviNit extends Thread {
                     odgovor.setRezultat(korisnik);
                     this.korisnik = korisnik;
                     break;
+                case PRIKAZI_SVE_GRADOVE:
+                    odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveGradove());
+                    break;
                 default:
                     throw new AssertionError();
             }

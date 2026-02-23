@@ -20,7 +20,7 @@ public class PrijavaSO extends ApstaktnaSO {
     @Override
     protected void preduslovi(Object objekat) throws Exception {
         if (objekat == null || !(objekat instanceof Korisnik)) {
-            throw new Exception("Pogresan tip objekta je prosledjen!");
+            throw new Exception("Prosledjen objekat mora biti tipa Korisnik!");
         }
 
         if (objekat instanceof Korisnik) {
