@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package rs.ac.bg.fon.farnaceutska_industrija_zajednicki.komunikacija;
+package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,18 +18,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OdgovorServera {
+public class ZahtevKlijenta implements Serializable {
 
-    private Object odgovor;
-    private Exception izuzetak;
+    private Operacija operacija;
+    private Object argument;
 
     @Override
     public String toString() {
-        if (izuzetak == null) {
-            return "Odgovor " + odgovor + "koji treba poslati klijentu nema gresaka!";
-        } else {
-            return "Odgovor " + odgovor + "se nece poslati klijentu jer se desila greska: " + izuzetak;
-        }
+        return "Nad objektom " + argument + "treba izvrsiti operaciju " + operacija;
     }
 
 }

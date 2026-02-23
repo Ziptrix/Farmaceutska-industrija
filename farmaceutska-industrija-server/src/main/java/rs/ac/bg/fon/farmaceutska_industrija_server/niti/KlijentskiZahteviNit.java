@@ -1,0 +1,72 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package rs.ac.bg.fon.farmaceutska_industrija_server.niti;
+
+import java.io.IOException;
+import java.net.Socket;
+import rs.ac.bg.fon.farmaceutska_industrija_server.logika.KontrolerServer;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.OdgovorServera;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Posiljalac;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Primalac;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.ZahtevKlijenta;
+
+/**
+ *
+ * @author milos
+ */
+public class KlijentskiZahteviNit extends Thread {
+
+    private Socket soket;
+    private Korisnik korisnik;
+    private Posiljalac posiljalac;
+    private Primalac primalac;
+
+    public KlijentskiZahteviNit(Socket soket) throws IOException {
+        this.soket = soket;
+        posiljalac = new Posiljalac(soket);
+        primalac = new Primalac(soket);
+    }
+
+    public Socket getSoket() {
+        return soket;
+    }
+
+    public Korisnik getKorisnika() {
+        return korisnik;
+    }
+
+    @Override
+    public void run() {
+        while (!soket.isClosed()) {
+            try {
+                ZahtevKlijenta zahtev = (ZahtevKlijenta) primalac.primiObjekat();
+                OdgovorServera odgovor = obradiZahtevKlijenta(zahtev);
+                posiljalac.posaljiObjekat(odgovor);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private OdgovorServera obradiZahtevKlijenta(ZahtevKlijenta zahtev) {
+        OdgovorServera odgovor = new OdgovorServera();
+        try {
+            switch (zahtev.getOperacija()) {
+                case LOGIN:
+                    Korisnik korisnik = KontrolerServer.vratiInstancu().prijava((Korisnik) zahtev.getArgument());
+                    odgovor.setRezultat(korisnik);
+                    this.korisnik = korisnik;
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        } catch (Exception e) {
+            odgovor.setIzuzetak(e);
+        }
+        return odgovor;
+    }
+
+}

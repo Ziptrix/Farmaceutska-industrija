@@ -1,0 +1,50 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler;
+
+import java.net.Socket;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.OdgovorServera;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Operacija;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Posiljalac;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Primalac;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.ZahtevKlijenta;
+
+/**
+ *
+ * @author milos
+ */
+public class KontrolerKlijent {
+
+    Socket soket;
+    Posiljalac posiljalac;
+    Primalac primalac;
+    private static KontrolerKlijent instanca;
+
+    private KontrolerKlijent() throws Exception {
+        soket = new Socket("127.0.0.1", 9090);
+        posiljalac = new Posiljalac(soket);
+        primalac = new Primalac(soket);
+    }
+
+    public static KontrolerKlijent vratiInstancu() throws Exception {
+        if (instanca == null) {
+            instanca = new KontrolerKlijent();
+        }
+        return instanca;
+    }
+
+    public Korisnik prijava(Korisnik korisnik) throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.LOGIN, korisnik);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() == null) {
+            return (Korisnik) odgovor.getRezultat();
+        } else {
+            throw odgovor.getIzuzetak();
+        }
+    }
+}

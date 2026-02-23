@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package rs.ac.bg.fon.farnaceutska_industrija_zajednicki.domenske_klase;
+package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase;
 
-import java.io.Serializable;
+import java.sql.PreparedStatement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Korisnik implements Serializable {
+public class Korisnik implements OpstaDomenskaKlasa {
 
     private Long id;
     private String korisnickoIme;
@@ -34,6 +34,22 @@ public class Korisnik implements Serializable {
     @Override
     public String toString() {
         return ime + " " + prezime + ", korisnicko ime: " + korisnickoIme;
+    }
+
+    public String vratiNazivTabele() {
+        return "USER";
+    }
+
+    public String vratiNaziveKolonaZaInsertUpit() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String vratiVrednostiInsertUpita() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void postaviId(long id) {
+        this.id = id;
     }
 
 }

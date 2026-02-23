@@ -1,17 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>rs.ac.bg.fon</groupId>
-    <artifactId>farmaceutska-industrija</artifactId>
-    <version>1.0.0</version>
-  </parent>
-  <artifactId>farmaceutska-industrija-server</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>rs.ac.bg.fon</groupId>
+        <artifactId>farmaceutska-industrija</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>farmaceutska-industrija-server</artifactId>
   
-  <dependencies>
-	<dependency>
-   		<groupId>rs.ac.bg.fon</groupId>
-   		<artifactId>farmaceutska-industrija-zajednicki</artifactId>
-   		<version>1.0.0</version>
-  	</dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>rs.ac.bg.fon</groupId>
+            <artifactId>farmaceutska-industrija-zajednicki</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- Source: https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.5.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 </project>
