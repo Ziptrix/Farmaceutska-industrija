@@ -14,14 +14,14 @@ import rs.ac.bg.fon.farmaceutska_industrija_server.repozitorijum.DBBrokerOpstaDo
  * @author milos
  */
 public abstract class ApstraktnaSO {
-    
+
     protected static DBBrokerOpstaDomenskaKlasa broker = new DBBrokerOpstaDomenskaKlasa();
 
-    public void izvrsi(Object objekat) throws Exception {
+    public void izvrsi(Object objekat, String kljuc) throws Exception {
         try {
             preduslovi(objekat);
             zapocniTransakciju();
-            izvrsiOperaciju(objekat);
+            izvrsiOperaciju(objekat, kljuc);
             potvrdiTransakciju();
             System.out.println("Operacija je uspesno izvrsena!");
         } catch (Exception e) {
@@ -35,7 +35,7 @@ public abstract class ApstraktnaSO {
 
     protected abstract void preduslovi(Object objekat) throws Exception;
 
-    protected abstract void izvrsiOperaciju(Object objekat) throws Exception;
+    protected abstract void izvrsiOperaciju(Object objekat, String kljuc) throws Exception;
 
     private void zapocniTransakciju() throws SQLException, IOException {
         DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();

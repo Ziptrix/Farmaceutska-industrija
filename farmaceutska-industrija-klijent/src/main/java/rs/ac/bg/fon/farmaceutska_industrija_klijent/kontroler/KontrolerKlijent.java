@@ -106,4 +106,16 @@ public class KontrolerKlijent {
             throw odgovor.getIzuzetak();
         }
     }
+    
+    public List<Dobavljac> pretragaDobavljaca(String kriterijum) throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.PRETRAGA_DOBAVLJACA, kriterijum);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() == null) {
+            return (List<Dobavljac>) odgovor.getRezultat();
+        } else {
+            throw odgovor.getIzuzetak();
+        }
+    }
 }

@@ -109,4 +109,9 @@ public class Dobavljac implements OpstaDomenskaKlasa {
         return "city = " + grad.getPostanskiBroj();
     }
 
+    @Override
+    public String vratiNazivKoloneZaPretragu() {
+        return "first_name";
+    }
+
 }

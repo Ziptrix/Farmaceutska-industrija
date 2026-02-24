@@ -4,6 +4,7 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme;
 
+import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
@@ -105,6 +106,7 @@ public class FrmPrijava extends javax.swing.JPanel {
         try {
             if(txtKorisnickoIme.getText().isEmpty() || txtKorisnickoIme.getText().equals("")){
                 JOptionPane.showMessageDialog(this, "Morate uneti korisnicko ime!", "Prijava", JOptionPane.ERROR_MESSAGE);
+                return;
             }
             Korisnik korisnik = new Korisnik(txtKorisnickoIme.getText(), new String(txtSifra.getPassword()));
             korisnik = KontrolerKlijent.vratiInstancu().prijava(korisnik);

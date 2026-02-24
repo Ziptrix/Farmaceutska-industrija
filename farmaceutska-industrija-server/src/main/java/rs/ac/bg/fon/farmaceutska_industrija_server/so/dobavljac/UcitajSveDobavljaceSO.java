@@ -28,7 +28,7 @@ public class UcitajSveDobavljaceSO extends ApstraktnaSO {
     }
 
     @Override
-    protected void izvrsiOperaciju(Object objekat) throws Exception {
+    protected void izvrsiOperaciju(Object objekat, String kljuc) throws Exception {
         List<OpstaDomenskaKlasa> rezultat = broker.ucitajSve((Dobavljac) objekat);
         dobavljaci = new ArrayList<>();
 

@@ -4,6 +4,7 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -42,6 +43,10 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
         tblDobavljaci = new javax.swing.JTable();
         btnIzmena = new javax.swing.JButton();
         btnBrisanje = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtPretraga = new javax.swing.JTextField();
+        btnPretraga = new javax.swing.JButton();
+        btnPonistiPretragu = new javax.swing.JButton();
 
         tblDobavljaci.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -70,32 +75,66 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setText("Ime:");
+
+        btnPretraga.setText("PRETRAGA");
+        btnPretraga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretragaActionPerformed(evt);
+            }
+        });
+
+        btnPonistiPretragu.setText("Ponisti pretragu");
+        btnPonistiPretragu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPonistiPretraguActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnBrisanje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnIzmena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(531, 531, 531)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnBrisanje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnIzmena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(btnPretraga)
+                        .addGap(101, 101, 101)
+                        .addComponent(btnPonistiPretragu)))
                 .addContainerGap(72, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(btnIzmena)
-                        .addGap(54, 54, 54)
-                        .addComponent(btnBrisanje)))
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnIzmena)
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPonistiPretragu)
+                    .addComponent(btnPretraga))
+                .addGap(23, 23, 23)
+                .addComponent(btnBrisanje)
+                .addGap(17, 17, 17)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(66, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -139,16 +178,42 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnIzmenaActionPerformed
 
+    private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
+        try {
+            String kriterijum = txtPretraga.getText().trim();
+            prikaziPretraguDobavljaca(kriterijum);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnPretragaActionPerformed
+
+    private void btnPonistiPretraguActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPonistiPretraguActionPerformed
+        txtPretraga.setText("");
+        try {
+            prikaziDobavljace();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnPonistiPretraguActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrisanje;
     private javax.swing.JButton btnIzmena;
+    private javax.swing.JButton btnPonistiPretragu;
+    private javax.swing.JButton btnPretraga;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDobavljaci;
+    private javax.swing.JTextField txtPretraga;
     // End of variables declaration//GEN-END:variables
 
-    public void prikaziDobavljace() throws Exception {
-        List<Dobavljac> dobavljaci = KontrolerKlijent.vratiInstancu().prikaziSveDobavljace();
+    public void prikaziPretraguDobavljaca(String kriterijum) throws Exception {
+        List<Dobavljac> dobavljaci = KontrolerKlijent.vratiInstancu().pretragaDobavljaca(kriterijum);
         tblDobavljaci.setModel(new ModelDobavljaci(dobavljaci));
+    }
+
+    public void prikaziDobavljace() throws Exception {
+        ModelDobavljaci model = new ModelDobavljaci(new ArrayList<>());
+        tblDobavljaci.setModel(model);
     }
 }

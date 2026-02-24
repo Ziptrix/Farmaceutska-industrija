@@ -56,11 +56,11 @@ public class DBBrokerOpstaDomenskaKlasa {
         }
     }
 
-    public List<OpstaDomenskaKlasa> ucitajSve(OpstaDomenskaKlasa opstaKlasa) throws Exception {
+    public List<OpstaDomenskaKlasa> ucitajSve(OpstaDomenskaKlasa objekat) throws Exception {
         List<OpstaDomenskaKlasa> objekti = new ArrayList<>();
-        String upit = "SELECT " + opstaKlasa.vratiVrednostiSelectUpita()
-                + " FROM " + opstaKlasa.vratiNazivTabele()
-                + opstaKlasa.vratiJoin();
+        String upit = "SELECT " + objekat.vratiVrednostiSelectUpita()
+                + " FROM " + objekat.vratiNazivTabele()
+                + objekat.vratiJoin();
         System.out.println("UPIT " + upit);
 
         try {
@@ -68,7 +68,7 @@ public class DBBrokerOpstaDomenskaKlasa {
             Statement st = konekcija.createStatement();
             ResultSet rs = st.executeQuery(upit);
 
-            objekti = opstaKlasa.vratiListuZaSelectUpit(rs);
+            objekti = objekat.vratiListuZaSelectUpit(rs);
 
             st.close();
             rs.close();
@@ -129,12 +129,37 @@ public class DBBrokerOpstaDomenskaKlasa {
             konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
             Statement st = konekcija.createStatement();
             st.executeUpdate(upit);
-            
+
             st.close();
         } catch (Exception e) {
             System.out.println("Objekat nije uspesno izmenjen u bazi!");
             throw e;
         }
+    }
+
+    public List<OpstaDomenskaKlasa> pretrazi(OpstaDomenskaKlasa objekat, String kriterijum) throws Exception {
+        List<OpstaDomenskaKlasa> rezultat = new ArrayList<>();
+        String upit = "SELECT " + objekat.vratiVrednostiSelectUpita()
+                + " FROM " + objekat.vratiNazivTabele()
+                + objekat.vratiJoin()
+                + " WHERE " + objekat.vratiNazivKoloneZaPretragu()
+                + " LIKE '%" + kriterijum + "%'";
+
+        try {
+            konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
+            Statement st = konekcija.createStatement();
+            ResultSet rs = st.executeQuery(upit);
+
+            rezultat = objekat.vratiListuZaSelectUpit(rs);
+            
+            st.close();
+            rs.close();
+        } catch (Exception e) {
+            System.out.println("Objekti nisu uspesno ucitani iz baze!");
+            throw e;
+        }
+
+        return rezultat;
     }
 
 }

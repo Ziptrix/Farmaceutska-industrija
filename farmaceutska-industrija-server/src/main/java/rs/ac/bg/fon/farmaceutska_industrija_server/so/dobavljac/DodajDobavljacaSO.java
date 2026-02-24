@@ -22,7 +22,7 @@ public class DodajDobavljacaSO extends ApstraktnaSO {
     }
 
     @Override
-    protected void izvrsiOperaciju(Object objekat) throws Exception {
+    protected void izvrsiOperaciju(Object objekat, String kljuc) throws Exception {
         broker.dodaj((OpstaDomenskaKlasa) objekat);
     }
 

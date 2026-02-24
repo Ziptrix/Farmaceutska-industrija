@@ -15,28 +15,30 @@ import java.util.List;
  */
 public interface OpstaDomenskaKlasa extends Serializable {
 
+    void postaviId(long id);
+
+    Long vratiId();
+
     String vratiNazivTabele();
+
+    String vratiNazivPrimarnogKljuca();
 
     String vratiNaziveKolonaZaInsertUpit();
 
+    String vratiNazivKoloneZaPretragu();
+
     String vratiVrednostiInsertUpita();
 
-    void postaviId(long id);
-    
-    Long vratiId();
-    
-    List<OpstaDomenskaKlasa> vratiListuZaSelectUpit (ResultSet rs) throws Exception;
-    
-    String vratiJoin();
-    
     String vratiVrednostiSelectUpita();
-    
-    String vratiUslovZaUpdateDelete();
-    
-    void postaviVrednostiZaDeleteUpit(PreparedStatement ps) throws Exception;
-    
-    String vratiNazivPrimarnogKljuca();
-    
+
     String vratiVrednostiUpdateUpita();
+
+    void postaviVrednostiZaDeleteUpit(PreparedStatement ps) throws Exception;
+
+    String vratiJoin();
+
+    List<OpstaDomenskaKlasa> vratiListuZaSelectUpit(ResultSet rs) throws Exception;
+
+    String vratiUslovZaUpdateDelete();
 
 }

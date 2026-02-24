@@ -82,7 +82,7 @@ public class FrmPocetna extends javax.swing.JFrame {
         });
         mnDobavljac.add(jMenuItem5);
 
-        jMenuItem6.setText("Prikaz svih dobavljaca");
+        jMenuItem6.setText("Pretraga dobavljaca");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);

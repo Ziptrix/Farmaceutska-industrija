@@ -22,7 +22,7 @@ public class ObrisiDobavljacaSO extends ApstraktnaSO {
     }
 
     @Override
-    protected void izvrsiOperaciju(Object objekat) throws Exception {
+    protected void izvrsiOperaciju(Object objekat, String kljuc) throws Exception {
         broker.obrisi((OpstaDomenskaKlasa) objekat);
     }
 

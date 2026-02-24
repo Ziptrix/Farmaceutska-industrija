@@ -9,6 +9,7 @@ import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstraktnaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.DodajDobavljacaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.IzmeniDobavljacaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.ObrisiDobavljacaSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.PretraziDobavljaceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.UcitajSveDobavljaceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.grad.UcitajSveGradoveSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.korisnik.PrijavaSO;
@@ -40,34 +41,40 @@ public class KontrolerServer {
 
     public Korisnik prijava(Korisnik korisnik) throws Exception {
         ApstraktnaSO prijava = new PrijavaSO();
-        prijava.izvrsi(korisnik);
+        prijava.izvrsi(korisnik, null);
         return ((PrijavaSO) prijava).getKorisnik();
     }
 
     public List<Grad> ucitajSveGradove() throws Exception {
         ApstraktnaSO ucitajSve = new UcitajSveGradoveSO();
-        ucitajSve.izvrsi(grad);
+        ucitajSve.izvrsi(grad, null);
         return ((UcitajSveGradoveSO) ucitajSve).getGradovi();
     }
 
     public void dodajDobavljaca(Dobavljac dobavljac) throws Exception {
         ApstraktnaSO dodaj = new DodajDobavljacaSO();
-        dodaj.izvrsi(dobavljac);
+        dodaj.izvrsi(dobavljac, null);
     }
 
     public List<Dobavljac> ucitajSveDobavljace() throws Exception {
         ApstraktnaSO ucitajSve = new UcitajSveDobavljaceSO();
-        ucitajSve.izvrsi(dobavljac);
+        ucitajSve.izvrsi(dobavljac, null);
         return ((UcitajSveDobavljaceSO) ucitajSve).getDobavljaci();
     }
 
     public void obrisiDobavljaca(Dobavljac dobavljac) throws Exception {
         ApstraktnaSO obrisi = new ObrisiDobavljacaSO();
-        obrisi.izvrsi(dobavljac);
+        obrisi.izvrsi(dobavljac, null);
     }
 
     public void izmeniDobavljaca(Dobavljac dobavljac) throws Exception {
         ApstraktnaSO izmeni = new IzmeniDobavljacaSO();
-        izmeni.izvrsi(dobavljac);
+        izmeni.izvrsi(dobavljac, null);
+    }
+    
+    public List<Dobavljac> pretraziDobavljace(String kriterijum) throws Exception {
+        ApstraktnaSO pretrazi = new PretraziDobavljaceSO();
+        pretrazi.izvrsi(dobavljac, kriterijum);
+        return ((PretraziDobavljaceSO) pretrazi).getDobavljaci();
     }
 }
