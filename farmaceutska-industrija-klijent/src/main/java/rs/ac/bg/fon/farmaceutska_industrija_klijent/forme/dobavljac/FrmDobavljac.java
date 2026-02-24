@@ -6,7 +6,6 @@ package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac;
 
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
@@ -19,15 +18,17 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
  */
 public class FrmDobavljac extends javax.swing.JPanel {
 
+    FrmDobavljaciPrikaz tabela;
     Dobavljac dobavljac;
     int mod;
 
     /**
      * Creates new form FrmDobavljac
      */
-    public FrmDobavljac(Dobavljac dobavljac, int mod) throws Exception {
+    public FrmDobavljac(FrmDobavljaciPrikaz tabela, Dobavljac dobavljac, int mod) throws Exception {
         initComponents();
 
+        this.tabela = tabela;
         this.dobavljac = dobavljac;
         this.mod = mod;
 
@@ -70,6 +71,11 @@ public class FrmDobavljac extends javax.swing.JPanel {
         });
 
         btnIzmeni.setText("Izmeni Dobavljaca");
+        btnIzmeni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniActionPerformed(evt);
+            }
+        });
 
         btnObrisi.setText("Obrisi Dobavljaca");
         btnObrisi.addActionListener(new java.awt.event.ActionListener() {
@@ -134,12 +140,15 @@ public class FrmDobavljac extends javax.swing.JPanel {
 
         if (txtIme.getText().isEmpty() || txtIme.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Morate uneti ime za dobavljaca!", "Dodavanje dobavljaca", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         if (txtPrezime.getText().isEmpty() || txtPrezime.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Morate uneti prezime za dobavljaca!", "Dodavanje dobavljaca", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         if (cmbGradovi.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Morate izabrati neki od gradova!", "Dodavanje dobavljaca", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         dobavljac.setIme(txtIme.getText().trim());
@@ -164,19 +173,37 @@ public class FrmDobavljac extends javax.swing.JPanel {
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
         if (dobavljac == null) {
-            JOptionPane.showMessageDialog(this, "Dobavljac ne postoji!", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Dobavljac nije ucitan!", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         int izbor = JOptionPane.showConfirmDialog(this, "Da li ste zaista sigurni da zelite da izbrisete Dobavljaca:\n" + dobavljac, "Brisanje Dobavljaca", JOptionPane.YES_NO_OPTION);
         if (izbor == JOptionPane.YES_OPTION) {
             try {
                 KontrolerKlijent.vratiInstancu().obrisiDobavljaca(dobavljac);
-                JOptionPane.showMessageDialog(this, "Uspesno ste izbrisali Dobavljaca:\n" + dobavljac, "USPEH!!!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Uspesno ste izbrisali Dobavljaca:\n" + dobavljac, "Brisanje Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
                 this.getTopLevelAncestor().setVisible(false);
+                tabela.prikaziDobavljace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }//GEN-LAST:event_btnObrisiActionPerformed
+
+    private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
+        if (dobavljac == null) {
+            JOptionPane.showMessageDialog(this, "Dobavljac nije ucitan!", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        dobavljac.setGrad((Grad) cmbGradovi.getSelectedItem());
+        try {
+            KontrolerKlijent.vratiInstancu().izmeniDobavljaca(dobavljac);
+            JOptionPane.showMessageDialog(this, "Uspesno ste izmenili Dobavljaca:\n" + dobavljac, "Izmena Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
+            this.getTopLevelAncestor().setVisible(false);
+            tabela.prikaziDobavljace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnIzmeniActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -208,7 +235,9 @@ public class FrmDobavljac extends javax.swing.JPanel {
             txtPrezime.setText(dobavljac.getPrezime());
             cmbGradovi.setSelectedItem(dobavljac.getGrad());
 
-            cmbGradovi.setEnabled(false);
+            txtIme.setEditable(false);
+            txtPrezime.setEditable(false);
+
             btnDodaj.setVisible(false);
             btnObrisi.setVisible(false);
         }

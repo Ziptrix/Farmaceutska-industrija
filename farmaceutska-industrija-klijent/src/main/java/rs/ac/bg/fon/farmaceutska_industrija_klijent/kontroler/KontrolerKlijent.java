@@ -96,4 +96,14 @@ public class KontrolerKlijent {
             throw odgovor.getIzuzetak();
         }
     }
+
+    public void izmeniDobavljaca(Dobavljac dobavljac) throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.IZMENI_DOBAVLJACA, dobavljac);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() != null) {
+            throw odgovor.getIzuzetak();
+        }
+    }
 }

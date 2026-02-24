@@ -111,7 +111,7 @@ public class FrmPocetna extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         JDialog dijalog = new JDialog((JFrame) null, "Dobavljac", true);
         try {
-            JPanel panel = new FrmDobavljac(null, FrmModovi.FORMA_MOD_DODAVANJE);
+            JPanel panel = new FrmDobavljac(null, null, FrmModovi.FORMA_MOD_DODAVANJE);
             dijalog.add(panel);
             dijalog.pack();
             dijalog.setLocationRelativeTo(null);

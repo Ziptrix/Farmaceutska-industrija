@@ -7,6 +7,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
@@ -56,6 +57,11 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblDobavljaci);
 
         btnIzmena.setText("IZMENA");
+        btnIzmena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmenaActionPerformed(evt);
+            }
+        });
 
         btnBrisanje.setText("BRISANJE");
         btnBrisanje.addActionListener(new java.awt.event.ActionListener() {
@@ -100,7 +106,7 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
             Dobavljac dobavljac = model.getDobavljac(red);
             JDialog dijalog = new JDialog((JFrame) null, "Dobavljac", true);
             try {
-                JPanel panel = new FrmDobavljac(dobavljac, FrmModovi.FORMA_MOD_CITANJE);
+                JPanel panel = new FrmDobavljac(this, dobavljac, FrmModovi.FORMA_MOD_CITANJE);
                 dijalog.add(panel);
                 dijalog.pack();
                 dijalog.setLocationRelativeTo(null);
@@ -108,9 +114,30 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            this.getTopLevelAncestor().setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate izabrati nekog Dobavljaca iz tabele!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnBrisanjeActionPerformed
+
+    private void btnIzmenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmenaActionPerformed
+        int red = tblDobavljaci.getSelectedRow();
+        ModelDobavljaci model = (ModelDobavljaci) tblDobavljaci.getModel();
+        if (red >= 0) {
+            Dobavljac dobavljac = model.getDobavljac(red);
+            JDialog dijalog = new JDialog((JFrame) null, "Dobavljac", true);
+            try {
+                JPanel panel = new FrmDobavljac(this, dobavljac, FrmModovi.FORMA_MOD_IZMENA);
+                dijalog.add(panel);
+                dijalog.pack();
+                dijalog.setLocationRelativeTo(null);
+                dijalog.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate izabrati nekog Dobavljaca iz tabele!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIzmenaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

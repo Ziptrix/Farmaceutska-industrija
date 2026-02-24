@@ -94,4 +94,19 @@ public class Dobavljac implements OpstaDomenskaKlasa {
         ps.setLong(1, id);
     }
 
+    @Override
+    public Long vratiId() {
+        return id;
+    }
+
+    @Override
+    public String vratiNazivPrimarnogKljuca() {
+        return "id";
+    }
+
+    @Override
+    public String vratiVrednostiUpdateUpita() {
+        return "city = " + grad.getPostanskiBroj();
+    }
+
 }

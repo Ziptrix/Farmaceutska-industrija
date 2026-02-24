@@ -52,7 +52,6 @@ public class DBBrokerOpstaDomenskaKlasa {
             return korisnik;
         } catch (SQLException e) {
             System.out.println("Objekat User nije uspesno ucitan iz baze!");
-            e.printStackTrace();
             throw e;
         }
     }
@@ -77,8 +76,8 @@ public class DBBrokerOpstaDomenskaKlasa {
             return objekti;
         } catch (SQLException e) {
             System.out.println("Objekti nisu uspesno ucitani iz baze!");
+            throw e;
         }
-        return null;
     }
 
     public void dodaj(OpstaDomenskaKlasa objekat) throws Exception {
@@ -101,7 +100,6 @@ public class DBBrokerOpstaDomenskaKlasa {
             rs.close();
         } catch (SQLException e) {
             System.out.println("Objekat nije uspesno dodat u bazu!");
-            e.printStackTrace();
             throw e;
         }
     }
@@ -118,7 +116,23 @@ public class DBBrokerOpstaDomenskaKlasa {
             ps.close();
         } catch (SQLException e) {
             System.out.println("Objekat nije uspesno izbrisan iz baze!");
-            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public void izmeni(OpstaDomenskaKlasa objekat) throws Exception {
+        String upit = "UPDATE " + objekat.vratiNazivTabele()
+                + " SET " + objekat.vratiVrednostiUpdateUpita()
+                + " WHERE " + objekat.vratiNazivPrimarnogKljuca()
+                + " = " + objekat.vratiId();
+        try {
+            konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
+            Statement st = konekcija.createStatement();
+            st.executeUpdate(upit);
+            
+            st.close();
+        } catch (Exception e) {
+            System.out.println("Objekat nije uspesno izmenjen u bazi!");
             throw e;
         }
     }

@@ -10,6 +10,7 @@ import rs.ac.bg.fon.farmaceutska_industrija_server.logika.KontrolerServer;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.OdgovorServera;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Operacija;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Posiljalac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Primalac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.ZahtevKlijenta;
@@ -80,6 +81,12 @@ public class KlijentskiZahteviNit extends Thread {
                     Dobavljac dobavljac = (Dobavljac) zahtev.getArgument();
                     KontrolerServer.vratiInstancu().obrisiDobavljaca(dobavljac);
                     odgovor.setRezultat(null);
+                    break;
+                }
+                case IZMENI_DOBAVLJACA:{
+                    Dobavljac dobavljac = (Dobavljac) zahtev.getArgument();
+                    KontrolerServer.vratiInstancu().izmeniDobavljaca(dobavljac);
+                    odgovor.setRezultat(dobavljac);
                     break;
                 }
                 default:

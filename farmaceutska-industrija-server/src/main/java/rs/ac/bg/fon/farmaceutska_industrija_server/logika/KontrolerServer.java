@@ -7,6 +7,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_server.logika;
 import java.util.List;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstraktnaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.DodajDobavljacaSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.IzmeniDobavljacaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.ObrisiDobavljacaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.UcitajSveDobavljaceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.grad.UcitajSveGradoveSO;
@@ -63,5 +64,10 @@ public class KontrolerServer {
     public void obrisiDobavljaca(Dobavljac dobavljac) throws Exception {
         ApstraktnaSO obrisi = new ObrisiDobavljacaSO();
         obrisi.izvrsi(dobavljac);
+    }
+
+    public void izmeniDobavljaca(Dobavljac dobavljac) throws Exception {
+        ApstraktnaSO izmeni = new IzmeniDobavljacaSO();
+        izmeni.izvrsi(dobavljac);
     }
 }

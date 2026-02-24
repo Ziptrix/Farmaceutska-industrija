@@ -23,6 +23,8 @@ public interface OpstaDomenskaKlasa extends Serializable {
 
     void postaviId(long id);
     
+    Long vratiId();
+    
     List<OpstaDomenskaKlasa> vratiListuZaSelectUpit (ResultSet rs) throws Exception;
     
     String vratiJoin();
@@ -32,5 +34,9 @@ public interface OpstaDomenskaKlasa extends Serializable {
     String vratiUslovZaUpdateDelete();
     
     void postaviVrednostiZaDeleteUpit(PreparedStatement ps) throws Exception;
+    
+    String vratiNazivPrimarnogKljuca();
+    
+    String vratiVrednostiUpdateUpita();
 
 }
