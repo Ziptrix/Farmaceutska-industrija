@@ -6,8 +6,10 @@ package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,12 +22,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Supstanca implements OpstaDomenskaKlasa {
 
-    private Long id;
+    private Long sifra;
     private String naziv;
-    private String kolicinaZaliha;
-    private String cena;
+    private Long kolicinaZaliha;
+    private Long cena;
 
     @Override
     public String toString() {
@@ -38,12 +41,12 @@ public class Supstanca implements OpstaDomenskaKlasa {
 
     @Override
     public void postaviId(long id) {
-        this.id = id;
+        this.sifra = id;
     }
 
     @Override
     public Long vratiId() {
-        return id;
+        return sifra;
     }
 
     @Override
@@ -53,7 +56,7 @@ public class Supstanca implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiNazivPrimarnogKljuca() {
-        return "id";
+        return "code";
     }
 
     @Override
@@ -68,7 +71,7 @@ public class Supstanca implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiVrednostiSelectUpita() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "code, name, quantity, price";
     }
 
     @Override
@@ -83,12 +86,23 @@ public class Supstanca implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiJoin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public List<OpstaDomenskaKlasa> vratiListuZaSelectUpit(ResultSet rs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<OpstaDomenskaKlasa> lista = new ArrayList<>();
+
+        while (rs.next()) {
+            Supstanca s = new Supstanca();
+            s.setSifra(rs.getLong("code"));
+            s.setNaziv(rs.getString("name"));
+            s.setKolicinaZaliha(rs.getLong("quantity"));
+            s.setCena(rs.getLong("price"));
+            lista.add(s);
+        }
+
+        return lista;
     }
 
     @Override

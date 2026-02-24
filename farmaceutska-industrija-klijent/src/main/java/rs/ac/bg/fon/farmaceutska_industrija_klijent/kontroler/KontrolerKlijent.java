@@ -9,6 +9,7 @@ import java.util.List;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.OdgovorServera;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Operacija;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Posiljalac;
@@ -106,7 +107,7 @@ public class KontrolerKlijent {
             throw odgovor.getIzuzetak();
         }
     }
-    
+
     public List<Dobavljac> pretragaDobavljaca(String kriterijum) throws Exception {
         ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.PRETRAGA_DOBAVLJACA, kriterijum);
         posiljalac.posaljiObjekat(zahtev);
@@ -114,6 +115,18 @@ public class KontrolerKlijent {
 
         if (odgovor.getIzuzetak() == null) {
             return (List<Dobavljac>) odgovor.getRezultat();
+        } else {
+            throw odgovor.getIzuzetak();
+        }
+    }
+
+    public List<Supstanca> prikaziSveSupstance() throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.PRIKAZI_SVE_SUPSTANCE, null);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() == null) {
+            return (List<Supstanca>) odgovor.getRezultat();
         } else {
             throw odgovor.getIzuzetak();
         }

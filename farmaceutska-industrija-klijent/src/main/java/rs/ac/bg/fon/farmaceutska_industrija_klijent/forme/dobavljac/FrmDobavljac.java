@@ -55,12 +55,15 @@ public class FrmDobavljac extends javax.swing.JPanel {
         btnIzmeni = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Ime:");
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Prezime:");
 
         cmbGradovi.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Grad:");
 
         btnDodaj.setText("Dodaj Dobavljaca");

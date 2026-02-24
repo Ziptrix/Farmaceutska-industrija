@@ -74,7 +74,7 @@ public class Grad implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiVrednostiSelectUpita() {
-        return "*";
+        return "zip_code, name";
     }
 
     @Override

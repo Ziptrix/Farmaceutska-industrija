@@ -93,6 +93,10 @@ public class KlijentskiZahteviNit extends Thread {
                     odgovor.setRezultat(KontrolerServer.vratiInstancu().pretraziDobavljace(kriterijum));
                     break;
                 }
+                case PRIKAZI_SVE_SUPSTANCE: {
+                    odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveSupstance());
+                    break;
+                }
                 default:
                     throw new AssertionError();
             }

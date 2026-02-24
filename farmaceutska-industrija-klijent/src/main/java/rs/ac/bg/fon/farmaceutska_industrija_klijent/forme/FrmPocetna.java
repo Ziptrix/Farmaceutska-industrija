@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac.FrmDobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac.FrmDobavljaciPrikaz;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.lek.FrmLek;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.lek.FrmLekoviPrikaz;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 
@@ -55,9 +57,19 @@ public class FrmPocetna extends javax.swing.JFrame {
         mnLek.setText("Lek");
 
         jMenuItem1.setText("Dodavanje novog leka");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         mnLek.add(jMenuItem1);
 
         jMenuItem2.setText("Pretraga lekova");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         mnLek.add(jMenuItem2);
 
         jMenuBar1.add(mnLek);
@@ -133,6 +145,28 @@ public class FrmPocetna extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        JDialog dijalog = new JDialog((JFrame) null, "Lek", true);
+        try {
+            JPanel panel = new FrmLek(null, null, FrmModovi.FORMA_MOD_DODAVANJE);
+            dijalog.add(panel);
+            dijalog.pack();
+            dijalog.setLocationRelativeTo(null);
+            dijalog.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        JDialog dijalog = new JDialog((JFrame) null, "Lek", true);
+        JPanel panel = new FrmLekoviPrikaz();
+        dijalog.add(panel);
+        dijalog.pack();
+        dijalog.setLocationRelativeTo(null);
+        dijalog.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments

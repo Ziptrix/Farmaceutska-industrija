@@ -13,9 +13,11 @@ import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.PretraziDobavlja
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.UcitajSveDobavljaceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.grad.UcitajSveGradoveSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.korisnik.PrijavaSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.supstanca.UcitajSveSupstanceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 
 /**
  *
@@ -26,10 +28,12 @@ public class KontrolerServer {
     private static KontrolerServer instanca;
     private Grad grad;
     private Dobavljac dobavljac;
+    private Supstanca supstanca;
 
     private KontrolerServer() {
         grad = new Grad();
         dobavljac = new Dobavljac();
+        supstanca = new Supstanca();
     }
 
     public static KontrolerServer vratiInstancu() {
@@ -71,10 +75,16 @@ public class KontrolerServer {
         ApstraktnaSO izmeni = new IzmeniDobavljacaSO();
         izmeni.izvrsi(dobavljac, null);
     }
-    
+
     public List<Dobavljac> pretraziDobavljace(String kriterijum) throws Exception {
         ApstraktnaSO pretrazi = new PretraziDobavljaceSO();
         pretrazi.izvrsi(dobavljac, kriterijum);
         return ((PretraziDobavljaceSO) pretrazi).getDobavljaci();
+    }
+
+    public List<Supstanca> ucitajSveSupstance() throws Exception {
+        ApstraktnaSO ucitajSve = new UcitajSveSupstanceSO();
+        ucitajSve.izvrsi(supstanca, null);
+        return ((UcitajSveSupstanceSO) ucitajSve).getSupstance();
     }
 }

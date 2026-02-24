@@ -75,6 +75,7 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Ime:");
 
         btnPretraga.setText("PRETRAGA");

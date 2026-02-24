@@ -22,9 +22,16 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Lek implements OpstaDomenskaKlasa {
 
-    private Long id;
+    private Long serijskiBroj;
     private String naziv;
     private String doziranje;
+    private List<Supstanca> sastav;
+
+    public Lek(Long serijskiBroj, String naziv, String doziranje) {
+        this.serijskiBroj = serijskiBroj;
+        this.naziv = naziv;
+        this.doziranje = doziranje;
+    }
 
     @Override
     public String toString() {
@@ -33,12 +40,12 @@ public class Lek implements OpstaDomenskaKlasa {
 
     @Override
     public void postaviId(long id) {
-        this.id = id;
+        this.serijskiBroj = id;
     }
 
     @Override
     public Long vratiId() {
-        return id;
+        return serijskiBroj;
     }
 
     @Override
@@ -48,7 +55,7 @@ public class Lek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiNazivPrimarnogKljuca() {
-        return "id";
+        return "serial_number";
     }
 
     @Override

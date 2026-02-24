@@ -86,6 +86,7 @@ public class DBBrokerOpstaDomenskaKlasa {
                 + objekat.vratiNaziveKolonaZaInsertUpit() + ") VALUES ("
                 + objekat.vratiVrednostiInsertUpita() + ")";
         System.out.println("UPIT " + upit);
+        
         try {
             konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
             Statement st = konekcija.createStatement();
@@ -107,6 +108,8 @@ public class DBBrokerOpstaDomenskaKlasa {
     public void obrisi(OpstaDomenskaKlasa objekat) throws Exception {
         String upit = "DELETE FROM " + objekat.vratiNazivTabele()
                 + " " + objekat.vratiUslovZaUpdateDelete();
+        System.out.println("UPIT: " + upit);
+        
         try {
             konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
             PreparedStatement ps = konekcija.prepareStatement(upit);
@@ -125,6 +128,8 @@ public class DBBrokerOpstaDomenskaKlasa {
                 + " SET " + objekat.vratiVrednostiUpdateUpita()
                 + " WHERE " + objekat.vratiNazivPrimarnogKljuca()
                 + " = " + objekat.vratiId();
+        System.out.println("UPIT: " + upit);
+        
         try {
             konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
             Statement st = konekcija.createStatement();
@@ -144,6 +149,7 @@ public class DBBrokerOpstaDomenskaKlasa {
                 + objekat.vratiJoin()
                 + " WHERE " + objekat.vratiNazivKoloneZaPretragu()
                 + " LIKE '%" + kriterijum + "%'";
+        System.out.println("UPIT: " + upit);
 
         try {
             konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
@@ -151,7 +157,7 @@ public class DBBrokerOpstaDomenskaKlasa {
             ResultSet rs = st.executeQuery(upit);
 
             rezultat = objekat.vratiListuZaSelectUpit(rs);
-            
+
             st.close();
             rs.close();
         } catch (Exception e) {
