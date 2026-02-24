@@ -4,10 +4,12 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +22,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Grad implements OpstaDomenskaKlasa {
 
     private Long postanskiBroj;
@@ -51,7 +54,7 @@ public class Grad implements OpstaDomenskaKlasa {
     }
 
     @Override
-    public List<OpstaDomenskaKlasa> vratiListu(ResultSet rs) throws Exception {
+    public List<OpstaDomenskaKlasa> vratiListuZaSelectUpit(ResultSet rs) throws Exception {
         List<OpstaDomenskaKlasa> lista = new ArrayList<>();
 
         while (rs.next()) {
@@ -62,6 +65,26 @@ public class Grad implements OpstaDomenskaKlasa {
         }
 
         return lista;
+    }
+
+    @Override
+    public String vratiJoin() {
+        return "";
+    }
+
+    @Override
+    public String vratiVrednostiSelectUpita() {
+        return "*";
+    }
+
+    @Override
+    public String vratiUslovZaUpdateDelete() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void postaviVrednostiZaDeleteUpit(PreparedStatement ps) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

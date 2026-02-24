@@ -56,19 +56,32 @@ public class KlijentskiZahteviNit extends Thread {
         OdgovorServera odgovor = new OdgovorServera();
         try {
             switch (zahtev.getOperacija()) {
-                case LOGIN:
+                case LOGIN: {
                     Korisnik korisnik = KontrolerServer.vratiInstancu().prijava((Korisnik) zahtev.getArgument());
                     odgovor.setRezultat(korisnik);
                     this.korisnik = korisnik;
                     break;
-                case PRIKAZI_SVE_GRADOVE:
+                }
+                case PRIKAZI_SVE_GRADOVE: {
                     odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveGradove());
                     break;
-                case DODAJ_DOBAVLJACA:
+                }
+                case DODAJ_DOBAVLJACA: {
                     Dobavljac dobavljac = (Dobavljac) zahtev.getArgument();
                     KontrolerServer.vratiInstancu().dodajDobavljaca(dobavljac);
                     odgovor.setRezultat(dobavljac);
                     break;
+                }
+                case PRIKAZI_SVE_DOBAVLJACE: {
+                    odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveDobavljace());
+                    break;
+                }
+                case OBRISI_DOBAVLJACA: {
+                    Dobavljac dobavljac = (Dobavljac) zahtev.getArgument();
+                    KontrolerServer.vratiInstancu().obrisiDobavljaca(dobavljac);
+                    odgovor.setRezultat(null);
+                    break;
+                }
                 default:
                     throw new AssertionError();
             }

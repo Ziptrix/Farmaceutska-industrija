@@ -12,18 +12,18 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.OpstaDomen
  *
  * @author milos
  */
-public class DodajDobavljacaSO extends ApstraktnaSO {
+public class ObrisiDobavljacaSO extends ApstraktnaSO {
 
     @Override
     protected void preduslovi(Object objekat) throws Exception {
         if (objekat == null || !(objekat instanceof Dobavljac)) {
-            throw new Exception("Prosledjen objekat mora biti tipa Dobavljac!");
+            throw new Exception("Prosledjen objekat mora biti instance Dobavljac!");
         }
     }
 
     @Override
     protected void izvrsiOperaciju(Object objekat) throws Exception {
-        broker.dodaj((OpstaDomenskaKlasa) objekat);
+        broker.obrisi((OpstaDomenskaKlasa) objekat);
     }
 
 }

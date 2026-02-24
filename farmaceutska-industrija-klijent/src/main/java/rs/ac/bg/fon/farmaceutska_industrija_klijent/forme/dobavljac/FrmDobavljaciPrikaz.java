@@ -4,6 +4,15 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac;
 
+import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.tabele.model.ModelDobavljaci;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
+
 /**
  *
  * @author milos
@@ -13,8 +22,10 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
     /**
      * Creates new form FrmDobavljaciPrikaz
      */
-    public FrmDobavljaciPrikaz() {
+    public FrmDobavljaciPrikaz() throws Exception {
         initComponents();
+
+        prikaziDobavljace();
     }
 
     /**
@@ -26,19 +37,91 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDobavljaci = new javax.swing.JTable();
+        btnIzmena = new javax.swing.JButton();
+        btnBrisanje = new javax.swing.JButton();
+
+        tblDobavljaci.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblDobavljaci);
+
+        btnIzmena.setText("IZMENA");
+
+        btnBrisanje.setText("BRISANJE");
+        btnBrisanje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBrisanjeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBrisanje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnIzmena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(btnIzmena)
+                        .addGap(54, 54, 54)
+                        .addComponent(btnBrisanje)))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBrisanjeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrisanjeActionPerformed
+        int red = tblDobavljaci.getSelectedRow();
+        ModelDobavljaci model = (ModelDobavljaci) tblDobavljaci.getModel();
+        if (red >= 0) {
+            Dobavljac dobavljac = model.getDobavljac(red);
+            JDialog dijalog = new JDialog((JFrame) null, "Dobavljac", true);
+            try {
+                JPanel panel = new FrmDobavljac(dobavljac, FrmModovi.FORMA_MOD_CITANJE);
+                dijalog.add(panel);
+                dijalog.pack();
+                dijalog.setLocationRelativeTo(null);
+                dijalog.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            this.getTopLevelAncestor().setVisible(false);
+        }
+    }//GEN-LAST:event_btnBrisanjeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBrisanje;
+    private javax.swing.JButton btnIzmena;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblDobavljaci;
     // End of variables declaration//GEN-END:variables
+
+    public void prikaziDobavljace() throws Exception {
+        List<Dobavljac> dobavljaci = KontrolerKlijent.vratiInstancu().prikaziSveDobavljace();
+        tblDobavljaci.setModel(new ModelDobavljaci(dobavljaci));
+    }
 }

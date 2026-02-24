@@ -70,7 +70,29 @@ public class KontrolerKlijent {
 
         if (odgovor.getIzuzetak() == null) {
             dobavljac.setId(((Dobavljac) odgovor.getRezultat()).getId());
-        }else{
+        } else {
+            throw odgovor.getIzuzetak();
+        }
+    }
+
+    public List<Dobavljac> prikaziSveDobavljace() throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.PRIKAZI_SVE_DOBAVLJACE, null);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() == null) {
+            return (List<Dobavljac>) odgovor.getRezultat();
+        } else {
+            throw odgovor.getIzuzetak();
+        }
+    }
+
+    public void obrisiDobavljaca(Dobavljac dobavljac) throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.OBRISI_DOBAVLJACA, dobavljac);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() != null) {
             throw odgovor.getIzuzetak();
         }
     }

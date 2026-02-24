@@ -5,7 +5,7 @@
 package rs.ac.bg.fon.farmaceutska_industrija_server.so.korisnik;
 
 import lombok.Getter;
-import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstaktnaSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstraktnaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 
 /**
@@ -13,7 +13,7 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
  * @author milos
  */
 @Getter
-public class PrijavaSO extends ApstaktnaSO {
+public class PrijavaSO extends ApstraktnaSO {
 
     private Korisnik korisnik;
 

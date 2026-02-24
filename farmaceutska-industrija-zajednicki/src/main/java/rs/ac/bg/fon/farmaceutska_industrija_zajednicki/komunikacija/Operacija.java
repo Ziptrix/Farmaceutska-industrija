@@ -11,5 +11,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija;
 public enum Operacija {
     LOGIN,
     PRIKAZI_SVE_GRADOVE,
-    DODAJ_DOBAVLJACA
+    DODAJ_DOBAVLJACA,
+    PRIKAZI_SVE_DOBAVLJACE,
+    OBRISI_DOBAVLJACA
 }

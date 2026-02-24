@@ -13,7 +13,7 @@ import rs.ac.bg.fon.farmaceutska_industrija_server.repozitorijum.DBBrokerOpstaDo
  *
  * @author milos
  */
-public abstract class ApstaktnaSO {
+public abstract class ApstraktnaSO {
     
     protected static DBBrokerOpstaDomenskaKlasa broker = new DBBrokerOpstaDomenskaKlasa();
 

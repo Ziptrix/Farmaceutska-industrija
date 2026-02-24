@@ -4,12 +4,11 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac.FrmDobavljac;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac.FrmDobavljaciPrikaz;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 
@@ -83,7 +82,12 @@ public class FrmPocetna extends javax.swing.JFrame {
         });
         mnDobavljac.add(jMenuItem5);
 
-        jMenuItem6.setText("Pretraga dobavljaca");
+        jMenuItem6.setText("Prikaz svih dobavljaca");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         mnDobavljac.add(jMenuItem6);
 
         jMenuBar1.add(mnDobavljac);
@@ -116,6 +120,19 @@ public class FrmPocetna extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        JDialog dijalog = new JDialog((JFrame) null, "Svi dobavljaci", true);
+        try {
+            JPanel panel = new FrmDobavljaciPrikaz();
+            dijalog.add(panel);
+            dijalog.pack();
+            dijalog.setLocationRelativeTo(null);
+            dijalog.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments

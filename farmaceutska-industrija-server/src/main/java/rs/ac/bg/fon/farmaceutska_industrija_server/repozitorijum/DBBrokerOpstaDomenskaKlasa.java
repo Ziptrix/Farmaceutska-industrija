@@ -50,7 +50,7 @@ public class DBBrokerOpstaDomenskaKlasa {
             rs.close();
 
             return korisnik;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Objekat User nije uspesno ucitan iz baze!");
             e.printStackTrace();
             throw e;
@@ -59,7 +59,9 @@ public class DBBrokerOpstaDomenskaKlasa {
 
     public List<OpstaDomenskaKlasa> ucitajSve(OpstaDomenskaKlasa opstaKlasa) throws Exception {
         List<OpstaDomenskaKlasa> objekti = new ArrayList<>();
-        String upit = "SELECT * FROM " + opstaKlasa.vratiNazivTabele();
+        String upit = "SELECT " + opstaKlasa.vratiVrednostiSelectUpita()
+                + " FROM " + opstaKlasa.vratiNazivTabele()
+                + opstaKlasa.vratiJoin();
         System.out.println("UPIT " + upit);
 
         try {
@@ -67,7 +69,7 @@ public class DBBrokerOpstaDomenskaKlasa {
             Statement st = konekcija.createStatement();
             ResultSet rs = st.executeQuery(upit);
 
-            objekti = opstaKlasa.vratiListu(rs);
+            objekti = opstaKlasa.vratiListuZaSelectUpit(rs);
 
             st.close();
             rs.close();
@@ -99,6 +101,23 @@ public class DBBrokerOpstaDomenskaKlasa {
             rs.close();
         } catch (SQLException e) {
             System.out.println("Objekat nije uspesno dodat u bazu!");
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public void obrisi(OpstaDomenskaKlasa objekat) throws Exception {
+        String upit = "DELETE FROM " + objekat.vratiNazivTabele()
+                + " " + objekat.vratiUslovZaUpdateDelete();
+        try {
+            konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
+            PreparedStatement ps = konekcija.prepareStatement(upit);
+            objekat.postaviVrednostiZaDeleteUpit(ps);
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println("Objekat nije uspesno izbrisan iz baze!");
             e.printStackTrace();
             throw e;
         }

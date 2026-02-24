@@ -4,6 +4,7 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -54,7 +55,27 @@ public class Korisnik implements OpstaDomenskaKlasa {
     }
 
     @Override
-    public List<OpstaDomenskaKlasa> vratiListu(ResultSet rs) throws Exception {
+    public List<OpstaDomenskaKlasa> vratiListuZaSelectUpit(ResultSet rs) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String vratiJoin() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String vratiVrednostiSelectUpita() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String vratiUslovZaUpdateDelete() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void postaviVrednostiZaDeleteUpit(PreparedStatement ps) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

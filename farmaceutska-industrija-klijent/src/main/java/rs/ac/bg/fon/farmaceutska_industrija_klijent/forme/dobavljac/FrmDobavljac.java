@@ -6,6 +6,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac;
 
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
@@ -51,7 +52,7 @@ public class FrmDobavljac extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         btnDodaj = new javax.swing.JButton();
         btnIzmeni = new javax.swing.JButton();
-        btnIzbrisi = new javax.swing.JButton();
+        btnObrisi = new javax.swing.JButton();
 
         jLabel1.setText("Ime:");
 
@@ -70,7 +71,12 @@ public class FrmDobavljac extends javax.swing.JPanel {
 
         btnIzmeni.setText("Izmeni Dobavljaca");
 
-        btnIzbrisi.setText("Izbrisi Dobavljaca");
+        btnObrisi.setText("Obrisi Dobavljaca");
+        btnObrisi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -89,7 +95,7 @@ public class FrmDobavljac extends javax.swing.JPanel {
                         .addGap(34, 34, 34)
                         .addComponent(btnIzmeni)
                         .addGap(47, 47, 47)
-                        .addComponent(btnIzbrisi))
+                        .addComponent(btnObrisi))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -118,7 +124,7 @@ public class FrmDobavljac extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDodaj)
                     .addComponent(btnIzmeni)
-                    .addComponent(btnIzbrisi))
+                    .addComponent(btnObrisi))
                 .addContainerGap(101, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -148,7 +154,7 @@ public class FrmDobavljac extends javax.swing.JPanel {
                 txtIme.setText("");
                 txtPrezime.setText("");
                 cmbGradovi.setSelectedIndex(-1);
-            }else{
+            } else {
                 this.getTopLevelAncestor().setVisible(false);
             }
         } catch (Exception e) {
@@ -156,11 +162,27 @@ public class FrmDobavljac extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDodajActionPerformed
 
+    private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
+        if (dobavljac == null) {
+            JOptionPane.showMessageDialog(this, "Dobavljac ne postoji!", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+        }
+        int izbor = JOptionPane.showConfirmDialog(this, "Da li ste zaista sigurni da zelite da izbrisete Dobavljaca:\n" + dobavljac, "Brisanje Dobavljaca", JOptionPane.YES_NO_OPTION);
+        if (izbor == JOptionPane.YES_OPTION) {
+            try {
+                KontrolerKlijent.vratiInstancu().obrisiDobavljaca(dobavljac);
+                JOptionPane.showMessageDialog(this, "Uspesno ste izbrisali Dobavljaca:\n" + dobavljac, "USPEH!!!", JOptionPane.INFORMATION_MESSAGE);
+                this.getTopLevelAncestor().setVisible(false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnObrisiActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;
-    private javax.swing.JButton btnIzbrisi;
     private javax.swing.JButton btnIzmeni;
+    private javax.swing.JButton btnObrisi;
     private javax.swing.JComboBox cmbGradovi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -179,7 +201,7 @@ public class FrmDobavljac extends javax.swing.JPanel {
     private void pripremiFormu() {
         if (mod == FrmModovi.FORMA_MOD_DODAVANJE) {
             btnIzmeni.setVisible(false);
-            btnIzbrisi.setVisible(false);
+            btnObrisi.setVisible(false);
         }
         if (mod == FrmModovi.FORMA_MOD_IZMENA) {
             txtIme.setText(dobavljac.getIme());
@@ -188,7 +210,7 @@ public class FrmDobavljac extends javax.swing.JPanel {
 
             cmbGradovi.setEnabled(false);
             btnDodaj.setVisible(false);
-            btnIzbrisi.setVisible(false);
+            btnObrisi.setVisible(false);
         }
         if (mod == FrmModovi.FORMA_MOD_CITANJE) {
             txtIme.setText(dobavljac.getIme());

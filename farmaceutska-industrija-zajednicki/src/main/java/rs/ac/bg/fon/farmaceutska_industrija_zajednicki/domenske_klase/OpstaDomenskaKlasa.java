@@ -5,6 +5,7 @@
 package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase;
 
 import java.io.Serializable;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
@@ -22,6 +23,14 @@ public interface OpstaDomenskaKlasa extends Serializable {
 
     void postaviId(long id);
     
-    List<OpstaDomenskaKlasa> vratiListu (ResultSet rs) throws Exception;
+    List<OpstaDomenskaKlasa> vratiListuZaSelectUpit (ResultSet rs) throws Exception;
+    
+    String vratiJoin();
+    
+    String vratiVrednostiSelectUpita();
+    
+    String vratiUslovZaUpdateDelete();
+    
+    void postaviVrednostiZaDeleteUpit(PreparedStatement ps) throws Exception;
 
 }
