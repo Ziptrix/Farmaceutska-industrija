@@ -4,10 +4,12 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.lek;
 
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.tabele.model.ModelSupstance;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 
@@ -17,6 +19,7 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
  */
 public class FrmLek extends javax.swing.JPanel {
 
+    List<Supstanca> supstanceZaLek;
     FrmLekoviPrikaz tabela;
     Lek lek;
     int mod;
@@ -30,6 +33,7 @@ public class FrmLek extends javax.swing.JPanel {
         this.tabela = tabela;
         this.lek = lek;
         this.mod = mod;
+        this.supstanceZaLek = new ArrayList<>();
 
         prikaziSupstance();
         pripremiFormu();
@@ -50,11 +54,16 @@ public class FrmLek extends javax.swing.JPanel {
         txtNaziv = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtDoziranje = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        cmbSupstance = new javax.swing.JComboBox();
         btnDodaj = new javax.swing.JButton();
         btnIzmeni = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDostupneSupstance = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblSupstanceZaLek = new javax.swing.JTable();
+        btnDodajSupstancu = new javax.swing.JButton();
+        btnUkloniSupstancu = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Serijski broj:");
@@ -65,50 +74,101 @@ public class FrmLek extends javax.swing.JPanel {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Doziranje:");
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Supstanca:");
-
-        cmbSupstance.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnDodaj.setText("Dodaj Lek");
+        btnDodaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajActionPerformed(evt);
+            }
+        });
 
         btnIzmeni.setText("Izmeni Lek");
 
         btnObrisi.setText("Obrisi Lek");
+
+        tblDostupneSupstance.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblDostupneSupstance);
+
+        tblSupstanceZaLek.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblSupstanceZaLek);
+
+        btnDodajSupstancu.setText("Dodaj >>");
+        btnDodajSupstancu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajSupstancuActionPerformed(evt);
+            }
+        });
+
+        btnUkloniSupstancu.setText("<< Ukloni");
+        btnUkloniSupstancu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUkloniSupstancuActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Izaberite supstance koje su potrebne za pravljenje leka:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNaziv)
-                                    .addComponent(txtDoziranje)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cmbSupstance, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtSerijskiBroj, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(btnDodaj)
-                        .addGap(77, 77, 77)
-                        .addComponent(btnIzmeni)
-                        .addGap(96, 96, 96)
-                        .addComponent(btnObrisi)))
-                .addContainerGap(197, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDoziranje, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtSerijskiBroj, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(37, 37, 37)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(txtNaziv, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                .addGap(88, 88, 88))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDodajSupstancu)
+                    .addComponent(btnUkloniSupstancu))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addComponent(btnDodaj)
+                .addGap(132, 132, 132)
+                .addComponent(btnIzmeni)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnObrisi)
+                .addGap(132, 132, 132))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(238, 238, 238))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,38 +176,158 @@ public class FrmLek extends javax.swing.JPanel {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtSerijskiBroj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSerijskiBroj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtDoziranje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(cmbSupstance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(67, 67, 67)
+                .addGap(41, 41, 41)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnDodajSupstancu)
+                        .addGap(50, 50, 50)
+                        .addComponent(btnUkloniSupstancu)
+                        .addGap(95, 95, 95)))
+                .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDodaj)
                     .addComponent(btnIzmeni)
                     .addComponent(btnObrisi))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDodajSupstancuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajSupstancuActionPerformed
+        int red = tblDostupneSupstance.getSelectedRow();
+        ModelSupstance modelDostupne = (ModelSupstance) tblDostupneSupstance.getModel();
+        if (red >= 0) {
+            Supstanca supstanca = modelDostupne.getSupstanca(red);
+            String unosKolicine = JOptionPane.showInputDialog(this, "Unesite zeljenu kolicinu supstance " + supstanca);
+            long unetaKolicina = Long.parseLong(unosKolicine);
+            if (unetaKolicina < 0 || unetaKolicina > supstanca.getKolicinaZaliha()) {
+                JOptionPane.showMessageDialog(this, "Uneta kolicina mora biti izmedju 0 i trenutne kolicine zaliha!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            supstanca.setKolicinaZaliha(supstanca.getKolicinaZaliha() - unetaKolicina);
+
+            boolean postoji = false;
+            for (Supstanca s : supstanceZaLek) {
+                if (s.getSifra().equals(supstanca.getSifra())) {
+                    s.setKolicinaZaliha(s.getKolicinaZaliha() + unetaKolicina);
+                    postoji = true;
+                    break;
+                }
+            }
+
+            if (!postoji) {
+                Supstanca supstancaZaLek = new Supstanca();
+                supstancaZaLek.setSifra(supstanca.getSifra());
+                supstancaZaLek.setNaziv(supstanca.getNaziv());
+                supstancaZaLek.setCena(supstanca.getCena());
+                supstancaZaLek.setKolicinaZaliha(unetaKolicina);
+
+                supstanceZaLek.add(supstancaZaLek);
+            }
+
+            ModelSupstance modelZaLek = new ModelSupstance(supstanceZaLek);
+            tblSupstanceZaLek.setModel(modelZaLek);
+
+            ModelSupstance azuriraniModelSupstance = new ModelSupstance(modelDostupne.getSupstance());
+            tblDostupneSupstance.setModel(azuriraniModelSupstance);
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate izabrati neku od supstanci!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDodajSupstancuActionPerformed
+
+    private void btnUkloniSupstancuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUkloniSupstancuActionPerformed
+        int red = tblSupstanceZaLek.getSelectedRow();
+        ModelSupstance modelDostupne = (ModelSupstance) tblDostupneSupstance.getModel();
+        if (red >= 0) {
+            Supstanca supstancaZaLek = supstanceZaLek.get(red);
+
+            for (Supstanca s : modelDostupne.getSupstance()) {
+                if (s.getSifra().equals(supstancaZaLek.getSifra())) {
+                    s.setKolicinaZaliha(s.getKolicinaZaliha() + supstancaZaLek.getKolicinaZaliha());
+                    break;
+                }
+            }
+
+            supstanceZaLek.remove(red);
+
+            ModelSupstance modelZaLek = new ModelSupstance(supstanceZaLek);
+            tblSupstanceZaLek.setModel(modelZaLek);
+
+            ModelSupstance azuriraniModelSupstance = new ModelSupstance(modelDostupne.getSupstance());
+            tblDostupneSupstance.setModel(azuriraniModelSupstance);
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate izabrati neku od supstanci!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnUkloniSupstancuActionPerformed
+
+    private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
+        if (txtSerijskiBroj.getText().isEmpty() || txtSerijskiBroj.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Morate uneti serijski broj leka!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (txtNaziv.getText().isEmpty() || txtNaziv.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Morate uneti naziv leka!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (txtDoziranje.getText().isEmpty() || txtDoziranje.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Morate uneti doziranje leka!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        ModelSupstance model = (ModelSupstance) tblSupstanceZaLek.getModel();
+        if (model.getSupstance() == null || model.getSupstance().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Morate uneti bar 1 supstancu za lek!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        String serijskiBroj = txtSerijskiBroj.getText().trim();
+        String naziv = txtNaziv.getText().trim();
+        String doziranje = txtDoziranje.getText().trim();
+        List<Supstanca> supstanceZaLek = model.getSupstance();
+
+        Lek lek = new Lek(Long.valueOf(serijskiBroj), naziv, doziranje, supstanceZaLek);
+
+        try {
+            KontrolerKlijent.vratiInstancu().dodajLek(lek);
+            JOptionPane.showMessageDialog(this, "Uspesno dodat lek\n" + lek, "Dodavanje Leka", JOptionPane.INFORMATION_MESSAGE);
+            int izbor = JOptionPane.showConfirmDialog(this, "Da li zelite da nastavite sa dodavanjem lekova?", "Dodavanje Leka", JOptionPane.YES_NO_OPTION);
+            if (izbor == JOptionPane.YES_OPTION) {
+                txtSerijskiBroj.setText("");
+                txtNaziv.setText("");
+                txtDoziranje.setText("");
+                tblSupstanceZaLek.setModel(new ModelSupstance(new ArrayList<>()));
+            } else {
+                this.getTopLevelAncestor().setVisible(false);
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnDodajActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;
+    private javax.swing.JButton btnDodajSupstancu;
     private javax.swing.JButton btnIzmeni;
     private javax.swing.JButton btnObrisi;
-    private javax.swing.JComboBox cmbSupstance;
+    private javax.swing.JButton btnUkloniSupstancu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblDostupneSupstance;
+    private javax.swing.JTable tblSupstanceZaLek;
     private javax.swing.JTextField txtDoziranje;
     private javax.swing.JTextField txtNaziv;
     private javax.swing.JTextField txtSerijskiBroj;
@@ -162,11 +342,9 @@ public class FrmLek extends javax.swing.JPanel {
             txtSerijskiBroj.setText(lek.getSerijskiBroj().toString());
             txtNaziv.setText(lek.getNaziv());
             txtDoziranje.setText(lek.getDoziranje());
-            cmbSupstance.setSelectedItem(lek.getSastav());
 
             txtSerijskiBroj.setEditable(false);
             txtNaziv.setEditable(false);
-            cmbSupstance.setEnabled(false);
 
             btnDodaj.setVisible(false);
             btnObrisi.setVisible(false);
@@ -175,12 +353,10 @@ public class FrmLek extends javax.swing.JPanel {
             txtSerijskiBroj.setText(lek.getSerijskiBroj().toString());
             txtNaziv.setText(lek.getNaziv());
             txtDoziranje.setText(lek.getDoziranje());
-            cmbSupstance.setSelectedItem(lek.getSastav());
 
             txtSerijskiBroj.setEditable(false);
             txtNaziv.setEditable(false);
             txtDoziranje.setEditable(false);
-            cmbSupstance.setEnabled(false);
 
             btnDodaj.setVisible(false);
             btnIzmeni.setVisible(false);
@@ -189,8 +365,10 @@ public class FrmLek extends javax.swing.JPanel {
 
     private void prikaziSupstance() throws Exception {
         List<Supstanca> supstance = KontrolerKlijent.vratiInstancu().prikaziSveSupstance();
-        cmbSupstance.removeAllItems();
-        cmbSupstance.setModel(new DefaultComboBoxModel(supstance.toArray()));
-        cmbSupstance.setSelectedIndex(-1);
+        ModelSupstance modelDostupne = new ModelSupstance(supstance);
+        tblDostupneSupstance.setModel(modelDostupne);
+
+        ModelSupstance modelZaLek = new ModelSupstance(new ArrayList<>());
+        tblSupstanceZaLek.setModel(modelZaLek);
     }
 }

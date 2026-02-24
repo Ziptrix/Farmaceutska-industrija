@@ -9,6 +9,7 @@ import java.net.Socket;
 import rs.ac.bg.fon.farmaceutska_industrija_server.logika.KontrolerServer;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.OdgovorServera;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Posiljalac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Primalac;
@@ -95,6 +96,12 @@ public class KlijentskiZahteviNit extends Thread {
                 }
                 case PRIKAZI_SVE_SUPSTANCE: {
                     odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveSupstance());
+                    break;
+                }
+                case DODAJ_LEK: {
+                    Lek lek = (Lek) zahtev.getArgument();
+                    KontrolerServer.vratiInstancu().dodajLek(lek);
+                    odgovor.setRezultat(lek);
                     break;
                 }
                 default:

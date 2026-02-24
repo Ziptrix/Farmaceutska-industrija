@@ -9,6 +9,7 @@ import java.util.List;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.OdgovorServera;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Operacija;
@@ -128,6 +129,16 @@ public class KontrolerKlijent {
         if (odgovor.getIzuzetak() == null) {
             return (List<Supstanca>) odgovor.getRezultat();
         } else {
+            throw odgovor.getIzuzetak();
+        }
+    }
+
+    public void dodajLek(Lek lek) throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.DODAJ_LEK, lek);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() != null) {
             throw odgovor.getIzuzetak();
         }
     }

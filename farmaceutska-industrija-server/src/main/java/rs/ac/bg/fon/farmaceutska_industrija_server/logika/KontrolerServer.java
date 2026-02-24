@@ -13,10 +13,12 @@ import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.PretraziDobavlja
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.UcitajSveDobavljaceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.grad.UcitajSveGradoveSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.korisnik.PrijavaSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.DodajLekSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.supstanca.UcitajSveSupstanceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 
 /**
@@ -86,5 +88,10 @@ public class KontrolerServer {
         ApstraktnaSO ucitajSve = new UcitajSveSupstanceSO();
         ucitajSve.izvrsi(supstanca, null);
         return ((UcitajSveSupstanceSO) ucitajSve).getSupstance();
+    }
+
+    public void dodajLek(Lek lek) throws Exception {
+        ApstraktnaSO dodaj = new DodajLekSO();
+        dodaj.izvrsi(lek, null);
     }
 }

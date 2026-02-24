@@ -20,57 +20,55 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Lek implements OpstaDomenskaKlasa {
+public class SupstancaLek implements OpstaDomenskaKlasa {
 
-    private Long serijskiBroj;
-    private String naziv;
-    private String doziranje;
-    private List<Supstanca> sastav;
-
-    public Lek(Long serijskiBroj, String naziv, String doziranje) {
-        this.serijskiBroj = serijskiBroj;
-        this.naziv = naziv;
-        this.doziranje = doziranje;
-    }
+    private Long serijskiBrojLeka;
+    private Long sifraSupstance;
+    private Long upotrebljenaKolicina;
 
     @Override
     public String toString() {
-        return naziv + " " + doziranje;
+        return serijskiBrojLeka + ", " + sifraSupstance + ", " + upotrebljenaKolicina;
     }
 
     @Override
     public void postaviId(long id) {
-        this.serijskiBroj = id;
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public Long vratiId() {
-        return serijskiBroj;
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public String vratiNazivTabele() {
-        return "medicine";
+        return "substance_medicine";
     }
 
     @Override
     public String vratiNazivPrimarnogKljuca() {
-        return "serial_number";
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public String vratiNaziveKolonaZaInsertUpit() {
-        return "serial_number, name, dosage";
+        return "id_medicine, id_substance, quantity_used";
+    }
+
+    @Override
+    public String vratiNazivKoloneZaPretragu() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public String vratiVrednostiInsertUpita() {
-        return serijskiBroj + ", '" + naziv + "', '" + doziranje + "'";
+        return serijskiBrojLeka + ", " + sifraSupstance + ", " + upotrebljenaKolicina;
     }
 
     @Override
     public String vratiVrednostiSelectUpita() {
-        return "serial_number, name, dosage";
+        return "id_medicine, id_substance, quantity_used";
     }
 
     @Override
@@ -85,7 +83,7 @@ public class Lek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiJoin() {
-        return "";
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -96,11 +94,6 @@ public class Lek implements OpstaDomenskaKlasa {
     @Override
     public String vratiUslovZaUpdateDelete() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public String vratiNazivKoloneZaPretragu() {
-        return "name";
     }
 
 }
