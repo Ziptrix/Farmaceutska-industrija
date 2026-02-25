@@ -93,7 +93,7 @@ public class DBBrokerOpstaDomenskaKlasa {
             st.executeUpdate(upit, Statement.RETURN_GENERATED_KEYS);
 
             ResultSet rs = st.getGeneratedKeys();
-            if (rs.next()) {
+            if (rs != null && rs.next()) {
                 objekat.postaviId(rs.getLong(1));
             }
 

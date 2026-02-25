@@ -10,6 +10,7 @@ import rs.ac.bg.fon.farmaceutska_industrija_server.logika.KontrolerServer;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Narudzbenica;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.OdgovorServera;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Posiljalac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Primalac;
@@ -119,6 +120,12 @@ public class KlijentskiZahteviNit extends Thread {
                     Lek lek = (Lek) zahtev.getArgument();
                     KontrolerServer.vratiInstancu().obrisiLek(lek);
                     odgovor.setRezultat(null);
+                    break;
+                }
+                case DODAJ_NARUDZBENICU: {
+                    Narudzbenica narudzbenica = (Narudzbenica) zahtev.getArgument();
+                    KontrolerServer.vratiInstancu().dodajNarudzbenicu(narudzbenica);
+                    odgovor.setRezultat(narudzbenica);
                     break;
                 }
                 default:

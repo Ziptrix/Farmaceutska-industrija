@@ -17,11 +17,13 @@ import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.DodajLekSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.IzmeniLekSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.ObrisiLekSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.PretraziLekoveSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.narudzbenica.DodajNarudzbenicuSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.supstanca.UcitajSveSupstanceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Narudzbenica;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 
 /**
@@ -35,12 +37,14 @@ public class KontrolerServer {
     private Dobavljac dobavljac;
     private Supstanca supstanca;
     private Lek lek;
+    private Narudzbenica narudzbenica;
 
     private KontrolerServer() {
         grad = new Grad();
         dobavljac = new Dobavljac();
         supstanca = new Supstanca();
         lek = new Lek();
+        this.narudzbenica = new Narudzbenica();
     }
 
     public static KontrolerServer vratiInstancu() {
@@ -110,9 +114,14 @@ public class KontrolerServer {
         ApstraktnaSO izmeni = new IzmeniLekSO();
         izmeni.izvrsi(lek, null);
     }
-    
-    public void obrisiLek(Lek lek)throws Exception{
+
+    public void obrisiLek(Lek lek) throws Exception {
         ApstraktnaSO obrisi = new ObrisiLekSO();
         obrisi.izvrsi(lek, null);
+    }
+
+    public void dodajNarudzbenicu(Narudzbenica narudzbenica) throws Exception {
+        ApstraktnaSO dodaj = new DodajNarudzbenicuSO();
+        dodaj.izvrsi(narudzbenica, null);
     }
 }

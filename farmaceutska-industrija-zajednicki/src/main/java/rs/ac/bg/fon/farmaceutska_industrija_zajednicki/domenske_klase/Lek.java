@@ -28,11 +28,11 @@ public class Lek implements OpstaDomenskaKlasa {
     private String doziranje;
     private List<Supstanca> sastav;
 
-    public Lek(Long serijskiBroj, String naziv, String doziranje) {
-        this.serijskiBroj = serijskiBroj;
-        this.naziv = naziv;
-        this.doziranje = doziranje;
-    }
+//    public Lek(Long serijskiBroj, String naziv, String doziranje) {
+//        this.serijskiBroj = serijskiBroj;
+//        this.naziv = naziv;
+//        this.doziranje = doziranje;
+//    }
 
     @Override
     public String toString() {

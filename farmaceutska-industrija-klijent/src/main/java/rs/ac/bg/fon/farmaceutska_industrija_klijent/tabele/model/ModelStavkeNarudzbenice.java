@@ -6,28 +6,29 @@ package rs.ac.bg.fon.farmaceutska_industrija_klijent.tabele.model;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.StavkaNarudzbenice;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 
 /**
  *
  * @author milos
  */
-public class ModelLekovi extends AbstractTableModel {
+public class ModelStavkeNarudzbenice extends AbstractTableModel {
 
-    List<Lek> lekovi;
-    String[] naziviKolona = {"Serijski broj", "Naziv", "Doziranje"};
-    Class[] klaseKolona = {Long.class, String.class, String.class};
+    List<StavkaNarudzbenice> stavke;
+    String[] naziviKolona = {"Redni broj", "Kolicina", "Iznos", "Supstanca"};
+    Class[] klaseKolona = {Long.class, Long.class, Long.class, Supstanca.class};
 
-    public ModelLekovi(List<Lek> lekovi) {
-        this.lekovi = lekovi;
+    public ModelStavkeNarudzbenice(List<StavkaNarudzbenice> stavke) {
+        this.stavke = stavke;
     }
 
     @Override
     public int getRowCount() {
-        if (lekovi == null) {
+        if (stavke == null) {
             return 0;
         }
-        return lekovi.size();
+        return stavke.size();
     }
 
     @Override
@@ -37,16 +38,16 @@ public class ModelLekovi extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Lek lek = lekovi.get(rowIndex);
+        StavkaNarudzbenice stavka = stavke.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return lek.getSerijskiBroj();
+                return stavka.getRedniBroj();
             case 1:
-                return lek.getNaziv();
+                return stavka.getKolicinaSupstance();
             case 2:
-                return lek.getDoziranje();
+                return stavka.getIznosStavke();
             case 3:
-                return lek.getSastav();
+                return stavka.getSupstanca();
             default:
                 throw new AssertionError();
         }
@@ -62,8 +63,8 @@ public class ModelLekovi extends AbstractTableModel {
         return naziviKolona[column];
     }
 
-    public Lek getLek(int red) {
-        return lekovi.get(red);
+    public void setStavkaNarudzbenice(StavkaNarudzbenice stavka) {
+        stavke.add(stavka);
     }
 
 }

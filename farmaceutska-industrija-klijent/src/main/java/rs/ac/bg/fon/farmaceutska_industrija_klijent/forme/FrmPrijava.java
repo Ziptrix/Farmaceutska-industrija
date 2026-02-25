@@ -4,7 +4,6 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme;
 
-import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;

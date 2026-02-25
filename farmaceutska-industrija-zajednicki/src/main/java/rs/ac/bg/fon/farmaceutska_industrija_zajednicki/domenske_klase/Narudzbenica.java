@@ -6,10 +6,9 @@ package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,21 +21,18 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-public class Supstanca implements OpstaDomenskaKlasa {
+public class Narudzbenica implements OpstaDomenskaKlasa {
 
     private Long sifra;
-    private String naziv;
-    private Long kolicinaZaliha;
-    private Long cena;
+    private LocalDate datum;
+    private Long ukupanIznos;
+    private Korisnik korisnik;
+    private Dobavljac dobavljac;
+    private List<StavkaNarudzbenice> listaStavki;
 
     @Override
     public String toString() {
-        return naziv;
-    }
-
-    public String toStringZaliheCena() {
-        return "Na stanju: " + kolicinaZaliha + ", po ceni od: " + cena;
+        return "Datum kreiranja: " + datum + ", ukupan iznos: " + ukupanIznos;
     }
 
     @Override
@@ -51,32 +47,37 @@ public class Supstanca implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiNazivTabele() {
-        return "substance s";
+        return "purchase_order";
     }
 
     @Override
     public String vratiNazivPrimarnogKljuca() {
-        return "s.code";
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public String vratiNaziveKolonaZaInsertUpit() {
+        return "code, date, total_amount, user, supplier";
+    }
+
+    @Override
+    public String vratiNazivKoloneZaPretragu() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public String vratiVrednostiInsertUpita() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return sifra + ", '" + datum + "', " + ukupanIznos + ", " + korisnik.getId() + ", " + dobavljac.getId();
     }
 
     @Override
     public String vratiVrednostiSelectUpita() {
-        return "s.code, s.name, s.quantity, s.price";
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public String vratiVrednostiUpdateUpita() {
-        return "quantity = " + kolicinaZaliha;
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -86,32 +87,16 @@ public class Supstanca implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiJoin() {
-        return "";
-    }
-
-    @Override
-    public List<OpstaDomenskaKlasa> vratiListuZaSelectUpit(ResultSet rs) throws Exception {
-        List<OpstaDomenskaKlasa> lista = new ArrayList<>();
-
-        while (rs.next()) {
-            Supstanca s = new Supstanca();
-            s.setSifra(rs.getLong("s.code"));
-            s.setNaziv(rs.getString("s.name"));
-            s.setKolicinaZaliha(rs.getLong("s.quantity"));
-            s.setCena(rs.getLong("s.price"));
-            lista.add(s);
-        }
-
-        return lista;
-    }
-
-    @Override
-    public String vratiUslovZaDelete() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public String vratiNazivKoloneZaPretragu() {
+    public List<OpstaDomenskaKlasa> vratiListuZaSelectUpit(ResultSet rs) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String vratiUslovZaDelete() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

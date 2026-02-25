@@ -20,5 +20,6 @@ public enum Operacija {
     DODAJ_LEK,
     PRETRAGA_LEKOVA,
     IZMENI_LEK,
-    OBRISI_LEK
+    OBRISI_LEK,
+    DODAJ_NARUDZBENICU
 }

@@ -11,6 +11,8 @@ import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac.FrmDobavljac
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac.FrmDobavljaciPrikaz;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.lek.FrmLek;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.lek.FrmLekoviPrikaz;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.narudzbenica.FrmNarudzbenica;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.narudzbenica.FrmNarudzbenicePrikaz;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 
@@ -77,9 +79,19 @@ public class FrmPocetna extends javax.swing.JFrame {
         mnNarudzbenica.setText("Narudzbenica");
 
         jMenuItem3.setText("Dodavanje nove narudzbenice");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         mnNarudzbenica.add(jMenuItem3);
 
-        jMenuItem4.setText("Pretraga narudzbenica");
+        jMenuItem4.setText("Brisanje narudzbenice");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         mnNarudzbenica.add(jMenuItem4);
 
         jMenuBar1.add(mnNarudzbenica);
@@ -167,6 +179,32 @@ public class FrmPocetna extends javax.swing.JFrame {
         dijalog.setLocationRelativeTo(null);
         dijalog.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        JDialog dijalog = new JDialog((JFrame) null, "Narudzbenica", true);
+        try {
+            JPanel panel = new FrmNarudzbenica(korisnik);
+            dijalog.add(panel);
+            dijalog.pack();
+            dijalog.setLocationRelativeTo(null);
+            dijalog.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        JDialog dijalog = new JDialog((JFrame) null, "Narudzbenica", true);
+        try {
+            JPanel panel = new FrmNarudzbenicePrikaz();
+            dijalog.add(panel);
+            dijalog.pack();
+            dijalog.setLocationRelativeTo(null);
+            dijalog.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments

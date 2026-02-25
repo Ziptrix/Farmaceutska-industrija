@@ -10,6 +10,7 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Narudzbenica;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.OdgovorServera;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.Operacija;
@@ -167,6 +168,16 @@ public class KontrolerKlijent {
 
     public void obrisiLek(Lek lek) throws Exception {
         ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.OBRISI_LEK, lek);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() != null) {
+            throw odgovor.getIzuzetak();
+        }
+    }
+
+    public void dodajNarudzbenicu(Narudzbenica narudzbenica) throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.DODAJ_NARUDZBENICU, narudzbenica);
         posiljalac.posaljiObjekat(zahtev);
         OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
 
