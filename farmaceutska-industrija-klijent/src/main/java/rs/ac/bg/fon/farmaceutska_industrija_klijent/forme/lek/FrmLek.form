@@ -59,7 +59,7 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+              <Component id="lblInfo" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="238" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -80,7 +80,7 @@
                   <Component id="txtDoziranje" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+              <Component id="lblInfo" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="1" groupAlignment="0" attributes="0">
@@ -142,6 +142,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Izmeni Lek"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIzmeniActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnObrisi">
       <Properties>
@@ -206,7 +209,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUkloniSupstancuActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
+    <Component class="javax.swing.JLabel" name="lblInfo">
       <Properties>
         <Property name="text" type="java.lang.String" value="Izaberite supstance koje su potrebne za pravljenje leka:"/>
       </Properties>

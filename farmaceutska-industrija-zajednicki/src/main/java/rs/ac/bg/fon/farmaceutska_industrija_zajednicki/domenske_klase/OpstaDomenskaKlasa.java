@@ -39,7 +39,7 @@ public interface OpstaDomenskaKlasa extends Serializable {
 
     List<OpstaDomenskaKlasa> vratiListuZaSelectUpit(ResultSet rs) throws Exception;
 
-    String vratiUslovZaUpdateDelete();
+    String vratiUslovZaDelete();
 
     String vratiNazivKoloneZaGroupBy();
 

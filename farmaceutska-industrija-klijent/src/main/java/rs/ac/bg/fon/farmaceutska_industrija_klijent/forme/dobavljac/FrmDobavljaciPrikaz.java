@@ -10,6 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.tabele.model.ModelDobavljaci;
@@ -28,6 +29,10 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
         initComponents();
 
         prikaziDobavljace();
+    }
+
+    public JTextField getTxtPretraga() {
+        return txtPretraga;
     }
 
     /**

@@ -63,7 +63,7 @@ public class FrmLek extends javax.swing.JPanel {
         tblSupstanceZaLek = new javax.swing.JTable();
         btnDodajSupstancu = new javax.swing.JButton();
         btnUkloniSupstancu = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
+        lblInfo = new javax.swing.JLabel();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Serijski broj:");
@@ -82,6 +82,11 @@ public class FrmLek extends javax.swing.JPanel {
         });
 
         btnIzmeni.setText("Izmeni Lek");
+        btnIzmeni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniActionPerformed(evt);
+            }
+        });
 
         btnObrisi.setText("Obrisi Lek");
 
@@ -125,7 +130,7 @@ public class FrmLek extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setText("Izaberite supstance koje su potrebne za pravljenje leka:");
+        lblInfo.setText("Izaberite supstance koje su potrebne za pravljenje leka:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -167,7 +172,7 @@ public class FrmLek extends javax.swing.JPanel {
                 .addGap(132, 132, 132))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
+                .addComponent(lblInfo)
                 .addGap(238, 238, 238))
         );
         layout.setVerticalGroup(
@@ -184,7 +189,7 @@ public class FrmLek extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(txtDoziranje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41)
-                .addComponent(jLabel5)
+                .addComponent(lblInfo)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,6 +318,22 @@ public class FrmLek extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDodajActionPerformed
 
+    private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
+        if (lek == null) {
+            JOptionPane.showMessageDialog(this, "Lek nije ucitan!", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        lek.setDoziranje(txtDoziranje.getText().trim());
+        try {
+            KontrolerKlijent.vratiInstancu().izmeniLek(lek);
+            JOptionPane.showMessageDialog(this, "Uspesno ste izmenili Lek:\n" + lek, "Izmena Leka", JOptionPane.INFORMATION_MESSAGE);
+            this.getTopLevelAncestor().setVisible(false);
+            tabela.prikaziLekove();
+            tabela.getTxtPretraga().setText("");
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnIzmeniActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;
@@ -323,9 +344,9 @@ public class FrmLek extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblInfo;
     private javax.swing.JTable tblDostupneSupstance;
     private javax.swing.JTable tblSupstanceZaLek;
     private javax.swing.JTextField txtDoziranje;
@@ -342,24 +363,34 @@ public class FrmLek extends javax.swing.JPanel {
             txtSerijskiBroj.setText(lek.getSerijskiBroj().toString());
             txtNaziv.setText(lek.getNaziv());
             txtDoziranje.setText(lek.getDoziranje());
+            tblDostupneSupstance.setModel(new ModelSupstance(lek.getSastav()));
 
             txtSerijskiBroj.setEditable(false);
             txtNaziv.setEditable(false);
+            jScrollPane2.setVisible(false);
+            lblInfo.setVisible(false);
 
             btnDodaj.setVisible(false);
             btnObrisi.setVisible(false);
+            btnDodajSupstancu.setVisible(false);
+            btnUkloniSupstancu.setVisible(false);
         }
         if (mod == FrmModovi.FORMA_MOD_CITANJE) {
             txtSerijskiBroj.setText(lek.getSerijskiBroj().toString());
             txtNaziv.setText(lek.getNaziv());
             txtDoziranje.setText(lek.getDoziranje());
+            tblDostupneSupstance.setModel(new ModelSupstance(lek.getSastav()));
 
             txtSerijskiBroj.setEditable(false);
             txtNaziv.setEditable(false);
             txtDoziranje.setEditable(false);
+            jScrollPane2.setVisible(false);
+            lblInfo.setVisible(false);
 
             btnDodaj.setVisible(false);
             btnIzmeni.setVisible(false);
+            btnDodajSupstancu.setVisible(false);
+            btnUkloniSupstancu.setVisible(false);
         }
     }
 

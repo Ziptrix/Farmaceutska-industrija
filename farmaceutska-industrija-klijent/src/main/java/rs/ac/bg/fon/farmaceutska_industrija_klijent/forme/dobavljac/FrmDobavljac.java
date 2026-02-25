@@ -203,6 +203,7 @@ public class FrmDobavljac extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Uspesno ste izmenili Dobavljaca:\n" + dobavljac, "Izmena Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
             this.getTopLevelAncestor().setVisible(false);
             tabela.prikaziDobavljace();
+            tabela.getTxtPretraga().setText("");
         } catch (Exception e) {
             e.printStackTrace();
         }

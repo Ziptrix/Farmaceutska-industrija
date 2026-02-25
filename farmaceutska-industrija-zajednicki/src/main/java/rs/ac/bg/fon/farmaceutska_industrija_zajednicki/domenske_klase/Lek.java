@@ -79,7 +79,7 @@ public class Lek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiVrednostiUpdateUpita() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "dosage = '" + doziranje + "'";
     }
 
     @Override
@@ -139,7 +139,7 @@ public class Lek implements OpstaDomenskaKlasa {
     }
 
     @Override
-    public String vratiUslovZaUpdateDelete() {
+    public String vratiUslovZaDelete() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

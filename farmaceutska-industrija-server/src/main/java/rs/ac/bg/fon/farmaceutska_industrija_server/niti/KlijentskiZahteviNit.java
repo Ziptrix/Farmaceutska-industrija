@@ -109,6 +109,12 @@ public class KlijentskiZahteviNit extends Thread {
                     odgovor.setRezultat(KontrolerServer.vratiInstancu().pretraziLekove(kriterijum));
                     break;
                 }
+                case IZMENI_LEK: {
+                    Lek lek = (Lek) zahtev.getArgument();
+                    KontrolerServer.vratiInstancu().izmeniLek(lek);
+                    odgovor.setRezultat(lek);
+                    break;
+                }
                 default:
                     throw new AssertionError();
             }

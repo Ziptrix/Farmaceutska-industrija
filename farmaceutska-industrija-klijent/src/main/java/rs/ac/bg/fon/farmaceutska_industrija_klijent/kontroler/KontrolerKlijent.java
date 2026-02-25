@@ -154,4 +154,14 @@ public class KontrolerKlijent {
             throw odgovor.getIzuzetak();
         }
     }
+
+    public void izmeniLek(Lek lek) throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.IZMENI_LEK, lek);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() != null) {
+            throw odgovor.getIzuzetak();
+        }
+    }
 }

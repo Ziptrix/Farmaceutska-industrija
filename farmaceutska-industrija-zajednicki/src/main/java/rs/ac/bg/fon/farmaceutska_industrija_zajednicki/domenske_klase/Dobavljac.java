@@ -85,7 +85,7 @@ public class Dobavljac implements OpstaDomenskaKlasa {
     }
 
     @Override
-    public String vratiUslovZaUpdateDelete() {
+    public String vratiUslovZaDelete() {
         return "WHERE id = ?";
     }
 

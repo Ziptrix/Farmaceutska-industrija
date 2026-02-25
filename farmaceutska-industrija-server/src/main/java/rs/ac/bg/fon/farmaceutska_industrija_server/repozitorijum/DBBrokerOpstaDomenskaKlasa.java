@@ -107,7 +107,7 @@ public class DBBrokerOpstaDomenskaKlasa {
 
     public void obrisi(OpstaDomenskaKlasa objekat) throws Exception {
         String upit = "DELETE FROM " + objekat.vratiNazivTabele()
-                + " " + objekat.vratiUslovZaUpdateDelete();
+                + " " + objekat.vratiUslovZaDelete();
         System.out.println("UPIT: " + upit);
         
         try {

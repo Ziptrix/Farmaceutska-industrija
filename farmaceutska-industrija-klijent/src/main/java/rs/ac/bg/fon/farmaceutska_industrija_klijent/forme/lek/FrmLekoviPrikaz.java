@@ -6,7 +6,12 @@ package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.lek;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.util.FrmModovi;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.tabele.model.ModelLekovi;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
@@ -24,6 +29,10 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
         initComponents();
 
         prikaziLekove();
+    }
+
+    public JTextField getTxtPretraga() {
+        return txtPretraga;
     }
 
     /**
@@ -63,6 +72,11 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
         });
 
         btnIzmena.setText("IZMENA");
+        btnIzmena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmenaActionPerformed(evt);
+            }
+        });
 
         btnBrisanje.setText("BRISANJE");
 
@@ -170,6 +184,26 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Morate izabrati neki od lekova!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnSastavLekaActionPerformed
+
+    private void btnIzmenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmenaActionPerformed
+        int red = tblLekovi.getSelectedRow();
+        ModelLekovi model = (ModelLekovi) tblLekovi.getModel();
+        if (red >= 0) {
+            Lek lek = model.getLek(red);
+            JDialog dijalog = new JDialog((JFrame) null, "Lek", true);
+            try {
+                JPanel panel = new FrmLek(this, lek, FrmModovi.FORMA_MOD_IZMENA);
+                dijalog.add(panel);
+                dijalog.pack();
+                dijalog.setLocationRelativeTo(null);
+                dijalog.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate izabrati neki od lekova!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIzmenaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
