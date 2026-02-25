@@ -16,8 +16,8 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 public class ModelLekovi extends AbstractTableModel {
 
     List<Lek> lekovi;
-    String[] naziviKolona = {"Serijski broj", "Naziv", "Doziranje", "Sastav"};
-    Class[] klaseKolona = {Long.class, String.class, String.class, Supstanca.class};
+    String[] naziviKolona = {"Serijski broj", "Naziv", "Doziranje"};
+    Class[] klaseKolona = {Long.class, String.class, String.class};
 
     public ModelLekovi(List<Lek> lekovi) {
         this.lekovi = lekovi;

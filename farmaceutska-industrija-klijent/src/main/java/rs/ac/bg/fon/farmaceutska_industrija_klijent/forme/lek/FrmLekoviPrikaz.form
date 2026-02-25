@@ -26,6 +26,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnBrisanje" min="-2" max="-2" attributes="0"/>
                               <Component id="btnIzmena" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnSastavLeka" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -45,7 +46,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="70" max="32767" attributes="0"/>
+              <EmptySpace pref="27" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,8 +67,16 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnBrisanje" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="161" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="161" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                      <Component id="btnSastavLeka" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace pref="30" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -86,11 +95,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="PRETRAGA"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPretragaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnPonistiPretragu">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ponisti pretragu"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPonistiPretraguActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnIzmena">
       <Properties>
@@ -123,5 +138,13 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnSastavLeka">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Prikazi sastav leka"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSastavLekaActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

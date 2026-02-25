@@ -41,4 +41,6 @@ public interface OpstaDomenskaKlasa extends Serializable {
 
     String vratiUslovZaUpdateDelete();
 
+    String vratiNazivKoloneZaGroupBy();
+
 }

@@ -5,7 +5,11 @@
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.lek;
 
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.tabele.model.ModelLekovi;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
 
 /**
  *
@@ -18,7 +22,7 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
      */
     public FrmLekoviPrikaz() {
         initComponents();
-        
+
         prikaziLekove();
     }
 
@@ -39,13 +43,24 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
         btnBrisanje = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLekovi = new javax.swing.JTable();
+        btnSastavLeka = new javax.swing.JButton();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Naziv:");
 
         btnPretraga.setText("PRETRAGA");
+        btnPretraga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretragaActionPerformed(evt);
+            }
+        });
 
         btnPonistiPretragu.setText("Ponisti pretragu");
+        btnPonistiPretragu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPonistiPretraguActionPerformed(evt);
+            }
+        });
 
         btnIzmena.setText("IZMENA");
 
@@ -64,6 +79,13 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblLekovi);
 
+        btnSastavLeka.setText("Prikazi sastav leka");
+        btnSastavLeka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSastavLekaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,7 +99,8 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
                             .addGap(491, 491, 491)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(btnBrisanje)
-                                .addComponent(btnIzmena)))
+                                .addComponent(btnIzmena)
+                                .addComponent(btnSastavLeka)))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
@@ -89,7 +112,7 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
                                     .addGap(52, 52, 52)
                                     .addComponent(btnPonistiPretragu)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,11 +129,47 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
                     .addComponent(btnPonistiPretragu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBrisanje)
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(btnSastavLeka)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPonistiPretraguActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPonistiPretraguActionPerformed
+        txtPretraga.setText("");
+        try {
+            prikaziLekove();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnPonistiPretraguActionPerformed
+
+    private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
+//        if (txtPretraga.getText().isEmpty() || txtPretraga.getText().equals("")) {
+//            JOptionPane.showMessageDialog(this, "Morate uneti parametar za pretragu!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+//            return;
+//        }
+        String kriterijum = txtPretraga.getText().trim();
+        try {
+            prikaziPretraguLekova(kriterijum);
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnPretragaActionPerformed
+
+    private void btnSastavLekaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSastavLekaActionPerformed
+        int red = tblLekovi.getSelectedRow();
+        ModelLekovi model = (ModelLekovi) tblLekovi.getModel();
+        if (red >= 0) {
+            Lek lek = model.getLek(red);
+            JOptionPane.showMessageDialog(this, "Lek: " + lek + " se sastoji od:\n" + lek.getSastav(), "SASTAV", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate izabrati neki od lekova!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSastavLekaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -118,6 +177,7 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
     private javax.swing.JButton btnIzmena;
     private javax.swing.JButton btnPonistiPretragu;
     private javax.swing.JButton btnPretraga;
+    private javax.swing.JButton btnSastavLeka;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblLekovi;
@@ -127,5 +187,10 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
     public void prikaziLekove() {
         ModelLekovi model = new ModelLekovi(new ArrayList<>());
         tblLekovi.setModel(model);
+    }
+
+    private void prikaziPretraguLekova(String kriterijum) throws Exception {
+        List<Lek> lekovi = KontrolerKlijent.vratiInstancu().pretragaLekova(kriterijum);
+        tblLekovi.setModel(new ModelLekovi(lekovi));
     }
 }

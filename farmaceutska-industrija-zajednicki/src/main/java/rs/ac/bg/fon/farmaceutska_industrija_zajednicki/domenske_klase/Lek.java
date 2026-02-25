@@ -6,6 +6,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -70,7 +71,10 @@ public class Lek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiVrednostiSelectUpita() {
-        return "serial_number, name, dosage";
+        return "l.serial_number, l.name AS naziv_leka, l.dosage, "
+                + "s.code, s.name, "
+                + "s.quantity, s.price, "
+                + "sl.id_medicine, sl.id_substance, sl.quantity_used";
     }
 
     @Override
@@ -85,12 +89,53 @@ public class Lek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiJoin() {
-        return "";
+        return " l JOIN substance_medicine sl ON l.serial_number = sl.id_medicine "
+                + " JOIN substance s ON s.code = sl.id_substance";
     }
 
     @Override
     public List<OpstaDomenskaKlasa> vratiListuZaSelectUpit(ResultSet rs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        List<OpstaDomenskaKlasa> lista = new ArrayList<>();
+//
+//        while (rs.next()) {
+//            Lek lek = new Lek();
+//            lek.setSerijskiBroj(rs.getLong("serial_number"));
+//            lek.setNaziv(rs.getString("name"));
+//            lek.setDoziranje(rs.getString("dosage"));
+//            lek.setSastav(new ArrayList<>());
+//            lista.add(lek);
+//        }
+//        return lista;
+        List<OpstaDomenskaKlasa> lekovi = new ArrayList<>();
+        Lek trenutniLek = null;
+        long poslednjiSerijskiBroj = -1;
+
+        while (rs.next()) {
+            long serijskiBroj = rs.getLong("serial_number");
+
+            // Ako je novi lek, kreiramo ga
+            if (trenutniLek == null || serijskiBroj != poslednjiSerijskiBroj) {
+                trenutniLek = new Lek();
+                trenutniLek.setSerijskiBroj(serijskiBroj);
+                trenutniLek.setNaziv(rs.getString("naziv_leka"));
+                trenutniLek.setDoziranje(rs.getString("l.dosage"));
+                trenutniLek.setSastav(new ArrayList<>());
+                lekovi.add(trenutniLek);
+
+                poslednjiSerijskiBroj = serijskiBroj;
+            }
+
+            // Dodajemo supstancu u sastav trenutnog leka
+            Supstanca s = new Supstanca();
+            s.setSifra(rs.getLong("sl.id_substance"));      // code u bazi
+            s.setNaziv(rs.getString("s.name"));      // naziv supstance
+            s.setCena(rs.getLong("s.price"));                  // cena supstance
+            s.setKolicinaZaliha(rs.getLong("sl.quantity_used")); // kolicina koja je u tom leku
+
+            trenutniLek.getSastav().add(s);
+        }
+
+        return lekovi;
     }
 
     @Override
@@ -100,7 +145,12 @@ public class Lek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiNazivKoloneZaPretragu() {
-        return "name";
+        return "l.name";
+    }
+
+    @Override
+    public String vratiNazivKoloneZaGroupBy() {
+        return "serial_number";
     }
 
 }

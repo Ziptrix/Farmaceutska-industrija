@@ -39,8 +39,8 @@ public class DodajLekSO extends ApstraktnaSO {
 
         for (Supstanca supstanca : lek.getSastav()) {
             SupstancaLek sl = new SupstancaLek();
-            sl.setSerijskiBrojLeka(lek.getSerijskiBroj());
-            sl.setSifraSupstance(supstanca.getSifra());
+            sl.setLek(lek);
+            sl.setSupstanca(supstanca);
             sl.setUpotrebljenaKolicina(supstanca.getKolicinaZaliha());
             broker.dodaj(sl);
 

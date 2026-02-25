@@ -104,6 +104,11 @@ public class KlijentskiZahteviNit extends Thread {
                     odgovor.setRezultat(lek);
                     break;
                 }
+                case PRETRAGA_LEKOVA: {
+                    String kriterijum = (String) zahtev.getArgument();
+                    odgovor.setRezultat(KontrolerServer.vratiInstancu().pretraziLekove(kriterijum));
+                    break;
+                }
                 default:
                     throw new AssertionError();
             }

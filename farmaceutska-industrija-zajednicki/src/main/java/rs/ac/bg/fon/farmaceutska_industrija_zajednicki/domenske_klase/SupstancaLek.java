@@ -6,6 +6,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,13 +23,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SupstancaLek implements OpstaDomenskaKlasa {
 
-    private Long serijskiBrojLeka;
-    private Long sifraSupstance;
+    private Lek lek;
+    private Supstanca supstanca;
     private Long upotrebljenaKolicina;
 
     @Override
     public String toString() {
-        return serijskiBrojLeka + ", " + sifraSupstance + ", " + upotrebljenaKolicina;
+        return lek + ", " + supstanca + ", " + upotrebljenaKolicina;
     }
 
     @Override
@@ -53,22 +54,23 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiNaziveKolonaZaInsertUpit() {
-        return "id_medicine, id_substance, quantity_used";
+        return "id_medicine, id_substance, slquantity_used";
     }
 
     @Override
     public String vratiNazivKoloneZaPretragu() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "sl.id_medicine";
     }
 
     @Override
     public String vratiVrednostiInsertUpita() {
-        return serijskiBrojLeka + ", " + sifraSupstance + ", " + upotrebljenaKolicina;
+        return lek.getSerijskiBroj() + ", " + supstanca.getSifra() + ", " + upotrebljenaKolicina;
     }
 
     @Override
     public String vratiVrednostiSelectUpita() {
-        return "id_medicine, id_substance, quantity_used";
+        return "sl.id_medicine, sl.id_substance, sl.quantity_used, s.code, s.name, s.quantity, s.price"
+                + ", l.serial_number, l.name, l.dosage";
     }
 
     @Override
@@ -83,16 +85,45 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiJoin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " sl JOIN substance s ON sl.id_substance = s.code"
+                + " JOIN medicine l ON l.serial_number = sl.id_medicine";
     }
 
     @Override
     public List<OpstaDomenskaKlasa> vratiListuZaSelectUpit(ResultSet rs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<OpstaDomenskaKlasa> lista = new ArrayList<>();
+
+        while (rs.next()) {
+            SupstancaLek sl = new SupstancaLek();
+
+            Lek lek = new Lek();
+            lek.setSerijskiBroj(rs.getLong("l.serial_number"));
+            lek.setNaziv(rs.getString("l.name"));
+            lek.setDoziranje(rs.getString("l.dosage"));
+
+            Supstanca supstanca = new Supstanca();
+            supstanca.setSifra(rs.getLong("s.code"));
+            supstanca.setNaziv(rs.getString("s.name"));
+            supstanca.setCena(rs.getLong("s.price"));
+            supstanca.setKolicinaZaliha(rs.getLong("quantity_used"));
+
+            sl.setLek(lek);
+            sl.setSupstanca(supstanca);
+            sl.setUpotrebljenaKolicina(rs.getLong("quantity_used"));
+
+            lista.add(sl);
+        }
+
+        return lista;
     }
 
     @Override
     public String vratiUslovZaUpdateDelete() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String vratiNazivKoloneZaGroupBy() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

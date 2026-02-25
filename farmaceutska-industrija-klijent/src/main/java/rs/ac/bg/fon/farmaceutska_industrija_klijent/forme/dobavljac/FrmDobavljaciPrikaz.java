@@ -180,8 +180,12 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
     }//GEN-LAST:event_btnIzmenaActionPerformed
 
     private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
+//        if (txtPretraga.getText().isEmpty() || txtPretraga.getText().equals("")) {
+//            JOptionPane.showMessageDialog(this, "Morate uneti parametar za pretragu!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+//            return;
+//        }
+        String kriterijum = txtPretraga.getText().trim();
         try {
-            String kriterijum = txtPretraga.getText().trim();
             prikaziPretraguDobavljaca(kriterijum);
         } catch (Exception e) {
             e.printStackTrace();

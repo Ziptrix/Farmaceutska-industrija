@@ -22,11 +22,9 @@ public class PretraziDobavljaceSO extends ApstraktnaSO {
 
     @Override
     protected void preduslovi(Object objekat) throws Exception {
-//        if (objekat != null || objekat instanceof Pretraga) {
-//            if (!(((Pretraga) objekat).getObjekat() instanceof Dobavljac)) {
-//                throw new Exception("Prosledjen objekat mora biti tipa Dobavljac!");
-//            }
-//        }
+        if (objekat == null || !(objekat instanceof Dobavljac)) {
+            throw new Exception("Prosledjen objekat mora biti tipa Dobavljac!");
+        }
     }
 
     @Override

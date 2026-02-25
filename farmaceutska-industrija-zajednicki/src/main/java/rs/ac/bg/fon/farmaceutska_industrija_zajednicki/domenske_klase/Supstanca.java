@@ -51,7 +51,7 @@ public class Supstanca implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiNazivTabele() {
-        return "substance";
+        return "substance s";
     }
 
     @Override
@@ -71,7 +71,7 @@ public class Supstanca implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiVrednostiSelectUpita() {
-        return "code, name, quantity, price";
+        return "s.code, s.name, s.quantity, s.price";
     }
 
     @Override
@@ -95,10 +95,10 @@ public class Supstanca implements OpstaDomenskaKlasa {
 
         while (rs.next()) {
             Supstanca s = new Supstanca();
-            s.setSifra(rs.getLong("code"));
-            s.setNaziv(rs.getString("name"));
-            s.setKolicinaZaliha(rs.getLong("quantity"));
-            s.setCena(rs.getLong("price"));
+            s.setSifra(rs.getLong("s.code"));
+            s.setNaziv(rs.getString("s.name"));
+            s.setKolicinaZaliha(rs.getLong("s.quantity"));
+            s.setCena(rs.getLong("s.price"));
             lista.add(s);
         }
 
@@ -112,6 +112,11 @@ public class Supstanca implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiNazivKoloneZaPretragu() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String vratiNazivKoloneZaGroupBy() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

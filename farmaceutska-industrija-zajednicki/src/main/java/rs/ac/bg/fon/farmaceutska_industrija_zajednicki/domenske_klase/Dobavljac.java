@@ -114,4 +114,9 @@ public class Dobavljac implements OpstaDomenskaKlasa {
         return "first_name";
     }
 
+    @Override
+    public String vratiNazivKoloneZaGroupBy() {
+        return "id";
+    }
+
 }

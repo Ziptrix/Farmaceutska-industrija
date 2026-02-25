@@ -142,4 +142,16 @@ public class KontrolerKlijent {
             throw odgovor.getIzuzetak();
         }
     }
+
+    public List<Lek> pretragaLekova(String kriterijum) throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.PRETRAGA_LEKOVA, kriterijum);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() == null) {
+            return (List<Lek>) odgovor.getRezultat();
+        } else {
+            throw odgovor.getIzuzetak();
+        }
+    }
 }

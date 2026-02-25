@@ -148,7 +148,8 @@ public class DBBrokerOpstaDomenskaKlasa {
                 + " FROM " + objekat.vratiNazivTabele()
                 + objekat.vratiJoin()
                 + " WHERE " + objekat.vratiNazivKoloneZaPretragu()
-                + " LIKE '%" + kriterijum + "%'";
+                + " LIKE '%" + kriterijum + "%'"
+                + " GROUP BY " + objekat.vratiNazivKoloneZaGroupBy();
         System.out.println("UPIT: " + upit);
 
         try {
