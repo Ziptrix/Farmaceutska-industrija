@@ -15,6 +15,7 @@ import rs.ac.bg.fon.farmaceutska_industrija_server.so.grad.UcitajSveGradoveSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.korisnik.PrijavaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.DodajLekSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.IzmeniLekSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.ObrisiLekSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.PretraziLekoveSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.supstanca.UcitajSveSupstanceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
@@ -108,5 +109,10 @@ public class KontrolerServer {
     public void izmeniLek(Lek lek) throws Exception {
         ApstraktnaSO izmeni = new IzmeniLekSO();
         izmeni.izvrsi(lek, null);
+    }
+    
+    public void obrisiLek(Lek lek)throws Exception{
+        ApstraktnaSO obrisi = new ObrisiLekSO();
+        obrisi.izvrsi(lek, null);
     }
 }

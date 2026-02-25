@@ -79,6 +79,11 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
         });
 
         btnBrisanje.setText("BRISANJE");
+        btnBrisanje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBrisanjeActionPerformed(evt);
+            }
+        });
 
         tblLekovi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -204,6 +209,26 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Morate izabrati neki od lekova!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnIzmenaActionPerformed
+
+    private void btnBrisanjeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrisanjeActionPerformed
+        int red = tblLekovi.getSelectedRow();
+        ModelLekovi model = (ModelLekovi) tblLekovi.getModel();
+        if (red >= 0) {
+            Lek lek = model.getLek(red);
+            JDialog dijalog = new JDialog((JFrame) null, "Lek", true);
+            try {
+                JPanel panel = new FrmLek(this, lek, FrmModovi.FORMA_MOD_CITANJE);
+                dijalog.add(panel);
+                dijalog.pack();
+                dijalog.setLocationRelativeTo(null);
+                dijalog.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate izabrati neki od lekova!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBrisanjeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

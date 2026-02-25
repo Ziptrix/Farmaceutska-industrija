@@ -84,7 +84,7 @@ public class Lek implements OpstaDomenskaKlasa {
 
     @Override
     public void postaviVrednostiZaDeleteUpit(PreparedStatement ps) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ps.setLong(1, serijskiBroj);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class Lek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiUslovZaDelete() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE serial_number = ?";
     }
 
     @Override

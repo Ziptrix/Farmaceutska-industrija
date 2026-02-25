@@ -54,7 +54,7 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiNaziveKolonaZaInsertUpit() {
-        return "id_medicine, id_substance, slquantity_used";
+        return "id_medicine, id_substance, quantity_used";
     }
 
     @Override
@@ -80,7 +80,7 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
 
     @Override
     public void postaviVrednostiZaDeleteUpit(PreparedStatement ps) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ps.setLong(1, lek.getSerijskiBroj());
     }
 
     @Override
@@ -119,7 +119,7 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiUslovZaDelete() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE id_medicine = ?";
     }
 
     @Override

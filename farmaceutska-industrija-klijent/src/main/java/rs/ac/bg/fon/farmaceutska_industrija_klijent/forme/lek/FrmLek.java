@@ -89,6 +89,11 @@ public class FrmLek extends javax.swing.JPanel {
         });
 
         btnObrisi.setText("Obrisi Lek");
+        btnObrisi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiActionPerformed(evt);
+            }
+        });
 
         tblDostupneSupstance.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -333,6 +338,24 @@ public class FrmLek extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnIzmeniActionPerformed
+
+    private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
+        if (lek == null) {
+            JOptionPane.showMessageDialog(this, "Lek nije ucitan!", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int izbor = JOptionPane.showConfirmDialog(this, "Da li ste zaista sigurni da zelite da izbrisete Lek:\n" + lek, "Brisanje Leka", JOptionPane.YES_NO_OPTION);
+        if (izbor == JOptionPane.YES_OPTION) {
+            try {
+                KontrolerKlijent.vratiInstancu().obrisiLek(lek);
+                JOptionPane.showMessageDialog(this, "Uspesno ste izbrisali Lek:\n" + lek, "Brisanje Leka", JOptionPane.INFORMATION_MESSAGE);
+                this.getTopLevelAncestor().setVisible(false);
+                tabela.prikaziLekove();
+                tabela.getTxtPretraga().setText("");
+            } catch (Exception e) {
+            }
+        }
+    }//GEN-LAST:event_btnObrisiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

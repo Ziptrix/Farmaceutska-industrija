@@ -19,5 +19,6 @@ public enum Operacija {
     PRIKAZI_SVE_SUPSTANCE,
     DODAJ_LEK,
     PRETRAGA_LEKOVA,
-    IZMENI_LEK
+    IZMENI_LEK,
+    OBRISI_LEK
 }
