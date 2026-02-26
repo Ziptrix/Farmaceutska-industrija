@@ -39,9 +39,26 @@ public class DBBrokerKonekcija {
                 Properties podesavanja = new Properties();
                 podesavanja.load(new FileInputStream("konfiguracija/broker-konfiguracija.properties"));
 
-                String url = podesavanja.getProperty("url");
-                String user = podesavanja.getProperty("username");
-                String pass = podesavanja.getProperty("password");
+                String url = podesavanja.stringPropertyNames()
+                        .stream()
+                        .filter(k -> k.equals("url"))
+                        .map(k -> podesavanja.getProperty(k))
+                        .findFirst()
+                        .orElse(null);
+
+                String user = podesavanja.stringPropertyNames()
+                        .stream()
+                        .filter(k -> k.equals("username"))
+                        .map(k -> podesavanja.getProperty(k))
+                        .findFirst()
+                        .orElse(null);
+
+                String pass = podesavanja.stringPropertyNames()
+                        .stream()
+                        .filter(k -> k.equals("password"))
+                        .map(k -> podesavanja.getProperty(k))
+                        .findFirst()
+                        .orElse(null);
 
                 konekcija = DriverManager.getConnection(url, user, pass);
                 konekcija.setAutoCommit(false);
@@ -56,10 +73,10 @@ public class DBBrokerKonekcija {
 
         return konekcija;
     }
-    
-    public void zatvoriKonekciju() throws SQLException{
+
+    public void zatvoriKonekciju() throws SQLException {
         try {
-            if(konekcija != null && !konekcija.isClosed()){
+            if (konekcija != null && !konekcija.isClosed()) {
                 konekcija.close();
                 System.out.println("Konekcija sa bazom uspesno zatvorena!");
             }
@@ -69,8 +86,8 @@ public class DBBrokerKonekcija {
             throw e;
         }
     }
-    
-    public void potvrdiTransakciju() throws SQLException{
+
+    public void potvrdiTransakciju() throws SQLException {
         try {
             konekcija.commit();
             System.out.println("Transakcija je uspesno potvrdjena!");
@@ -80,8 +97,8 @@ public class DBBrokerKonekcija {
             throw e;
         }
     }
-    
-    public void ponistiTransakciju() throws SQLException{
+
+    public void ponistiTransakciju() throws SQLException {
         try {
             konekcija.rollback();
             System.out.println("Transakcija je uspesno ponistena!");

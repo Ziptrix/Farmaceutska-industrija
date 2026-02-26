@@ -17,34 +17,47 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 public class ServerskaNit extends Thread {
 
     private ServerSocket serverskiSoket;
-
     private List<KlijentskiZahteviNit> klijenti;
+    private List<Korisnik> prijavljeniKorisnici;
 
     public ServerskaNit() throws Exception {
         serverskiSoket = new ServerSocket(9090);
         klijenti = new ArrayList<>();
+        prijavljeniKorisnici = new ArrayList<>();
     }
-    
+
     public ServerSocket getServerskiSoket() {
         return serverskiSoket;
     }
 
     @Override
     public void run() {
-        while (!serverskiSoket.isClosed()) {            
+        while (!serverskiSoket.isClosed()) {
             try {
                 System.out.println("Cekanje klijenta...");
                 Socket soket = serverskiSoket.accept();
                 System.out.println("Uspesno povezivanje sa klijentom!");
-                
-                KlijentskiZahteviNit nit = new KlijentskiZahteviNit(soket);
+
+                KlijentskiZahteviNit nit = new KlijentskiZahteviNit(soket, this);
                 nit.start();
-                klijenti.add(nit);
+
+                System.out.println("Korisnici " + vratiSveKorisnike());
                 System.out.println("Klijent se uspesno povezao!");
             } catch (Exception e) {
             }
         }
         prekiniSveNiti();
+    }
+
+    public void prijavaKorisnika(Korisnik korisnik, KlijentskiZahteviNit nit) throws Exception {
+        for (Korisnik k : prijavljeniKorisnici) {
+            if (k.equals(korisnik)) {
+                throw new Exception("Korisnik sa unetim kredencijalima je vec prijavljen na sistem!");
+            }
+        }
+
+        prijavljeniKorisnici.add(korisnik);
+        klijenti.add(nit);
     }
 
     private void prekiniSveNiti() {
@@ -56,8 +69,8 @@ public class ServerskaNit extends Thread {
             }
         }
     }
-    
-    private List<Korisnik> vratiSveKorisnike(){
+
+    private List<Korisnik> vratiSveKorisnike() {
         List<Korisnik> korisnici = new ArrayList<>();
         for (KlijentskiZahteviNit klijent : klijenti) {
             korisnici.add(klijent.getKorisnika());

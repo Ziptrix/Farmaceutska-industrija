@@ -26,11 +26,14 @@ public class KlijentskiZahteviNit extends Thread {
     private Korisnik korisnik;
     private Posiljalac posiljalac;
     private Primalac primalac;
+    private ServerskaNit server;
 
-    public KlijentskiZahteviNit(Socket soket) throws IOException {
+    public KlijentskiZahteviNit(Socket soket, ServerskaNit server) throws IOException {
         this.soket = soket;
+        this.korisnik = new Korisnik();
         posiljalac = new Posiljalac(soket);
         primalac = new Primalac(soket);
+        this.server = server;
     }
 
     public Socket getSoket() {
@@ -39,6 +42,10 @@ public class KlijentskiZahteviNit extends Thread {
 
     public Korisnik getKorisnika() {
         return korisnik;
+    }
+
+    public void setKorisnika(Korisnik korisnik) {
+        this.korisnik = korisnik;
     }
 
     @Override
@@ -59,9 +66,15 @@ public class KlijentskiZahteviNit extends Thread {
         try {
             switch (zahtev.getOperacija()) {
                 case LOGIN: {
-                    Korisnik korisnik = KontrolerServer.vratiInstancu().prijava((Korisnik) zahtev.getArgument());
-                    odgovor.setRezultat(korisnik);
-                    this.korisnik = korisnik;
+                    Korisnik korisnik = (Korisnik) zahtev.getArgument();
+                    korisnik = KontrolerServer.vratiInstancu().prijava(korisnik);
+                    try {
+                        server.prijavaKorisnika(korisnik, this);
+                        this.korisnik = korisnik;
+                        odgovor.setRezultat(korisnik);
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case PRIKAZI_SVE_GRADOVE: {

@@ -25,7 +25,7 @@ public class Posiljalac {
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            throw new Exception("Desila se greska prilikom slanja odgovora klijentu!");
+            throw new Exception("Desila se greska prilikom slanja odgovora!");
         }
     }
 }

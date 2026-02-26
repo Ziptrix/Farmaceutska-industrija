@@ -24,7 +24,7 @@ public class Primalac {
             return in.readObject();
         } catch (IOException e) {
             e.printStackTrace();
-            throw new Exception("Desila se greska prilikom prijema odgovora od servera!");
+            throw new Exception("Desila se greska prilikom prijema odgovora!");
         }
     }
 }

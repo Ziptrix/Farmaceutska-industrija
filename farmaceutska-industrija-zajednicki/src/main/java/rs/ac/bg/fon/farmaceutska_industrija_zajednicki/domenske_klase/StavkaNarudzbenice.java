@@ -55,7 +55,7 @@ public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiNaziveKolonaZaInsertUpit() {
-        return "order_number, id_po, quantity, amount, id_substance";
+        return "order_number, id_po, quantity, amount, substance";
     }
 
     @Override
