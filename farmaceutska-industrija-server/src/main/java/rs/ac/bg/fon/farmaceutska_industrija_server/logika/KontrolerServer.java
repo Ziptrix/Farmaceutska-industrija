@@ -18,6 +18,7 @@ import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.IzmeniLekSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.ObrisiLekSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.PretraziLekoveSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.narudzbenica.DodajNarudzbenicuSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.narudzbenica.ObrisiNarudzbenicuSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.narudzbenica.UcitajSveNarudzbeniceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.supstanca.UcitajSveSupstanceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
@@ -130,5 +131,10 @@ public class KontrolerServer {
         ApstraktnaSO ucitajSve = new UcitajSveNarudzbeniceSO();
         ucitajSve.izvrsi(narudzbenica, null);
         return ((UcitajSveNarudzbeniceSO) ucitajSve).getNarudzbenice();
+    }
+
+    public void obrisiNarudzbenicu(Narudzbenica narudzbenica) throws Exception {
+        ApstraktnaSO obrisi = new ObrisiNarudzbenicuSO();
+        obrisi.izvrsi(narudzbenica, null);
     }
 }

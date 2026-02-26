@@ -53,6 +53,11 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblNarudzbenice);
 
         tblObrisi.setText("Obrisi narudzbenicu");
+        tblObrisi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tblObrisiActionPerformed(evt);
+            }
+        });
 
         btnPrikaziStavke.setText("Prikazi stavke narudzbenice");
         btnPrikaziStavke.addActionListener(new java.awt.event.ActionListener() {
@@ -92,13 +97,33 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
     private void btnPrikaziStavkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrikaziStavkeActionPerformed
         int red = tblNarudzbenice.getSelectedRow();
         ModelNarudzbenice model = (ModelNarudzbenice) tblNarudzbenice.getModel();
-        if(red >= 0){
+        if (red >= 0) {
             Narudzbenica narudzbenica = model.getNarudzbenica(red);
             JOptionPane.showMessageDialog(this, "Narudzbenica: " + narudzbenica + "\nSadrzi stavke:\nNaruceno: " + narudzbenica.getListaStavki(), "Podaci o narudzbenici", JOptionPane.INFORMATION_MESSAGE);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Morate izabrati neku od narudzbenica!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnPrikaziStavkeActionPerformed
+
+    private void tblObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tblObrisiActionPerformed
+        int red = tblNarudzbenice.getSelectedRow();
+        ModelNarudzbenice model = (ModelNarudzbenice) tblNarudzbenice.getModel();
+        if (red >= 0) {
+            Narudzbenica narudzbenica = model.getNarudzbenica(red);
+            int izbor = JOptionPane.showConfirmDialog(this, "Da li ste zaista sigurni da zelite da izbrisete Narudzbenicu:\n" + narudzbenica, "Brisanje Narudzbenice", JOptionPane.YES_NO_OPTION);
+            if (izbor == JOptionPane.YES_OPTION) {
+                try {
+                    KontrolerKlijent.vratiInstancu().obrisiNarudzbenicu(narudzbenica);
+                    JOptionPane.showMessageDialog(this, "Uspesno ste obrisali narudzbenicu:\n" + narudzbenica, "Brisanje Narudzbenice", JOptionPane.INFORMATION_MESSAGE);
+                    prikaziNarudzbenice();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Desila se greska!\n" + e.getMessage(), "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate izabrati neku od narudzbenica!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_tblObrisiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -6,7 +6,6 @@ package rs.ac.bg.fon.farmaceutska_industrija_server.so.lek;
 
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstraktnaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
-import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.OpstaDomenskaKlasa;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.SupstancaLek;
 
 /**

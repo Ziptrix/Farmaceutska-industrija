@@ -80,7 +80,7 @@ public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
 
     @Override
     public void postaviVrednostiZaDeleteUpit(PreparedStatement ps) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ps.setLong(1, narudzbenica.getSifra());
     }
 
     @Override
@@ -95,7 +95,7 @@ public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiUslovZaDelete() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE id_po = ?";
     }
 
     @Override

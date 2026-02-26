@@ -197,4 +197,14 @@ public class KontrolerKlijent {
             throw odgovor.getIzuzetak();
         }
     }
+
+    public void obrisiNarudzbenicu(Narudzbenica narudzbenica) throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.OBRISI_NARUDZBENICU, narudzbenica);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() != null) {
+            throw odgovor.getIzuzetak();
+        }
+    }
 }
