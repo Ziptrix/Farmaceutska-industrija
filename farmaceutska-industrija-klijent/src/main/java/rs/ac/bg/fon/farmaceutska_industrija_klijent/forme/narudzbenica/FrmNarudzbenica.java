@@ -25,7 +25,6 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 public class FrmNarudzbenica extends javax.swing.JPanel {
 
     Korisnik korisnik;
-    Narudzbenica narudzbenica;
     List<StavkaNarudzbenice> stavkeNarudzbenice;
 
     /**
@@ -35,7 +34,6 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
         initComponents();
 
         this.korisnik = korisnik;
-        this.narudzbenica = new Narudzbenica();
         this.stavkeNarudzbenice = new ArrayList<>();
 
         popuniFormu();
@@ -218,14 +216,10 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
             return;
         }
 
-        StavkaNarudzbenice postojeca = null;
-
-        for (StavkaNarudzbenice sn : stavkeNarudzbenice) {
-            if (sn.getSupstanca().getSifra().equals(supstanca.getSifra())) {
-                postojeca = sn;
-                break;
-            }
-        }
+        StavkaNarudzbenice postojeca = stavkeNarudzbenice.stream()
+                .filter(sn -> sn.getSupstanca().getSifra().equals(supstanca.getSifra()))
+                .findFirst()
+                .orElse(null);
 
         if (postojeca != null) {
             long novaKolicina = postojeca.getKolicinaSupstance() + kolicinaPoruceneSupstance;
@@ -246,11 +240,9 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
             stavkeNarudzbenice.add(nova);
         }
 
-        long ukupanIznos = 0;
-
-        for (StavkaNarudzbenice stavkaNarudzbenice : stavkeNarudzbenice) {
-            ukupanIznos += stavkaNarudzbenice.getIznosStavke();
-        }
+        long ukupanIznos = stavkeNarudzbenice.stream()
+                .mapToLong(StavkaNarudzbenice::getIznosStavke)
+                .sum();
 
         txtUkupanIznos.setText(String.valueOf(ukupanIznos));
 
@@ -286,9 +278,7 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
         narudzbenica.setDobavljac((Dobavljac) cmbDobavljaci.getSelectedItem());
         narudzbenica.setListaStavki(stavkeNarudzbenice);
 
-        for (StavkaNarudzbenice stavkaNarudzbenice : stavkeNarudzbenice) {
-            stavkaNarudzbenice.setNarudzbenica(narudzbenica);
-        }
+        stavkeNarudzbenice.forEach(stavka -> stavka.setNarudzbenica(narudzbenica));
 
         try {
             KontrolerKlijent.vratiInstancu().dodajNarudzbenicu(narudzbenica);

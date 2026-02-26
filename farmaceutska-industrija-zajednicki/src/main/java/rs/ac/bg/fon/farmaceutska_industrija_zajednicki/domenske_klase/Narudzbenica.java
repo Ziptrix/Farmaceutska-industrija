@@ -91,7 +91,7 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
     @Override
     public String vratiJoin() {
         return " n JOIN item sn ON n.code = sn.id_po "
-                + " JOIN substance s ON sn.id_substance = s.code ";
+                + " JOIN substance s ON sn.substance = s.code ";
     }
 
     @Override
@@ -101,14 +101,20 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
         while (rs.next()) {
             Long idNarudzbenice = rs.getLong("n.code");
             Narudzbenica postojeca = null;
-            for (OpstaDomenskaKlasa odk : lista) {
-                Narudzbenica n = (Narudzbenica) odk;
-                if (n.getSifra().equals(idNarudzbenice)) {
-                    postojeca = n;
-                    break;
-                }
-            }
 
+            postojeca = lista.stream()
+                    .map(odk -> (Narudzbenica) odk)
+                    .filter(n -> n.getSifra().equals(idNarudzbenice))
+                    .findFirst()
+                    .orElse(null);
+
+//            for (OpstaDomenskaKlasa odk : lista) {
+//                Narudzbenica n = (Narudzbenica) odk;
+//                if (n.getSifra().equals(idNarudzbenice)) {
+//                    postojeca = n;
+//                    break;
+//                }
+//            }
             if (postojeca == null) {
                 postojeca = new Narudzbenica();
                 postojeca.setSifra(idNarudzbenice);

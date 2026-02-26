@@ -28,12 +28,6 @@ public class Lek implements OpstaDomenskaKlasa {
     private String doziranje;
     private List<Supstanca> sastav;
 
-//    public Lek(Long serijskiBroj, String naziv, String doziranje) {
-//        this.serijskiBroj = serijskiBroj;
-//        this.naziv = naziv;
-//        this.doziranje = doziranje;
-//    }
-
     @Override
     public String toString() {
         return naziv + " " + doziranje;
@@ -95,17 +89,6 @@ public class Lek implements OpstaDomenskaKlasa {
 
     @Override
     public List<OpstaDomenskaKlasa> vratiListuZaSelectUpit(ResultSet rs) throws Exception {
-//        List<OpstaDomenskaKlasa> lista = new ArrayList<>();
-//
-//        while (rs.next()) {
-//            Lek lek = new Lek();
-//            lek.setSerijskiBroj(rs.getLong("serial_number"));
-//            lek.setNaziv(rs.getString("name"));
-//            lek.setDoziranje(rs.getString("dosage"));
-//            lek.setSastav(new ArrayList<>());
-//            lista.add(lek);
-//        }
-//        return lista;
         List<OpstaDomenskaKlasa> lekovi = new ArrayList<>();
         Lek trenutniLek = null;
         long poslednjiSerijskiBroj = -1;
@@ -113,7 +96,6 @@ public class Lek implements OpstaDomenskaKlasa {
         while (rs.next()) {
             long serijskiBroj = rs.getLong("serial_number");
 
-            // Ako je novi lek, kreiramo ga
             if (trenutniLek == null || serijskiBroj != poslednjiSerijskiBroj) {
                 trenutniLek = new Lek();
                 trenutniLek.setSerijskiBroj(serijskiBroj);
@@ -125,12 +107,11 @@ public class Lek implements OpstaDomenskaKlasa {
                 poslednjiSerijskiBroj = serijskiBroj;
             }
 
-            // Dodajemo supstancu u sastav trenutnog leka
             Supstanca s = new Supstanca();
-            s.setSifra(rs.getLong("sl.id_substance"));      // code u bazi
-            s.setNaziv(rs.getString("s.name"));      // naziv supstance
-            s.setCena(rs.getLong("s.price"));                  // cena supstance
-            s.setKolicinaZaliha(rs.getLong("sl.quantity_used")); // kolicina koja je u tom leku
+            s.setSifra(rs.getLong("sl.id_substance"));
+            s.setNaziv(rs.getString("s.name"));
+            s.setCena(rs.getLong("s.price"));
+            s.setKolicinaZaliha(rs.getLong("sl.quantity_used"));
 
             trenutniLek.getSastav().add(s);
         }

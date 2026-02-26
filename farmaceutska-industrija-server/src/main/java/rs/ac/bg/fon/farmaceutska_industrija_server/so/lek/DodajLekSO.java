@@ -31,11 +31,10 @@ public class DodajLekSO extends ApstraktnaSO {
         broker.dodaj(lek);
 
         List<OpstaDomenskaKlasa> rezultat = broker.ucitajSve(new Supstanca());
-        List<Supstanca> supstanceIzBaze = new ArrayList<>();
 
-        for (OpstaDomenskaKlasa opstaDomenskaKlasa : rezultat) {
-            supstanceIzBaze.add((Supstanca) opstaDomenskaKlasa);
-        }
+        List<Supstanca> supstanceIzBaze = rezultat.stream()
+                .map(op -> (Supstanca) op)
+                .toList();
 
         for (Supstanca supstanca : lek.getSastav()) {
             SupstancaLek sl = new SupstancaLek();
@@ -44,27 +43,15 @@ public class DodajLekSO extends ApstraktnaSO {
             sl.setUpotrebljenaKolicina(supstanca.getKolicinaZaliha());
             broker.dodaj(sl);
 
-            Supstanca izBaze = null;
-            for (Supstanca s : supstanceIzBaze) {
-                if (s.getSifra().equals(supstanca.getSifra())) {
-                    izBaze = s;
-                    break;
-                }
-            }
+            Supstanca izBaze = supstanceIzBaze.stream()
+                    .filter(s -> s.getSifra().equals(supstanca.getSifra()))
+                    .findFirst()
+                    .orElseThrow(() -> new Exception("Supstanca nije pronadjena u bazi"));
 
             long novaKolicina = izBaze.getKolicinaZaliha() - supstanca.getKolicinaZaliha();
             izBaze.setKolicinaZaliha(novaKolicina);
             broker.izmeni(izBaze);
         }
-
-//        for (int i = 0; i < lek.getSastav().size(); i++) {
-//            SupstancaLek sl = new SupstancaLek(lek.getSerijskiBroj(), lek.getSastav().get(i).getSifra(), lek.getSastav().get(i).getKolicinaZaliha());
-//            broker.dodaj(sl);
-//
-//            long novaKolicinaZaliha = supstanceIzBaze.get(i).getKolicinaZaliha() - lek.getSastav().get(i).getKolicinaZaliha();
-//            supstanceIzBaze.get(i).setKolicinaZaliha(novaKolicinaZaliha);
-//            broker.izmeni(supstanceIzBaze.get(i));
-//        }
     }
 
 }

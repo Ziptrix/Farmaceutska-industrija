@@ -30,11 +30,10 @@ public class UcitajSveNarudzbeniceSO extends ApstraktnaSO {
     @Override
     protected void izvrsiOperaciju(Object objekat, String kljuc) throws Exception {
         List<OpstaDomenskaKlasa> rezultat = broker.ucitajSve((Narudzbenica) objekat);
-        narudzbenice = new ArrayList<>();
 
-        for (OpstaDomenskaKlasa opstaDomenskaKlasa : rezultat) {
-            narudzbenice.add((Narudzbenica) opstaDomenskaKlasa);
-        }
+        narudzbenice = rezultat.stream()
+                .map(odk -> (Narudzbenica) odk)
+                .toList();
     }
 
 }

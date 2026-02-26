@@ -50,10 +50,8 @@ public class ServerskaNit extends Thread {
     }
 
     public void prijavaKorisnika(Korisnik korisnik, KlijentskiZahteviNit nit) throws Exception {
-        for (Korisnik k : prijavljeniKorisnici) {
-            if (k.equals(korisnik)) {
-                throw new Exception("Korisnik sa unetim kredencijalima je vec prijavljen na sistem!");
-            }
+        if (prijavljeniKorisnici.stream().anyMatch(k -> k.equals(korisnik))) {
+            throw new Exception("Korisnik sa unetim kredencijalima je vec prijavljen na sistem!");
         }
 
         prijavljeniKorisnici.add(korisnik);
@@ -71,11 +69,10 @@ public class ServerskaNit extends Thread {
     }
 
     private List<Korisnik> vratiSveKorisnike() {
-        List<Korisnik> korisnici = new ArrayList<>();
-        for (KlijentskiZahteviNit klijent : klijenti) {
-            korisnici.add(klijent.getKorisnika());
-        }
-        return korisnici;
+        return klijenti.stream()
+                .map(KlijentskiZahteviNit::getKorisnika)
+                .toList();
+
     }
 
 }

@@ -30,11 +30,10 @@ public class UcitajSveGradoveSO extends ApstraktnaSO {
     @Override
     protected void izvrsiOperaciju(Object objekat, String kljuc) throws Exception {
         List<OpstaDomenskaKlasa> rezultat = broker.ucitajSve((Grad) objekat);
-        gradovi = new ArrayList<>();
 
-        for (OpstaDomenskaKlasa opstaDomenskaKlasa : rezultat) {
-            gradovi.add((Grad) opstaDomenskaKlasa);
-        }
+        gradovi = rezultat.stream()
+                .map(op -> (Grad) op)
+                .toList();
     }
 
 }

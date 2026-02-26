@@ -32,29 +32,27 @@ public class PretraziLekoveSO extends ApstraktnaSO {
     @Override
     protected void izvrsiOperaciju(Object objekat, String kljuc) throws Exception {
         List<OpstaDomenskaKlasa> rezultat = broker.pretrazi((Lek) objekat, kljuc);
-        lekovi = new ArrayList<>();
 
-        for (OpstaDomenskaKlasa opstaDomenskaKlasa : rezultat) {
-            lekovi.add((Lek) opstaDomenskaKlasa);
-        }
+        lekovi = rezultat.stream()
+                .map(op -> (Lek) op)
+                .toList();
 
         List<OpstaDomenskaKlasa> slZaLek = broker.ucitajSve(new SupstancaLek());
-        List<SupstancaLek> supstanceULeku = new ArrayList<>();
 
-        for (OpstaDomenskaKlasa opstaDomenskaKlasa : slZaLek) {
-            supstanceULeku.add((SupstancaLek) opstaDomenskaKlasa);
-        }
+        List<SupstancaLek> supstanceULeku = slZaLek.stream()
+                .map(op -> (SupstancaLek) op)
+                .toList();
 
         for (Lek lek : lekovi) {
-            List<Supstanca> sastav = new ArrayList<>();
+            List<Supstanca> sastav = supstanceULeku.stream()
+                    .filter(sl -> lek.getSerijskiBroj().equals(sl.getLek().getSerijskiBroj()))
+                    .map(sl -> {
+                        Supstanca s = sl.getSupstanca();
+                        s.setKolicinaZaliha(sl.getUpotrebljenaKolicina());
+                        return s;
+                    })
+                    .toList();
 
-            for (SupstancaLek supstancaLek : supstanceULeku) {
-                if (lek.getSerijskiBroj().equals(supstancaLek.getLek().getSerijskiBroj())) {
-                    Supstanca s = supstancaLek.getSupstanca();
-                    s.setKolicinaZaliha(supstancaLek.getUpotrebljenaKolicina());
-                    sastav.add(s);
-                }
-            }
             lek.setSastav(sastav);
         }
     }

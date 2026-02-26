@@ -221,22 +221,20 @@ public class FrmLek extends javax.swing.JPanel {
             Supstanca supstanca = modelDostupne.getSupstanca(red);
             String unosKolicine = JOptionPane.showInputDialog(this, "Unesite zeljenu kolicinu supstance " + supstanca);
             long unetaKolicina = Long.parseLong(unosKolicine);
-            if (unetaKolicina < 0 || unetaKolicina > supstanca.getKolicinaZaliha()) {
-                JOptionPane.showMessageDialog(this, "Uneta kolicina mora biti izmedju 0 i trenutne kolicine zaliha!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+            if (unetaKolicina <= 0 || unetaKolicina > supstanca.getKolicinaZaliha()) {
+                JOptionPane.showMessageDialog(this, "Uneta kolicina mora biti izmedju 1 i trenutne kolicine zaliha!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             supstanca.setKolicinaZaliha(supstanca.getKolicinaZaliha() - unetaKolicina);
 
-            boolean postoji = false;
-            for (Supstanca s : supstanceZaLek) {
-                if (s.getSifra().equals(supstanca.getSifra())) {
-                    s.setKolicinaZaliha(s.getKolicinaZaliha() + unetaKolicina);
-                    postoji = true;
-                    break;
-                }
-            }
+            Supstanca postojeca = supstanceZaLek.stream()
+                    .filter(s -> s.getSifra().equals(supstanca.getSifra()))
+                    .findFirst()
+                    .orElse(null);
 
-            if (!postoji) {
+            if (postojeca != null) {
+                postojeca.setKolicinaZaliha(postojeca.getKolicinaZaliha() + unetaKolicina);
+            } else {
                 Supstanca supstancaZaLek = new Supstanca();
                 supstancaZaLek.setSifra(supstanca.getSifra());
                 supstancaZaLek.setNaziv(supstanca.getNaziv());
@@ -262,12 +260,10 @@ public class FrmLek extends javax.swing.JPanel {
         if (red >= 0) {
             Supstanca supstancaZaLek = supstanceZaLek.get(red);
 
-            for (Supstanca s : modelDostupne.getSupstance()) {
-                if (s.getSifra().equals(supstancaZaLek.getSifra())) {
-                    s.setKolicinaZaliha(s.getKolicinaZaliha() + supstancaZaLek.getKolicinaZaliha());
-                    break;
-                }
-            }
+            modelDostupne.getSupstance().stream()
+                    .filter(s -> s.getSifra().equals(supstancaZaLek.getSifra()))
+                    .findFirst()
+                    .ifPresent(s -> s.setKolicinaZaliha(s.getKolicinaZaliha() + supstancaZaLek.getKolicinaZaliha()));
 
             supstanceZaLek.remove(red);
 
@@ -329,6 +325,11 @@ public class FrmLek extends javax.swing.JPanel {
     private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
         if (lek == null) {
             JOptionPane.showMessageDialog(this, "Lek nije ucitan!", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (txtDoziranje.getText().trim().isEmpty() || txtDoziranje.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Morate uneti tekst za novo doziranje!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         lek.setDoziranje(txtDoziranje.getText().trim());

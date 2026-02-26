@@ -31,11 +31,10 @@ public class DodajNarudzbenicuSO extends ApstraktnaSO {
         broker.dodaj(narudzbenica);
 
         List<OpstaDomenskaKlasa> supstanceIzBaze = broker.ucitajSve(new Supstanca());
-        List<Supstanca> supstance = new ArrayList<>();
 
-        for (OpstaDomenskaKlasa odk : supstanceIzBaze) {
-            supstance.add((Supstanca) odk);
-        }
+        List<Supstanca> supstance = supstanceIzBaze.stream()
+                .map(odk -> (Supstanca) odk)
+                .toList();
 
         for (StavkaNarudzbenice stavkaNarudzbenice : narudzbenica.getListaStavki()) {
             broker.dodaj(stavkaNarudzbenice);
