@@ -290,8 +290,6 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
             stavkaNarudzbenice.setNarudzbenica(narudzbenica);
         }
 
-        System.out.println("NARUDZBA: " + narudzbenica);
-
         try {
             KontrolerKlijent.vratiInstancu().dodajNarudzbenicu(narudzbenica);
             JOptionPane.showMessageDialog(this, "Uspesno ste dodali narudzbenicu:\n" + narudzbenica + " sa stavkama:\n" + stavkeNarudzbenice);
@@ -304,6 +302,7 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
                 cmbDobavljaci.setSelectedIndex(-1);
                 stavkeNarudzbenice = new ArrayList<>();
                 tblStavke.setModel(new ModelStavkeNarudzbenice(stavkeNarudzbenice));
+                txtUkupanIznos.setText("");
             } else {
                 this.getTopLevelAncestor().setVisible(false);
             }

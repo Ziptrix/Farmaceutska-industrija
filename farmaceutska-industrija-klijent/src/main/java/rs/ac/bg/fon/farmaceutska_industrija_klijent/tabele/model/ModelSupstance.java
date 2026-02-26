@@ -66,10 +66,6 @@ public class ModelSupstance extends AbstractTableModel {
     public Supstanca getSupstanca(int red) {
         return supstance.get(red);
     }
-
-    public void dodajSupstancu(Supstanca supstanca) {
-        supstance.add(supstanca);
-    }
     
     public List<Supstanca> getSupstance(){
         return supstance;

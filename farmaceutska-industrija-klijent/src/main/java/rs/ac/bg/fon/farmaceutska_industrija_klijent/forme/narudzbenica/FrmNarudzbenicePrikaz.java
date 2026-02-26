@@ -4,6 +4,12 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.narudzbenica;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
+import rs.ac.bg.fon.farmaceutska_industrija_klijent.tabele.model.ModelNarudzbenice;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Narudzbenica;
+
 /**
  *
  * @author milos
@@ -13,8 +19,10 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
     /**
      * Creates new form FrmNarudzbenicePrikaz
      */
-    public FrmNarudzbenicePrikaz() {
+    public FrmNarudzbenicePrikaz() throws Exception {
         initComponents();
+
+        prikaziNarudzbenice();
     }
 
     /**
@@ -27,10 +35,11 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        tblNarudzbenice = new javax.swing.JTable();
+        tblObrisi = new javax.swing.JButton();
+        btnPrikaziStavke = new javax.swing.JButton();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblNarudzbenice.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -41,9 +50,16 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblNarudzbenice);
 
-        jButton1.setText("Obrisi narudzbenicu");
+        tblObrisi.setText("Obrisi narudzbenicu");
+
+        btnPrikaziStavke.setText("Prikazi stavke narudzbenice");
+        btnPrikaziStavke.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrikaziStavkeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -51,29 +67,49 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(50, 50, 50))
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(108, 108, 108)
+                .addComponent(btnPrikaziStavke)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                .addComponent(tblObrisi)
+                .addGap(136, 136, 136))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jButton1)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPrikaziStavke)
+                    .addComponent(tblObrisi))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnPrikaziStavkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrikaziStavkeActionPerformed
+        int red = tblNarudzbenice.getSelectedRow();
+        ModelNarudzbenice model = (ModelNarudzbenice) tblNarudzbenice.getModel();
+        if(red >= 0){
+            Narudzbenica narudzbenica = model.getNarudzbenica(red);
+            JOptionPane.showMessageDialog(this, "Narudzbenica: " + narudzbenica + "\nSadrzi stavke:\nNaruceno: " + narudzbenica.getListaStavki(), "Podaci o narudzbenici", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "Morate izabrati neku od narudzbenica!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnPrikaziStavkeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnPrikaziStavke;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblNarudzbenice;
+    private javax.swing.JButton tblObrisi;
     // End of variables declaration//GEN-END:variables
+
+    private void prikaziNarudzbenice() throws Exception {
+        List<Narudzbenica> narudzbenice = KontrolerKlijent.vratiInstancu().prikaziSveNarudzbenice();
+        tblNarudzbenice.setModel(new ModelNarudzbenice(narudzbenice));
+    }
 }

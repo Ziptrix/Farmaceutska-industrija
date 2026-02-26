@@ -18,6 +18,7 @@ import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.IzmeniLekSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.ObrisiLekSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.PretraziLekoveSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.narudzbenica.DodajNarudzbenicuSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.narudzbenica.UcitajSveNarudzbeniceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.supstanca.UcitajSveSupstanceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
@@ -44,7 +45,7 @@ public class KontrolerServer {
         dobavljac = new Dobavljac();
         supstanca = new Supstanca();
         lek = new Lek();
-        this.narudzbenica = new Narudzbenica();
+        narudzbenica = new Narudzbenica();
     }
 
     public static KontrolerServer vratiInstancu() {
@@ -123,5 +124,11 @@ public class KontrolerServer {
     public void dodajNarudzbenicu(Narudzbenica narudzbenica) throws Exception {
         ApstraktnaSO dodaj = new DodajNarudzbenicuSO();
         dodaj.izvrsi(narudzbenica, null);
+    }
+
+    public List<Narudzbenica> ucitajSveNarudzbenice() throws Exception {
+        ApstraktnaSO ucitajSve = new UcitajSveNarudzbeniceSO();
+        ucitajSve.izvrsi(narudzbenica, null);
+        return ((UcitajSveNarudzbeniceSO) ucitajSve).getNarudzbenice();
     }
 }

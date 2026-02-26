@@ -185,4 +185,16 @@ public class KontrolerKlijent {
             throw odgovor.getIzuzetak();
         }
     }
+
+    public List<Narudzbenica> prikaziSveNarudzbenice() throws Exception {
+        ZahtevKlijenta zahtev = new ZahtevKlijenta(Operacija.PRIKAZI_SVE_NARUDZBENICE, null);
+        posiljalac.posaljiObjekat(zahtev);
+        OdgovorServera odgovor = (OdgovorServera) primalac.primiObjekat();
+
+        if (odgovor.getIzuzetak() == null) {
+            return (List<Narudzbenica>) odgovor.getRezultat();
+        } else {
+            throw odgovor.getIzuzetak();
+        }
+    }
 }

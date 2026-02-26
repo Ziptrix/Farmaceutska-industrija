@@ -7,6 +7,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -72,7 +73,9 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiVrednostiSelectUpita() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "n.code, n.date, n.total_amount, n.user, n.supplier, "
+                + "sn.order_number AS stavka_id, sn.quantity, sn.amount, "
+                + "s.code AS supstanca_id, s.name, s.quantity, s.price";
     }
 
     @Override
@@ -87,12 +90,53 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiJoin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " n JOIN item sn ON n.code = sn.id_po "
+                + " JOIN substance s ON sn.id_substance = s.code ";
     }
 
     @Override
     public List<OpstaDomenskaKlasa> vratiListuZaSelectUpit(ResultSet rs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<OpstaDomenskaKlasa> lista = new ArrayList<>();
+
+        while (rs.next()) {
+            Long idNarudzbenice = rs.getLong("n.code");
+            Narudzbenica postojeca = null;
+            for (OpstaDomenskaKlasa odk : lista) {
+                Narudzbenica n = (Narudzbenica) odk;
+                if (n.getSifra().equals(idNarudzbenice)) {
+                    postojeca = n;
+                    break;
+                }
+            }
+
+            if (postojeca == null) {
+                postojeca = new Narudzbenica();
+                postojeca.setSifra(idNarudzbenice);
+                postojeca.setDatum(rs.getDate("n.date").toLocalDate());
+                postojeca.setUkupanIznos(rs.getLong("n.total_amount"));
+                postojeca.setKorisnik(null);
+                postojeca.setDobavljac(null);
+                postojeca.setListaStavki(new ArrayList<>());
+                lista.add(postojeca);
+            }
+
+            Supstanca s = new Supstanca();
+            s.setSifra(rs.getLong("supstanca_id"));
+            s.setNaziv(rs.getString("s.name"));
+            s.setKolicinaZaliha(rs.getLong("s.quantity"));
+            s.setCena(rs.getLong("s.price"));
+
+            StavkaNarudzbenice sn = new StavkaNarudzbenice();
+            sn.setRedniBroj(rs.getLong("stavka_id"));
+            sn.setKolicinaSupstance(rs.getLong("sn.quantity"));
+            sn.setIznosStavke(rs.getLong("sn.amount"));
+            sn.setSupstanca(s);
+            sn.setNarudzbenica(postojeca);
+
+            postojeca.getListaStavki().add(sn);
+        }
+
+        return lista;
     }
 
     @Override

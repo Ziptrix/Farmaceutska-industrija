@@ -30,7 +30,7 @@ public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
 
     @Override
     public String toString() {
-        return "Naruceno: " + kolicinaSupstance + " jedinica supstance: " + supstanca;
+        return kolicinaSupstance + " jedinica supstance " + supstanca;
     }
 
     @Override

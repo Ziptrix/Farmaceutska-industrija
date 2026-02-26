@@ -315,7 +315,10 @@ public class FrmLek extends javax.swing.JPanel {
                 txtSerijskiBroj.setText("");
                 txtNaziv.setText("");
                 txtDoziranje.setText("");
-                tblSupstanceZaLek.setModel(new ModelSupstance(new ArrayList<>()));
+                for (int i = 0; i < supstanceZaLek.size(); i++) {
+                    supstanceZaLek.remove(i);
+                }
+                tblSupstanceZaLek.setModel(new ModelSupstance(supstanceZaLek));
             } else {
                 this.getTopLevelAncestor().setVisible(false);
             }

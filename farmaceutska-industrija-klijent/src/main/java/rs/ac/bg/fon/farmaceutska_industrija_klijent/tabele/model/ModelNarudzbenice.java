@@ -4,31 +4,31 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.tabele.model;
 
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.StavkaNarudzbenice;
-import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Narudzbenica;
 
 /**
  *
  * @author milos
  */
-public class ModelStavkeNarudzbenice extends AbstractTableModel {
+public class ModelNarudzbenice extends AbstractTableModel {
 
-    List<StavkaNarudzbenice> stavke;
-    String[] naziviKolona = {"Redni broj", "Kolicina", "Iznos", "Supstanca"};
-    Class[] klaseKolona = {Long.class, Long.class, Long.class, Supstanca.class};
+    List<Narudzbenica> narudzbenice;
+    String[] naziviKolona = {"Sifra", "Datum kreiranja", "Ukupan iznos"};
+    Class[] klaseKolona = {Long.class, LocalDate.class, Long.class};
 
-    public ModelStavkeNarudzbenice(List<StavkaNarudzbenice> stavke) {
-        this.stavke = stavke;
+    public ModelNarudzbenice(List<Narudzbenica> narudzbenice) {
+        this.narudzbenice = narudzbenice;
     }
 
     @Override
     public int getRowCount() {
-        if (stavke == null) {
+        if (narudzbenice == null) {
             return 0;
         }
-        return stavke.size();
+        return narudzbenice.size();
     }
 
     @Override
@@ -38,16 +38,14 @@ public class ModelStavkeNarudzbenice extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        StavkaNarudzbenice stavka = stavke.get(rowIndex);
+        Narudzbenica narudzbenica = narudzbenice.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return stavka.getRedniBroj();
+                return narudzbenica.getSifra();
             case 1:
-                return stavka.getKolicinaSupstance();
+                return narudzbenica.getDatum();
             case 2:
-                return stavka.getIznosStavke();
-            case 3:
-                return stavka.getSupstanca();
+                return narudzbenica.getUkupanIznos();
             default:
                 throw new AssertionError();
         }
@@ -61,6 +59,10 @@ public class ModelStavkeNarudzbenice extends AbstractTableModel {
     @Override
     public String getColumnName(int column) {
         return naziviKolona[column];
+    }
+
+    public Narudzbenica getNarudzbenica(int red) {
+        return narudzbenice.get(red);
     }
 
 }

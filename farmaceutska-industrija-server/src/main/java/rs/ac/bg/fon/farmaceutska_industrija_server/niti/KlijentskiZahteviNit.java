@@ -128,6 +128,10 @@ public class KlijentskiZahteviNit extends Thread {
                     odgovor.setRezultat(narudzbenica);
                     break;
                 }
+                case PRIKAZI_SVE_NARUDZBENICE: {
+                    odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveNarudzbenice());
+                    break;
+                }
                 default:
                     throw new AssertionError();
             }
