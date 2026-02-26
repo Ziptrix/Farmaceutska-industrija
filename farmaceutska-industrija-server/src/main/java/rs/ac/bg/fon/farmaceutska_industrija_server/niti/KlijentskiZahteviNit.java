@@ -6,6 +6,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_server.niti;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 import rs.ac.bg.fon.farmaceutska_industrija_server.logika.KontrolerServer;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
@@ -55,10 +56,17 @@ public class KlijentskiZahteviNit extends Thread {
                 ZahtevKlijenta zahtev = (ZahtevKlijenta) primalac.primiObjekat();
                 OdgovorServera odgovor = obradiZahtevKlijenta(zahtev);
                 posiljalac.posaljiObjekat(odgovor);
+            } catch (SocketException se) {
+                System.out.println("Klijent je prekinuo vezu: " + soket);
+                break;
+            } catch (IOException ioe) {
+                System.out.println("Greska u komunikaciji sa klijentom: " + ioe.getMessage());
+                break;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        server.odjaviKorisnika(korisnik, this);
     }
 
     private OdgovorServera obradiZahtevKlijenta(ZahtevKlijenta zahtev) {
@@ -67,11 +75,11 @@ public class KlijentskiZahteviNit extends Thread {
             switch (zahtev.getOperacija()) {
                 case LOGIN: {
                     Korisnik korisnik = (Korisnik) zahtev.getArgument();
-                    korisnik = KontrolerServer.vratiInstancu().prijava(korisnik);
                     try {
-                        server.prijavaKorisnika(korisnik, this);
-                        this.korisnik = korisnik;
-                        odgovor.setRezultat(korisnik);
+                        Korisnik pronadjen = KontrolerServer.vratiInstancu().prijava(korisnik);
+                        server.prijavaKorisnika(pronadjen, this);
+                        this.korisnik = pronadjen;
+                        odgovor.setRezultat(pronadjen);
                     } catch (Exception e) {
                         odgovor.setIzuzetak(e);
                     }

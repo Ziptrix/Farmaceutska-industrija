@@ -4,8 +4,10 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler;
 
+import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
+import lombok.Getter;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
@@ -22,6 +24,7 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.komunikacija.ZahtevKlijen
  *
  * @author milos
  */
+@Getter
 public class KontrolerKlijent {
 
     Socket soket;

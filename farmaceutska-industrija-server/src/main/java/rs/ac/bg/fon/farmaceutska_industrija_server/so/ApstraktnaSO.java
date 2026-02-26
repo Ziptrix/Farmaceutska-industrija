@@ -28,6 +28,7 @@ public abstract class ApstraktnaSO {
             e.printStackTrace();
             System.out.println("Operacija nije uspesno izvrsena!");
             ponistiTransakciju();
+            throw e;
         } finally {
             zatvoriTransakciju();
         }

@@ -23,14 +23,13 @@ public class PrijavaSO extends ApstraktnaSO {
             throw new Exception("Prosledjen objekat mora biti tipa Korisnik!");
         }
 
-        if (objekat instanceof Korisnik) {
-            if (((Korisnik) objekat).getKorisnickoIme().isEmpty() || ((Korisnik) objekat).getKorisnickoIme()== "") {
-                throw new Exception("Korisnicko ime Korisnika ne sme biti prazno!");
-            }
-            if (((Korisnik) objekat).getSifra().isEmpty() || ((Korisnik) objekat).getSifra()== "") {
-                throw new Exception("Sifra Korisnika ne sme biti prazna!");
-            }
+        if (((Korisnik) objekat).getKorisnickoIme().isEmpty() || ((Korisnik) objekat).getKorisnickoIme().equals("")) {
+            throw new Exception("Korisnicko ime Korisnika ne sme biti prazno!");
         }
+        if (((Korisnik) objekat).getSifra().isEmpty() || ((Korisnik) objekat).getSifra().equals("")) {
+            throw new Exception("Sifra Korisnika ne sme biti prazna!");
+        }
+
     }
 
     @Override

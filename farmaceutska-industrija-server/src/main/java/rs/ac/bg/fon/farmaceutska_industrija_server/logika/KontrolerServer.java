@@ -58,7 +58,7 @@ public class KontrolerServer {
 
     public Korisnik prijava(Korisnik korisnik) throws Exception {
         ApstraktnaSO prijava = new PrijavaSO();
-        prijava.izvrsi(korisnik, null);
+        prijava.izvrsi(korisnik, null);        
         return ((PrijavaSO) prijava).getKorisnik();
     }
 

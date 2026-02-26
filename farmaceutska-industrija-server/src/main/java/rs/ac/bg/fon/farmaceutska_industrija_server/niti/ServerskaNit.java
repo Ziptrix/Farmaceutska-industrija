@@ -41,7 +41,6 @@ public class ServerskaNit extends Thread {
                 KlijentskiZahteviNit nit = new KlijentskiZahteviNit(soket, this);
                 nit.start();
 
-                System.out.println("Korisnici " + vratiSveKorisnike());
                 System.out.println("Klijent se uspesno povezao!");
             } catch (Exception e) {
             }
@@ -56,6 +55,7 @@ public class ServerskaNit extends Thread {
 
         prijavljeniKorisnici.add(korisnik);
         klijenti.add(nit);
+        System.out.println("Korisnici " + prijavljeniKorisnici);
     }
 
     private void prekiniSveNiti() {
@@ -68,11 +68,11 @@ public class ServerskaNit extends Thread {
         }
     }
 
-    private List<Korisnik> vratiSveKorisnike() {
-        return klijenti.stream()
-                .map(KlijentskiZahteviNit::getKorisnika)
-                .toList();
-
+    public void odjaviKorisnika(Korisnik korisnik, KlijentskiZahteviNit nit) {
+        if (korisnik != null) {
+            prijavljeniKorisnici.remove(korisnik);
+        }
+        klijenti.remove(nit);
+        System.out.println("Korisnik je odjavljen " + korisnik);
     }
-
 }

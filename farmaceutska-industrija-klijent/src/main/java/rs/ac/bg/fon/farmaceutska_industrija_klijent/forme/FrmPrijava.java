@@ -102,13 +102,18 @@ public class FrmPrijava extends javax.swing.JPanel {
     }//GEN-LAST:event_btnIzlazActionPerformed
 
     private void btnPrijavaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrijavaActionPerformed
+        if (txtKorisnickoIme.getText().isEmpty() || txtKorisnickoIme.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Morate uneti korisnicko ime!", "Prijava", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (txtSifra.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this, "Morate uneti sifru!", "Prijava", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         try {
-            if(txtKorisnickoIme.getText().isEmpty() || txtKorisnickoIme.getText().equals("")){
-                JOptionPane.showMessageDialog(this, "Morate uneti korisnicko ime!", "Prijava", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
             Korisnik korisnik = new Korisnik(txtKorisnickoIme.getText(), new String(txtSifra.getPassword()));
             korisnik = KontrolerKlijent.vratiInstancu().prijava(korisnik);
+
             JOptionPane.showMessageDialog(this, korisnik.getIme() + " je uspesno prijavljen!", "Prijava", JOptionPane.INFORMATION_MESSAGE);
             JFrame pocetna = new FrmPocetna(korisnik);
             this.getTopLevelAncestor().setVisible(false);

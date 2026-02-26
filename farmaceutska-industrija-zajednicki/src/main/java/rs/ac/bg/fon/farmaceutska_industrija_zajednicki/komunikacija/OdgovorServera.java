@@ -26,9 +26,9 @@ public class OdgovorServera implements Serializable {
     @Override
     public String toString() {
         if (izuzetak == null) {
-            return "Odgovor " + rezultat + "koji treba poslati klijentu nema gresaka!";
+            return "Odgovor " + rezultat + " koji treba poslati klijentu nema gresaka!";
         } else {
-            return "Odgovor " + rezultat + "se nece poslati klijentu jer se desila greska: " + izuzetak;
+            return "Odgovor " + rezultat + " se nece poslati klijentu jer se desila greska: " + izuzetak;
         }
     }
 
