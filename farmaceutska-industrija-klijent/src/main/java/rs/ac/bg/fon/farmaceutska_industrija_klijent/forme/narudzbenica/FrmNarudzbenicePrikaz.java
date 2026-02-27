@@ -38,7 +38,7 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNarudzbenice = new javax.swing.JTable();
-        tblObrisi = new javax.swing.JButton();
+        btnObrisi = new javax.swing.JButton();
         btnPrikaziStavke = new javax.swing.JButton();
 
         tblNarudzbenice.setModel(new javax.swing.table.DefaultTableModel(
@@ -54,10 +54,10 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblNarudzbenice);
 
-        tblObrisi.setText("Obrisi narudzbenicu");
-        tblObrisi.addActionListener(new java.awt.event.ActionListener() {
+        btnObrisi.setText("Obrisi narudzbenicu");
+        btnObrisi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tblObrisiActionPerformed(evt);
+                btnObrisiActionPerformed(evt);
             }
         });
 
@@ -80,7 +80,7 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
                 .addGap(108, 108, 108)
                 .addComponent(btnPrikaziStavke)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
-                .addComponent(tblObrisi)
+                .addComponent(btnObrisi)
                 .addGap(136, 136, 136))
         );
         layout.setVerticalGroup(
@@ -91,7 +91,7 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
                 .addGap(83, 83, 83)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPrikaziStavke)
-                    .addComponent(tblObrisi))
+                    .addComponent(btnObrisi))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -107,7 +107,7 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnPrikaziStavkeActionPerformed
 
-    private void tblObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tblObrisiActionPerformed
+    private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
         int red = tblNarudzbenice.getSelectedRow();
         ModelNarudzbenice model = (ModelNarudzbenice) tblNarudzbenice.getModel();
         if (red >= 0) {
@@ -116,23 +116,24 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
             if (izbor == JOptionPane.YES_OPTION) {
                 try {
                     KontrolerKlijent.vratiInstancu().obrisiNarudzbenicu(narudzbenica);
-                    JOptionPane.showMessageDialog(this, "Uspesno ste obrisali narudzbenicu:\n" + narudzbenica, "Brisanje Narudzbenice", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Sistem je obrisao narudzbenicu:\n" + narudzbenica, "Brisanje Narudzbenice", JOptionPane.INFORMATION_MESSAGE);
                     prikaziNarudzbenice();
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Desila se greska!\n" + e.getMessage(), "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise narudzbenicu", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+                    System.out.println("Greska " + e.getMessage());
                 }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Morate izabrati neku od narudzbenica!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         }
-    }//GEN-LAST:event_tblObrisiActionPerformed
+    }//GEN-LAST:event_btnObrisiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnPrikaziStavke;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblNarudzbenice;
-    private javax.swing.JButton tblObrisi;
     // End of variables declaration//GEN-END:variables
 
     private void prikaziNarudzbenice() throws Exception {

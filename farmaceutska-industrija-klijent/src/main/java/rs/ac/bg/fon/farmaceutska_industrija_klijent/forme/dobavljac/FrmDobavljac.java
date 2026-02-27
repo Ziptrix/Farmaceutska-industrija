@@ -160,7 +160,7 @@ public class FrmDobavljac extends javax.swing.JPanel {
 
         try {
             KontrolerKlijent.vratiInstancu().dodajDobavljaca(dobavljac);
-            JOptionPane.showMessageDialog(this, "Dobavljac dodat!\nGenerisani ID: " + dobavljac.getId(), "Dodavanje Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je sacuvao dobavljaca\nGenerisani ID: " + dobavljac.getId(), "Dodavanje Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
             int izbor = JOptionPane.showConfirmDialog(this, "Da li zelite da nastavite sa dodavanjem dobavljaca?", "Dodavanje Dobavljaca", JOptionPane.YES_NO_OPTION);
             if (izbor == JOptionPane.YES_OPTION) {
                 txtIme.setText("");
@@ -170,7 +170,8 @@ public class FrmDobavljac extends javax.swing.JPanel {
                 this.getTopLevelAncestor().setVisible(false);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Dobavljac nije dodat!\n" + e.getMessage(), "Dodavanje Dobavljaca", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da sacuva dobavljaca", "Dodavanje Dobavljaca", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Greska " + e.getMessage());
         }
     }//GEN-LAST:event_btnDodajActionPerformed
 
@@ -183,12 +184,13 @@ public class FrmDobavljac extends javax.swing.JPanel {
         if (izbor == JOptionPane.YES_OPTION) {
             try {
                 KontrolerKlijent.vratiInstancu().obrisiDobavljaca(dobavljac);
-                JOptionPane.showMessageDialog(this, "Uspesno ste izbrisali Dobavljaca:\n" + dobavljac, "Brisanje Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Sistem je obrisao dobavljaca\n" + dobavljac, "Brisanje Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
                 this.getTopLevelAncestor().setVisible(false);
                 tabela.prikaziDobavljace();
                 tabela.getTxtPretraga().setText("");
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Desila se greska prilikom brisanja dobavljaca:\n" + dobavljac + "\n" + e.getMessage(), "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise dobavljaca\n" + dobavljac + "\n", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Greska " + e.getMessage());
             }
         }
     }//GEN-LAST:event_btnObrisiActionPerformed
@@ -201,12 +203,13 @@ public class FrmDobavljac extends javax.swing.JPanel {
         dobavljac.setGrad((Grad) cmbGradovi.getSelectedItem());
         try {
             KontrolerKlijent.vratiInstancu().izmeniDobavljaca(dobavljac);
-            JOptionPane.showMessageDialog(this, "Uspesno ste izmenili Dobavljaca:\n" + dobavljac, "Izmena Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je sacuvao dobavljaca\n" + dobavljac, "Izmena Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
             this.getTopLevelAncestor().setVisible(false);
             tabela.prikaziDobavljace();
             tabela.getTxtPretraga().setText("");
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da sacuva dobavljaca", "Dodavanje Dobavljaca", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Greska " + e.getMessage());
         }
     }//GEN-LAST:event_btnIzmeniActionPerformed
 

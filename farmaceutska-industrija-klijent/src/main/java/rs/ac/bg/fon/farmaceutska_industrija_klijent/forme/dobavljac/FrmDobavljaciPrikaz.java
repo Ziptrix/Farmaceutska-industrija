@@ -192,8 +192,10 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
         String kriterijum = txtPretraga.getText().trim();
         try {
             prikaziPretraguDobavljaca(kriterijum);
+            JOptionPane.showMessageDialog(this, "Sistem je pronasao dobavjace sa zadatim parametrom", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Za kriterijum: " + kriterijum + "\n" + e.getMessage(), "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da pronadje dobavjace sa zadatim parametrom", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Greska " + e.getMessage());
             prikaziDobavljace();
         }
     }//GEN-LAST:event_btnPretragaActionPerformed
