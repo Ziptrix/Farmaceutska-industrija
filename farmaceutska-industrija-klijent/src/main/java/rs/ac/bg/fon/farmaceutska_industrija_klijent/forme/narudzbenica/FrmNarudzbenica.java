@@ -63,6 +63,7 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtSifra = new javax.swing.JTextField();
         txtPodaciSupstance = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Datum:");
@@ -121,6 +122,13 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
 
         txtPodaciSupstance.setEditable(false);
 
+        jButton1.setText("Ukloni stavku");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,7 +148,9 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(47, 47, 47)
-                                .addComponent(btnDodajStavku))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnDodajStavku)
+                                    .addComponent(jButton1)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -158,7 +168,7 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cmbDobavljaci, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtDatum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(55, Short.MAX_VALUE))))
+                        .addContainerGap(54, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,6 +195,8 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(117, 117, 117)
                         .addComponent(btnDodajStavku)
+                        .addGap(55, 55, 55)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnDodajNarudzbenicu)
@@ -310,12 +322,39 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDodajNarudzbenicuActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (stavkeNarudzbenice.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Morate uneti barem jednu stavku klikom na dugme dodaj stavku!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        int red = tblStavke.getSelectedRow();
+        if (red >= 0) {
+            StavkaNarudzbenice uklonjena = stavkeNarudzbenice.remove(red);
+
+            for (StavkaNarudzbenice stavkaNarudzbenice : stavkeNarudzbenice) {
+                if (uklonjena.getRedniBroj() < stavkaNarudzbenice.getRedniBroj()) {
+                    stavkaNarudzbenice.setRedniBroj(stavkaNarudzbenice.getRedniBroj() - 1);
+                }
+            }
+
+            long noviUkupanIznos = Long.valueOf(txtUkupanIznos.getText().trim()) - uklonjena.getIznosStavke();
+            txtUkupanIznos.setText(String.valueOf(noviUkupanIznos));
+
+            tblStavke.setModel(new ModelStavkeNarudzbenice(stavkeNarudzbenice));
+
+            System.out.println("Trenutne stavke: " + stavkeNarudzbenice);
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate odabrati neku od stavki!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodajNarudzbenicu;
     private javax.swing.JButton btnDodajStavku;
     private javax.swing.JComboBox cmbDobavljaci;
     private javax.swing.JComboBox cmbSupstance;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
