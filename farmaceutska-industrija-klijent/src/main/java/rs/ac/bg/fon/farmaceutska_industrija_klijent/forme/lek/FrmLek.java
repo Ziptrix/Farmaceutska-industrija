@@ -297,7 +297,14 @@ public class FrmLek extends javax.swing.JPanel {
         }
 
         try {
-            Long serijskiBroj = Long.valueOf(txtSerijskiBroj.getText().trim());
+            String sBroj = txtSerijskiBroj.getText().trim();
+
+            if (sBroj.startsWith("0")) {
+                JOptionPane.showMessageDialog(this, "Uneti serijski broj ne sme zapoceti sa nulom!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            Long serijskiBroj = Long.valueOf(sBroj);
             String naziv = txtNaziv.getText().trim();
             String doziranje = txtDoziranje.getText().trim();
             List<Supstanca> supstanceZaLek = model.getSupstance();

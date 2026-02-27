@@ -266,10 +266,15 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
         }
 
         try {
-            long sifra = Long.valueOf(txtSifra.getText().trim());
+            String sifraTekst = txtSifra.getText().trim();
+
+            if (sifraTekst.startsWith("0")) {
+                JOptionPane.showMessageDialog(this, "Uneta sifra ne sme zapoceti sa nulom!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
 
             Narudzbenica narudzbenica = new Narudzbenica();
-            narudzbenica.setSifra(sifra);
+            narudzbenica.setSifra(Long.valueOf(sifraTekst));
 
             String datumTekst = txtDatum.getText();
             DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
@@ -299,7 +304,7 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
                 this.getTopLevelAncestor().setVisible(false);
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Uneti serijski broj mora biti broj!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Uneta sifra mora biti broj!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Doslo je do greske\n" + e.getMessage(), "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
         }
