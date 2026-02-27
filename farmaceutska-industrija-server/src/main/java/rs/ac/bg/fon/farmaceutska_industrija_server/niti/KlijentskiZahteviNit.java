@@ -95,8 +95,12 @@ public class KlijentskiZahteviNit extends Thread {
                 }
                 case DODAJ_DOBAVLJACA: {
                     Dobavljac dobavljac = (Dobavljac) zahtev.getArgument();
-                    KontrolerServer.vratiInstancu().dodajDobavljaca(dobavljac);
-                    odgovor.setRezultat(dobavljac);
+                    try {
+                        KontrolerServer.vratiInstancu().dodajDobavljaca(dobavljac);
+                        odgovor.setRezultat(dobavljac);
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case PRIKAZI_SVE_DOBAVLJACE: {
@@ -119,8 +123,12 @@ public class KlijentskiZahteviNit extends Thread {
                 }
                 case IZMENI_DOBAVLJACA: {
                     Dobavljac dobavljac = (Dobavljac) zahtev.getArgument();
-                    KontrolerServer.vratiInstancu().izmeniDobavljaca(dobavljac);
-                    odgovor.setRezultat(dobavljac);
+                    try {
+                        KontrolerServer.vratiInstancu().izmeniDobavljaca(dobavljac);
+                        odgovor.setRezultat(dobavljac);
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case PRETRAGA_DOBAVLJACA: {
@@ -142,8 +150,12 @@ public class KlijentskiZahteviNit extends Thread {
                 }
                 case DODAJ_LEK: {
                     Lek lek = (Lek) zahtev.getArgument();
-                    KontrolerServer.vratiInstancu().dodajLek(lek);
-                    odgovor.setRezultat(lek);
+                    try {
+                        KontrolerServer.vratiInstancu().dodajLek(lek);
+                        odgovor.setRezultat(lek);
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case PRETRAGA_LEKOVA: {
@@ -157,30 +169,50 @@ public class KlijentskiZahteviNit extends Thread {
                 }
                 case IZMENI_LEK: {
                     Lek lek = (Lek) zahtev.getArgument();
-                    KontrolerServer.vratiInstancu().izmeniLek(lek);
-                    odgovor.setRezultat(lek);
+                    try {
+                        KontrolerServer.vratiInstancu().izmeniLek(lek);
+                        odgovor.setRezultat(lek);
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case OBRISI_LEK: {
                     Lek lek = (Lek) zahtev.getArgument();
-                    KontrolerServer.vratiInstancu().obrisiLek(lek);
-                    odgovor.setRezultat(null);
+                    try {
+                        KontrolerServer.vratiInstancu().obrisiLek(lek);
+                        odgovor.setRezultat(null);
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case DODAJ_NARUDZBENICU: {
                     Narudzbenica narudzbenica = (Narudzbenica) zahtev.getArgument();
-                    KontrolerServer.vratiInstancu().dodajNarudzbenicu(narudzbenica);
-                    odgovor.setRezultat(narudzbenica);
+                    try {
+                        KontrolerServer.vratiInstancu().dodajNarudzbenicu(narudzbenica);
+                        odgovor.setRezultat(narudzbenica);
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case PRIKAZI_SVE_NARUDZBENICE: {
-                    odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveNarudzbenice());
+                    try {
+                        odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveNarudzbenice());
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case OBRISI_NARUDZBENICU: {
                     Narudzbenica narudzbenica = (Narudzbenica) zahtev.getArgument();
-                    KontrolerServer.vratiInstancu().obrisiNarudzbenicu(narudzbenica);
-                    odgovor.setRezultat(null);
+                    try {
+                        KontrolerServer.vratiInstancu().obrisiNarudzbenicu(narudzbenica);
+                        odgovor.setRezultat(null);
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 default:

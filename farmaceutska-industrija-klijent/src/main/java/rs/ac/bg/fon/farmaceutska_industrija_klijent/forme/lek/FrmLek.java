@@ -142,20 +142,14 @@ public class FrmLek extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDoziranje, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtSerijskiBroj, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                .addGap(51, 51, 51)
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(txtNaziv, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                .addComponent(txtSerijskiBroj, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(txtNaziv)
                 .addGap(88, 88, 88))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -177,8 +171,15 @@ public class FrmLek extends javax.swing.JPanel {
                 .addGap(132, 132, 132))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblInfo)
-                .addGap(238, 238, 238))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblInfo)
+                        .addGap(238, 238, 238))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDoziranje, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(337, 337, 337))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,7 +312,7 @@ public class FrmLek extends javax.swing.JPanel {
             Lek lek = new Lek(serijskiBroj, naziv, doziranje, supstanceZaLek);
 
             KontrolerKlijent.vratiInstancu().dodajLek(lek);
-            JOptionPane.showMessageDialog(this, "Uspesno dodat lek\n" + lek, "Dodavanje Leka", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je sacuvao lek!\n" + lek, "Dodavanje Leka", JOptionPane.INFORMATION_MESSAGE);
             int izbor = JOptionPane.showConfirmDialog(this, "Da li zelite da nastavite sa dodavanjem lekova?", "Dodavanje Leka", JOptionPane.YES_NO_OPTION);
             if (izbor == JOptionPane.YES_OPTION) {
                 txtSerijskiBroj.setText("");
@@ -327,6 +328,8 @@ public class FrmLek extends javax.swing.JPanel {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Uneti serijski broj mora biti broj!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da sacuva lek", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Greska " + e.getMessage());
         }
     }//GEN-LAST:event_btnDodajActionPerformed
 
@@ -343,11 +346,13 @@ public class FrmLek extends javax.swing.JPanel {
         lek.setDoziranje(txtDoziranje.getText().trim());
         try {
             KontrolerKlijent.vratiInstancu().izmeniLek(lek);
-            JOptionPane.showMessageDialog(this, "Uspesno ste izmenili Lek:\n" + lek, "Izmena Leka", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je sacuvao lek:\n" + lek, "Izmena Leka", JOptionPane.INFORMATION_MESSAGE);
             this.getTopLevelAncestor().setVisible(false);
             tabela.prikaziLekove();
             tabela.getTxtPretraga().setText("");
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da sacuva lek", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Greska " + e.getMessage());
         }
     }//GEN-LAST:event_btnIzmeniActionPerformed
 
@@ -360,12 +365,16 @@ public class FrmLek extends javax.swing.JPanel {
         if (izbor == JOptionPane.YES_OPTION) {
             try {
                 KontrolerKlijent.vratiInstancu().obrisiLek(lek);
-                JOptionPane.showMessageDialog(this, "Uspesno ste izbrisali Lek:\n" + lek, "Brisanje Leka", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Sistem je obrisao lek:\n" + lek, "Brisanje Leka", JOptionPane.INFORMATION_MESSAGE);
                 this.getTopLevelAncestor().setVisible(false);
                 tabela.prikaziLekove();
                 tabela.getTxtPretraga().setText("");
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise lek", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Greska " + e.getMessage());
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise lek", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnObrisiActionPerformed
 

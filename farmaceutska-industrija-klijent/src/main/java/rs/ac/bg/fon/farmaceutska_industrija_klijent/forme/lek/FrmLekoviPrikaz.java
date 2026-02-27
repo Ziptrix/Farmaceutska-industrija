@@ -175,8 +175,10 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
         String kriterijum = txtPretraga.getText().trim();
         try {
             prikaziPretraguLekova(kriterijum);
+            JOptionPane.showMessageDialog(this, "Sistem je pronasao lekove sa zadatim parametrom!", "Uspesna pretraga!", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Za kriterijum: " + kriterijum + "\n" + e.getMessage(), "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da pronadje lekove sa zadatim parametrom!", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Greska " + e.getMessage());
             prikaziLekove();
         }
     }//GEN-LAST:event_btnPretragaActionPerformed
