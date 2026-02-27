@@ -4,7 +4,6 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstraktnaSO;
@@ -34,6 +33,10 @@ public class UcitajSveDobavljaceSO extends ApstraktnaSO {
         dobavljaci = rezultat.stream()
                 .map(op -> (Dobavljac) op)
                 .toList();
+
+        if (dobavljaci.isEmpty()) {
+            throw new Exception("Lista ucitanih dobavljaca je prazna pa se forma za dodavanje narudzbenice ne otvara!");
+        }
     }
 
 }

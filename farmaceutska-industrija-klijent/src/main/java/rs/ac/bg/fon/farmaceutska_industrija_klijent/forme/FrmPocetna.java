@@ -6,6 +6,7 @@ package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac.FrmDobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.dobavljac.FrmDobavljaciPrikaz;
@@ -141,7 +142,7 @@ public class FrmPocetna extends javax.swing.JFrame {
             dijalog.setLocationRelativeTo(null);
             dijalog.setVisible(true);
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Desila se greska!\n" + e.getMessage(), "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -167,7 +168,7 @@ public class FrmPocetna extends javax.swing.JFrame {
             dijalog.setLocationRelativeTo(null);
             dijalog.setVisible(true);
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Desila se greska!\n" + e.getMessage(), "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -189,7 +190,7 @@ public class FrmPocetna extends javax.swing.JFrame {
             dijalog.setLocationRelativeTo(null);
             dijalog.setVisible(true);
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Desila se greska!\n" + e.getMessage(), "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 

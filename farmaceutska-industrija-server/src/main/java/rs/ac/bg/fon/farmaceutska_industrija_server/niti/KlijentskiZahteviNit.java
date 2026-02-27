@@ -86,7 +86,11 @@ public class KlijentskiZahteviNit extends Thread {
                     break;
                 }
                 case PRIKAZI_SVE_GRADOVE: {
-                    odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveGradove());
+                    try {
+                        odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveGradove());
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case DODAJ_DOBAVLJACA: {
@@ -96,7 +100,11 @@ public class KlijentskiZahteviNit extends Thread {
                     break;
                 }
                 case PRIKAZI_SVE_DOBAVLJACE: {
-                    odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveDobavljace());
+                    try {
+                        odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveDobavljace());
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case OBRISI_DOBAVLJACA: {
@@ -125,7 +133,11 @@ public class KlijentskiZahteviNit extends Thread {
                     break;
                 }
                 case PRIKAZI_SVE_SUPSTANCE: {
-                    odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveSupstance());
+                    try {
+                        odgovor.setRezultat(KontrolerServer.vratiInstancu().ucitajSveSupstance());
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case DODAJ_LEK: {

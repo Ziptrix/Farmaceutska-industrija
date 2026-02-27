@@ -4,7 +4,6 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_server.so.grad;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstraktnaSO;
@@ -34,6 +33,10 @@ public class UcitajSveGradoveSO extends ApstraktnaSO {
         gradovi = rezultat.stream()
                 .map(op -> (Grad) op)
                 .toList();
+
+        if (gradovi.isEmpty()) {
+            throw new Exception("Lista ucitanih gradova je prazna pa se forma za dodavanje dobavljaca ne otvara!");
+        }
     }
 
 }
