@@ -4,7 +4,6 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler;
 
-import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
 import lombok.Getter;

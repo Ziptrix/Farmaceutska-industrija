@@ -176,6 +176,8 @@ public class FrmLekoviPrikaz extends javax.swing.JPanel {
         try {
             prikaziPretraguLekova(kriterijum);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Za kriterijum: " + kriterijum + "\n" + e.getMessage(), "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+            prikaziLekove();
         }
     }//GEN-LAST:event_btnPretragaActionPerformed
 

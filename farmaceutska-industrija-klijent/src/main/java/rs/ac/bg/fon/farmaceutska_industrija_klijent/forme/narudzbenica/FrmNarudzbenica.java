@@ -265,22 +265,24 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
             return;
         }
 
-        Narudzbenica narudzbenica = new Narudzbenica();
-        narudzbenica.setSifra(Long.valueOf(txtSifra.getText().trim()));
-
-        String datumTekst = txtDatum.getText();
-        DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
-        LocalDate datum = LocalDate.parse(datumTekst, formater);
-        narudzbenica.setDatum(datum);
-
-        narudzbenica.setUkupanIznos(Long.valueOf(txtUkupanIznos.getText()));
-        narudzbenica.setKorisnik(korisnik);
-        narudzbenica.setDobavljac((Dobavljac) cmbDobavljaci.getSelectedItem());
-        narudzbenica.setListaStavki(stavkeNarudzbenice);
-
-        stavkeNarudzbenice.forEach(stavka -> stavka.setNarudzbenica(narudzbenica));
-
         try {
+            long sifra = Long.valueOf(txtSifra.getText().trim());
+
+            Narudzbenica narudzbenica = new Narudzbenica();
+            narudzbenica.setSifra(sifra);
+
+            String datumTekst = txtDatum.getText();
+            DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
+            LocalDate datum = LocalDate.parse(datumTekst, formater);
+            narudzbenica.setDatum(datum);
+
+            narudzbenica.setUkupanIznos(Long.valueOf(txtUkupanIznos.getText()));
+            narudzbenica.setKorisnik(korisnik);
+            narudzbenica.setDobavljac((Dobavljac) cmbDobavljaci.getSelectedItem());
+            narudzbenica.setListaStavki(stavkeNarudzbenice);
+
+            stavkeNarudzbenice.forEach(stavka -> stavka.setNarudzbenica(narudzbenica));
+
             KontrolerKlijent.vratiInstancu().dodajNarudzbenicu(narudzbenica);
             JOptionPane.showMessageDialog(this, "Uspesno ste dodali narudzbenicu:\n" + narudzbenica + " sa stavkama:\n" + stavkeNarudzbenice);
             int izbor = JOptionPane.showConfirmDialog(this, "Da li zelite da nastavite sa dodavanjem narudzbenica?", "Dodavanje Narudzbenice", JOptionPane.YES_NO_OPTION);
@@ -296,6 +298,8 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
             } else {
                 this.getTopLevelAncestor().setVisible(false);
             }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Uneti serijski broj mora biti broj!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Doslo je do greske\n" + e.getMessage(), "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
         }

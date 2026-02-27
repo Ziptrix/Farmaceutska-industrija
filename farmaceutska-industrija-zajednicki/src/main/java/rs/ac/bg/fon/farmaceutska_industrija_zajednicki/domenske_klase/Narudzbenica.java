@@ -75,7 +75,10 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
     public String vratiVrednostiSelectUpita() {
         return "n.code, n.date, n.total_amount, n.user, n.supplier, "
                 + "sn.order_number AS stavka_id, sn.quantity, sn.amount, "
-                + "s.code AS supstanca_id, s.name, s.quantity, s.price";
+                + "s.code AS supstanca_id, s.name, s.quantity, s.price, "
+                + "k.id, k.first_name, k.last_name, k.username, k.password, "
+                + "d.id, d.first_name, d.last_name, d.city, "
+                + "g.zip_code, g.name";
     }
 
     @Override
@@ -91,7 +94,10 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
     @Override
     public String vratiJoin() {
         return " n JOIN item sn ON n.code = sn.id_po "
-                + " JOIN substance s ON sn.substance = s.code ";
+                + " JOIN substance s ON sn.substance = s.code "
+                + " JOIN user k ON n.user = k.id "
+                + " JOIN supplier d ON n.supplier = d.id "
+                + " JOIN city g ON d.city = g.zip_code ";
     }
 
     @Override
@@ -108,13 +114,6 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
                     .findFirst()
                     .orElse(null);
 
-//            for (OpstaDomenskaKlasa odk : lista) {
-//                Narudzbenica n = (Narudzbenica) odk;
-//                if (n.getSifra().equals(idNarudzbenice)) {
-//                    postojeca = n;
-//                    break;
-//                }
-//            }
             if (postojeca == null) {
                 postojeca = new Narudzbenica();
                 postojeca.setSifra(idNarudzbenice);
@@ -123,6 +122,25 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
                 postojeca.setKorisnik(null);
                 postojeca.setDobavljac(null);
                 postojeca.setListaStavki(new ArrayList<>());
+
+                Korisnik k = new Korisnik();
+                k.setId(rs.getLong("k.id"));
+                k.setIme(rs.getString("k.first_name"));
+                k.setPrezime(rs.getString("k.last_name"));
+                k.setKorisnickoIme(rs.getString("k.username"));
+                k.setSifra(rs.getString("k.password"));
+                postojeca.setKorisnik(k);
+
+                Dobavljac d = new Dobavljac();
+                d.setId(rs.getLong("d.id"));
+                d.setIme(rs.getString("d.first_name"));
+                d.setPrezime(rs.getString("d.last_name"));
+                Grad g = new Grad();
+                g.setPostanskiBroj(rs.getLong("g.zip_code"));
+                g.setNaziv(rs.getString("g.name"));
+                d.setGrad(g);
+                postojeca.setDobavljac(d);
+
                 lista.add(postojeca);
             }
 

@@ -142,15 +142,15 @@ public class FrmDobavljac extends javax.swing.JPanel {
         Dobavljac dobavljac = new Dobavljac();
 
         if (txtIme.getText().isEmpty() || txtIme.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Morate uneti ime za dobavljaca!", "Dodavanje dobavljaca", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate uneti ime za dobavljaca!", "Dodavanje dobavljaca", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         if (txtPrezime.getText().isEmpty() || txtPrezime.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Morate uneti prezime za dobavljaca!", "Dodavanje dobavljaca", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate uneti prezime za dobavljaca!", "Dodavanje dobavljaca", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         if (cmbGradovi.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, "Morate izabrati neki od gradova!", "Dodavanje dobavljaca", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate izabrati neki od gradova!", "Dodavanje dobavljaca", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
@@ -188,7 +188,7 @@ public class FrmDobavljac extends javax.swing.JPanel {
                 tabela.prikaziDobavljace();
                 tabela.getTxtPretraga().setText("");
             } catch (Exception e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Desila se greska prilikom brisanja dobavljaca:\n" + dobavljac + "\n" + e.getMessage(), "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnObrisiActionPerformed

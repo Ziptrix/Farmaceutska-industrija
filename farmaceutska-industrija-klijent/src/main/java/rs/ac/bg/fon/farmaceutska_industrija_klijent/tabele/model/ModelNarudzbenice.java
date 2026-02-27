@@ -7,6 +7,8 @@ package rs.ac.bg.fon.farmaceutska_industrija_klijent.tabele.model;
 import java.time.LocalDate;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Narudzbenica;
 
 /**
@@ -16,8 +18,8 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Narudzbeni
 public class ModelNarudzbenice extends AbstractTableModel {
 
     List<Narudzbenica> narudzbenice;
-    String[] naziviKolona = {"Sifra", "Datum kreiranja", "Ukupan iznos"};
-    Class[] klaseKolona = {Long.class, LocalDate.class, Long.class};
+    String[] naziviKolona = {"Sifra", "Datum kreiranja", "Ukupan iznos", "Korisnik koji je kreirao", "Dobavljac od kojeg je naruceno"};
+    Class[] klaseKolona = {Long.class, LocalDate.class, Long.class, Korisnik.class, Dobavljac.class};
 
     public ModelNarudzbenice(List<Narudzbenica> narudzbenice) {
         this.narudzbenice = narudzbenice;
@@ -46,6 +48,10 @@ public class ModelNarudzbenice extends AbstractTableModel {
                 return narudzbenica.getDatum();
             case 2:
                 return narudzbenica.getUkupanIznos();
+            case 3:
+                return narudzbenica.getKorisnik();
+            case 4:
+                return narudzbenica.getDobavljac();
             default:
                 throw new AssertionError();
         }

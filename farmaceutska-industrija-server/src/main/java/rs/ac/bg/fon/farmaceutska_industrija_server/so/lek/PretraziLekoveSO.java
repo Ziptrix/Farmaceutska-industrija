@@ -4,7 +4,6 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_server.so.lek;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstraktnaSO;
@@ -54,6 +53,10 @@ public class PretraziLekoveSO extends ApstraktnaSO {
                     .toList();
 
             lek.setSastav(sastav);
+        }
+
+        if (lekovi.isEmpty()) {
+            throw new Exception("Sistem ne moze da pronadje lekove koji odgovaraju!");
         }
     }
 

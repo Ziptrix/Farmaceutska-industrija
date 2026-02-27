@@ -193,7 +193,8 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
         try {
             prikaziPretraguDobavljaca(kriterijum);
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Za kriterijum: " + kriterijum + "\n" + e.getMessage(), "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+            prikaziDobavljace();
         }
     }//GEN-LAST:event_btnPretragaActionPerformed
 
@@ -217,13 +218,13 @@ public class FrmDobavljaciPrikaz extends javax.swing.JPanel {
     private javax.swing.JTextField txtPretraga;
     // End of variables declaration//GEN-END:variables
 
+    public void prikaziDobavljace() {
+        ModelDobavljaci model = new ModelDobavljaci(new ArrayList<>());
+        tblDobavljaci.setModel(model);
+    }
+
     public void prikaziPretraguDobavljaca(String kriterijum) throws Exception {
         List<Dobavljac> dobavljaci = KontrolerKlijent.vratiInstancu().pretragaDobavljaca(kriterijum);
         tblDobavljaci.setModel(new ModelDobavljaci(dobavljaci));
-    }
-
-    public void prikaziDobavljace() throws Exception {
-        ModelDobavljaci model = new ModelDobavljaci(new ArrayList<>());
-        tblDobavljaci.setModel(model);
     }
 }

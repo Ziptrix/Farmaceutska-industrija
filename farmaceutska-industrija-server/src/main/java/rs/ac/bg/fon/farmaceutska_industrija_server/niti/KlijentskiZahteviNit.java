@@ -101,8 +101,12 @@ public class KlijentskiZahteviNit extends Thread {
                 }
                 case OBRISI_DOBAVLJACA: {
                     Dobavljac dobavljac = (Dobavljac) zahtev.getArgument();
-                    KontrolerServer.vratiInstancu().obrisiDobavljaca(dobavljac);
-                    odgovor.setRezultat(null);
+                    try {
+                        KontrolerServer.vratiInstancu().obrisiDobavljaca(dobavljac);
+                        odgovor.setRezultat(null);
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case IZMENI_DOBAVLJACA: {
@@ -113,7 +117,11 @@ public class KlijentskiZahteviNit extends Thread {
                 }
                 case PRETRAGA_DOBAVLJACA: {
                     String kriterijum = (String) zahtev.getArgument();
-                    odgovor.setRezultat(KontrolerServer.vratiInstancu().pretraziDobavljace(kriterijum));
+                    try {
+                        odgovor.setRezultat(KontrolerServer.vratiInstancu().pretraziDobavljace(kriterijum));
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case PRIKAZI_SVE_SUPSTANCE: {
@@ -128,7 +136,11 @@ public class KlijentskiZahteviNit extends Thread {
                 }
                 case PRETRAGA_LEKOVA: {
                     String kriterijum = (String) zahtev.getArgument();
-                    odgovor.setRezultat(KontrolerServer.vratiInstancu().pretraziLekove(kriterijum));
+                    try {
+                        odgovor.setRezultat(KontrolerServer.vratiInstancu().pretraziLekove(kriterijum));
+                    } catch (Exception e) {
+                        odgovor.setIzuzetak(e);
+                    }
                     break;
                 }
                 case IZMENI_LEK: {

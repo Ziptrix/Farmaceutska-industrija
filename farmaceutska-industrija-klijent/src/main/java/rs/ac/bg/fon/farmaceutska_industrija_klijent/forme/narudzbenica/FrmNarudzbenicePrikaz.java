@@ -4,6 +4,7 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_klijent.forme.narudzbenica;
 
+import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JOptionPane;
 import rs.ac.bg.fon.farmaceutska_industrija_klijent.kontroler.KontrolerKlijent;
@@ -22,6 +23,7 @@ public class FrmNarudzbenicePrikaz extends javax.swing.JPanel {
     public FrmNarudzbenicePrikaz() throws Exception {
         initComponents();
 
+        setSize(Toolkit.getDefaultToolkit().getScreenSize());
         prikaziNarudzbenice();
     }
 

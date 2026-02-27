@@ -146,7 +146,7 @@ public class FrmPocetna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        JDialog dijalog = new JDialog((JFrame) null, "Svi dobavljaci", true);
+        JDialog dijalog = new JDialog((JFrame) null, "Prikaz Dobavljaca", true);
         try {
             JPanel panel = new FrmDobavljaciPrikaz();
             dijalog.add(panel);
@@ -172,7 +172,7 @@ public class FrmPocetna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        JDialog dijalog = new JDialog((JFrame) null, "Lek", true);
+        JDialog dijalog = new JDialog((JFrame) null, "Prikaz Lekova", true);
         JPanel panel = new FrmLekoviPrikaz();
         dijalog.add(panel);
         dijalog.pack();
@@ -194,7 +194,7 @@ public class FrmPocetna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        JDialog dijalog = new JDialog((JFrame) null, "Narudzbenica", true);
+        JDialog dijalog = new JDialog((JFrame) null, "Prikaz Narudzbenica", true);
         try {
             JPanel panel = new FrmNarudzbenicePrikaz();
             dijalog.add(panel);

@@ -4,7 +4,6 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_server.so.lek;
 
-import java.util.ArrayList;
 import java.util.List;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstraktnaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
@@ -23,6 +22,39 @@ public class DodajLekSO extends ApstraktnaSO {
         if (objekat == null || !(objekat instanceof Lek)) {
             throw new Exception("Prosledjeni objekat mora biti tipa Lek!");
         }
+
+        if (((Lek) objekat).getSerijskiBroj() == null) {
+            throw new Exception("Serijski broj leka nije unet!");
+        }
+
+        if (((Lek) objekat).getSerijskiBroj() <= 0) {
+            throw new Exception("Unet serijski broj leka mora imatu pozitivnu vrednost!");
+        }
+
+        if (((Lek) objekat).getNaziv() == null) {
+            throw new Exception("Naziv leka nije unet!");
+        }
+
+        if (((Lek) objekat).getNaziv().isEmpty() || ((Lek) objekat).getNaziv().equals("")) {
+            throw new Exception("Naziv leka ne sme biti prazan!");
+        }
+
+        if (((Lek) objekat).getDoziranje() == null) {
+            throw new Exception("Doziranje za lek nije uneto!");
+        }
+
+        if (((Lek) objekat).getDoziranje().isEmpty() || ((Lek) objekat).getDoziranje().equals("")) {
+            throw new Exception("Doziranje leka ne sme biti prazno!");
+        }
+
+        if (((Lek) objekat).getSastav() == null) {
+            throw new Exception("Lista supstanci od kojih je lek napravljen nije uneta!");
+        }
+
+        if (((Lek) objekat).getSastav().isEmpty()) {
+            throw new Exception("Lista supstanci od kojih je lek napravljen ne sme biti prazna!");
+        }
+
     }
 
     @Override

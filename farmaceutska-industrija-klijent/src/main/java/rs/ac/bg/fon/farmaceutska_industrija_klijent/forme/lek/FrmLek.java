@@ -296,14 +296,13 @@ public class FrmLek extends javax.swing.JPanel {
             return;
         }
 
-        String serijskiBroj = txtSerijskiBroj.getText().trim();
-        String naziv = txtNaziv.getText().trim();
-        String doziranje = txtDoziranje.getText().trim();
-        List<Supstanca> supstanceZaLek = model.getSupstance();
-
-        Lek lek = new Lek(Long.valueOf(serijskiBroj), naziv, doziranje, supstanceZaLek);
-
         try {
+            Long serijskiBroj = Long.valueOf(txtSerijskiBroj.getText().trim());
+            String naziv = txtNaziv.getText().trim();
+            String doziranje = txtDoziranje.getText().trim();
+            List<Supstanca> supstanceZaLek = model.getSupstance();
+            Lek lek = new Lek(serijskiBroj, naziv, doziranje, supstanceZaLek);
+
             KontrolerKlijent.vratiInstancu().dodajLek(lek);
             JOptionPane.showMessageDialog(this, "Uspesno dodat lek\n" + lek, "Dodavanje Leka", JOptionPane.INFORMATION_MESSAGE);
             int izbor = JOptionPane.showConfirmDialog(this, "Da li zelite da nastavite sa dodavanjem lekova?", "Dodavanje Leka", JOptionPane.YES_NO_OPTION);
@@ -318,6 +317,8 @@ public class FrmLek extends javax.swing.JPanel {
             } else {
                 this.getTopLevelAncestor().setVisible(false);
             }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Uneti serijski broj mora biti broj!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnDodajActionPerformed
