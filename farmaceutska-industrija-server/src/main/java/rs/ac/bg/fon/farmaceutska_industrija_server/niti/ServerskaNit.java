@@ -4,10 +4,14 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_server.niti;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.FileWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import rs.ac.bg.fon.farmaceutska_industrija_server.forme.FrmServer;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 
 /**
@@ -19,15 +23,21 @@ public class ServerskaNit extends Thread {
     private ServerSocket serverskiSoket;
     private List<KlijentskiZahteviNit> klijenti;
     private List<Korisnik> prijavljeniKorisnici;
+    private FrmServer forma;
 
-    public ServerskaNit() throws Exception {
+    public ServerskaNit(FrmServer forma) throws Exception {
         serverskiSoket = new ServerSocket(9090);
         klijenti = new ArrayList<>();
         prijavljeniKorisnici = new ArrayList<>();
+        this.forma = forma;
     }
 
     public ServerSocket getServerskiSoket() {
         return serverskiSoket;
+    }
+
+    public List<Korisnik> getPrijavljeniKorisnici() {
+        return prijavljeniKorisnici;
     }
 
     @Override
@@ -54,6 +64,17 @@ public class ServerskaNit extends Thread {
         }
 
         prijavljeniKorisnici.add(korisnik);
+
+        forma.prikaziTabelu();
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try ( FileWriter out = new FileWriter("prijavljeni.json")) {
+            gson.toJson(prijavljeniKorisnici, out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         klijenti.add(nit);
         System.out.println("Korisnici " + prijavljeniKorisnici);
     }
@@ -71,8 +92,28 @@ public class ServerskaNit extends Thread {
     public void odjaviKorisnika(Korisnik korisnik, KlijentskiZahteviNit nit) {
         if (korisnik != null) {
             prijavljeniKorisnici.remove(korisnik);
+            forma.prikaziTabelu();
         }
         klijenti.remove(nit);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try ( FileWriter out = new FileWriter("prijavljeni.json")) {
+            gson.toJson(prijavljeniKorisnici, out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Korisnik je odjavljen " + korisnik);
+    }
+
+    public void ocistiJson() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try ( FileWriter out = new FileWriter("prijavljeni.json")) {
+            gson.toJson(new ArrayList<>(), out); // upis prazne liste
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -4,22 +4,35 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_server.forme;
 
+import java.util.List;
 import rs.ac.bg.fon.farmaceutska_industrija_server.niti.ServerskaNit;
+import rs.ac.bg.fon.farmaceutska_industrija_server.tabele.model.ModelKorisnici;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 
 /**
  *
  * @author milos
  */
 public class FrmServer extends javax.swing.JFrame {
-    
+
     private ServerskaNit serverskaNit;
 
     /**
      * Creates new form FrmServer
      */
-    public FrmServer() {
+    public FrmServer() throws Exception {
         initComponents();
         btnStop.setEnabled(false);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                serverskaNit.ocistiJson();
+            }
+        });
+
+        lblInfo.setVisible(false);
+        jScrollPane1.setVisible(false);
     }
 
     /**
@@ -33,6 +46,9 @@ public class FrmServer extends javax.swing.JFrame {
 
         btnStart = new javax.swing.JButton();
         btnStop = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblKorisnici = new javax.swing.JTable();
+        lblInfo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,36 +68,67 @@ public class FrmServer extends javax.swing.JFrame {
             }
         });
 
+        tblKorisnici.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblKorisnici);
+
+        lblInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblInfo.setText("Trenutno prijavljeni korisnici:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
-                .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(153, 153, 153)
+                        .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(105, 105, 105)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addGap(63, 63, 63)
+                .addComponent(lblInfo)
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
-        if(serverskaNit == null || !serverskaNit.isAlive()){
+        if (serverskaNit == null || !serverskaNit.isAlive()) {
             try {
-                serverskaNit = new ServerskaNit();
+                serverskaNit = new ServerskaNit(this);
                 serverskaNit.start();
-                
+
+                prikaziTabelu();
+                lblInfo.setVisible(true);
+                jScrollPane1.setVisible(true);
+
                 btnStart.setEnabled(false);
                 btnStop.setEnabled(true);
             } catch (Exception e) {
@@ -91,9 +138,14 @@ public class FrmServer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStartActionPerformed
 
     private void btnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopActionPerformed
-        if(serverskaNit.getServerskiSoket() != null && serverskaNit.getServerskiSoket().isBound()){
+        if (serverskaNit.getServerskiSoket() != null && serverskaNit.getServerskiSoket().isBound()) {
             try {
                 serverskaNit.getServerskiSoket().close();
+                serverskaNit.ocistiJson();
+
+                lblInfo.setVisible(false);
+                jScrollPane1.setVisible(false);
+
                 System.out.println("Serverska nit je ugasena!");
                 btnStart.setEnabled(true);
                 btnStop.setEnabled(false);
@@ -110,5 +162,13 @@ public class FrmServer extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStart;
     private javax.swing.JButton btnStop;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblInfo;
+    private javax.swing.JTable tblKorisnici;
     // End of variables declaration//GEN-END:variables
+
+    public void prikaziTabelu() {
+        List<Korisnik> korisnici = serverskaNit.getPrijavljeniKorisnici();
+        tblKorisnici.setModel(new ModelKorisnici(korisnici));
+    }
 }
