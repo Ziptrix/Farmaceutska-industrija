@@ -32,7 +32,7 @@ public class Supstanca implements OpstaDomenskaKlasa {
 
     @Override
     public String toString() {
-        return naziv;
+        return naziv + ", kolicina: " + kolicinaZaliha;
     }
 
     public String toStringZaliheCena() {

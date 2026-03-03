@@ -155,9 +155,9 @@ public class FrmLek extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDodajSupstancu)
-                    .addComponent(btnUkloniSupstancu))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnUkloniSupstancu)
+                    .addComponent(btnDodajSupstancu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -201,11 +201,10 @@ public class FrmLek extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnDodajSupstancu)
-                        .addGap(50, 50, 50)
-                        .addComponent(btnUkloniSupstancu)
-                        .addGap(95, 95, 95)))
+                        .addGap(30, 30, 30)
+                        .addComponent(btnUkloniSupstancu)))
                 .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDodaj)
@@ -373,7 +372,7 @@ public class FrmLek extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise lek", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
                 System.out.println("Greska " + e.getMessage());
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise lek", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnObrisiActionPerformed

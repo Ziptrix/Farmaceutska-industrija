@@ -66,9 +66,29 @@ public class ModelSupstance extends AbstractTableModel {
     public Supstanca getSupstanca(int red) {
         return supstance.get(red);
     }
-    
-    public List<Supstanca> getSupstance(){
+
+    public List<Supstanca> getSupstance() {
         return supstance;
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        if (columnIndex == 2) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Supstanca supstanca = supstance.get(rowIndex);
+        switch (columnIndex) {
+            case 2:
+                supstanca.setKolicinaZaliha((Long) aValue);
+                break;
+            default:
+                throw new AssertionError();
+        }
     }
 
 }

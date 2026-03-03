@@ -7,6 +7,8 @@ package rs.ac.bg.fon.farmaceutska_industrija_server.so.lek;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstraktnaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.OpstaDomenskaKlasa;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
+import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.SupstancaLek;
 
 /**
  *
@@ -23,7 +25,16 @@ public class IzmeniLekSO extends ApstraktnaSO {
 
     @Override
     protected void izvrsiOperaciju(Object objekat, String kljuc) throws Exception {
-        broker.izmeni((OpstaDomenskaKlasa) objekat);
+        Lek lek = (Lek) objekat;
+        broker.izmeni((OpstaDomenskaKlasa) lek);
+        SupstancaLek supstanceLeka = new SupstancaLek();
+        supstanceLeka.setLek(lek);
+
+        for (Supstanca supstanca : lek.getSastav()) {
+            supstanceLeka.setSupstanca(supstanca);
+            supstanceLeka.setUpotrebljenaKolicina(supstanca.getKolicinaZaliha());
+            broker.izmeni(supstanceLeka);
+        }
     }
 
 }

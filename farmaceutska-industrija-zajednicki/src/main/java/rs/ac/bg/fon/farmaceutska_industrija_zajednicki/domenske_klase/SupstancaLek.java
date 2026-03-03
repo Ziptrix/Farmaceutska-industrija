@@ -39,7 +39,7 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
 
     @Override
     public Long vratiId() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return supstanca.getSifra();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiNazivPrimarnogKljuca() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "id_substance";
     }
 
     @Override
@@ -75,7 +75,7 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
 
     @Override
     public String vratiVrednostiUpdateUpita() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "quantity_used = " + upotrebljenaKolicina;
     }
 
     @Override
