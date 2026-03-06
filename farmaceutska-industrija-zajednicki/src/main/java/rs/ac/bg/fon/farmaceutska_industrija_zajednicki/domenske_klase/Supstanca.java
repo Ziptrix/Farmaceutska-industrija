@@ -8,21 +8,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  *
  * @author milos
  */
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Supstanca implements OpstaDomenskaKlasa {
 
     private Long sifra;
@@ -30,9 +27,70 @@ public class Supstanca implements OpstaDomenskaKlasa {
     private Long kolicinaZaliha;
     private Long cena;
 
+    public void setSifra(Long sifra) throws Exception {
+        if(sifra == null){
+            throw new Exception("Sifra supstance mora da postoji!");
+        }
+        if(sifra <= 0){
+            throw new Exception("Sifra supstance mora biti pozitivna!");
+        }
+        this.sifra = sifra;
+    }
+
+    public void setNaziv(String naziv) throws Exception {
+        if(naziv == null){
+            throw new Exception("Naziv supstance mora da postoji!");
+        }
+        if(naziv.isEmpty() || naziv.equals("")){
+            throw new Exception("Sifra supstance ne sme biti prazna!");
+        }
+        this.naziv = naziv;
+    }
+
+    public void setKolicinaZaliha(Long kolicinaZaliha) throws Exception {
+        if(kolicinaZaliha == null){
+            throw new Exception("Kolicina supstance mora da postoji!");
+        }
+        if(kolicinaZaliha <= 0){
+            throw new Exception("Kolicina supstance mora biti pozitivna!");
+        }
+        this.kolicinaZaliha = kolicinaZaliha;
+    }
+
+    public void setCena(Long cena) throws Exception {
+        if(cena == null){
+            throw new Exception("Cena supstance mora da postoji!");
+        }
+        if(cena <= 0){
+            throw new Exception("Cena supstance mora biti pozitivna!");
+        }
+        this.cena = cena;
+    }
+
     @Override
     public String toString() {
         return naziv + ", kolicina: " + kolicinaZaliha;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Supstanca other = (Supstanca) obj;
+        return Objects.equals(this.sifra, other.sifra);
     }
 
     public String toStringZaliheCena() {

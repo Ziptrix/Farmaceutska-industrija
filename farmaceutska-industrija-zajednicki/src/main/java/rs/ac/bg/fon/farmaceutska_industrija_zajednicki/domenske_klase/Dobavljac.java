@@ -12,14 +12,12 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  *
  * @author milos
  */
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Dobavljac implements OpstaDomenskaKlasa {
@@ -28,6 +26,43 @@ public class Dobavljac implements OpstaDomenskaKlasa {
     private String ime;
     private String prezime;
     private Grad grad;
+
+    public void setId(Long id) throws Exception {
+        if (id == null) {
+            throw new Exception("ID dobavljaca mora da postoji!");
+        }
+        if (id <= 0) {
+            throw new Exception("ID dobavljaca mora biti pozitivan!");
+        }
+        this.id = id;
+    }
+
+    public void setIme(String ime) throws Exception {
+        if (ime == null) {
+            throw new Exception("Ime dobavljaca mora da postoji!");
+        }
+        if (ime.isEmpty() || ime.equals("")) {
+            throw new Exception("Ime dobavljaca ne sme biti prazno!");
+        }
+        this.ime = ime;
+    }
+
+    public void setPrezime(String prezime) throws Exception {
+        if (prezime == null) {
+            throw new Exception("Prezime dobavljaca mora da postoji!");
+        }
+        if (prezime.isEmpty() || prezime.equals("")) {
+            throw new Exception("Prezime dobavljaca ne sme biti prazno!");
+        }
+        this.prezime = prezime;
+    }
+
+    public void setGrad(Grad grad) throws Exception {
+        if (grad == null || !(grad instanceof Grad)) {
+            throw new Exception("Grad dobavljaca mora da postoji!");
+        }
+        this.grad = grad;
+    }
 
     @Override
     public String toString() {

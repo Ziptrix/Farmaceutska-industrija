@@ -47,7 +47,11 @@ public class PretraziLekoveSO extends ApstraktnaSO {
                     .filter(sl -> lek.getSerijskiBroj().equals(sl.getLek().getSerijskiBroj()))
                     .map(sl -> {
                         Supstanca s = sl.getSupstanca();
-                        s.setKolicinaZaliha(sl.getUpotrebljenaKolicina());
+                        try {
+                            s.setKolicinaZaliha(sl.getUpotrebljenaKolicina());
+                        } catch (Exception e) {
+                            System.out.println("Greska " + e.getMessage());
+                        }
                         return s;
                     })
                     .toList();

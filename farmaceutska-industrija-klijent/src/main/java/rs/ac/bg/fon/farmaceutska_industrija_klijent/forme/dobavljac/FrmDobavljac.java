@@ -140,25 +140,10 @@ public class FrmDobavljac extends javax.swing.JPanel {
 
     private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
         Dobavljac dobavljac = new Dobavljac();
-
-        if (txtIme.getText().isEmpty() || txtIme.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Morate uneti ime za dobavljaca!", "Dodavanje dobavljaca", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        if (txtPrezime.getText().isEmpty() || txtPrezime.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Morate uneti prezime za dobavljaca!", "Dodavanje dobavljaca", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        if (cmbGradovi.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, "Morate izabrati neki od gradova!", "Dodavanje dobavljaca", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        dobavljac.setIme(txtIme.getText().trim());
-        dobavljac.setPrezime(txtPrezime.getText().trim());
-        dobavljac.setGrad((Grad) cmbGradovi.getSelectedItem());
-
         try {
+            dobavljac.setIme(txtIme.getText().trim());
+            dobavljac.setPrezime(txtPrezime.getText().trim());
+            dobavljac.setGrad((Grad) cmbGradovi.getSelectedItem());
             KontrolerKlijent.vratiInstancu().dodajDobavljaca(dobavljac);
             JOptionPane.showMessageDialog(this, "Sistem je sacuvao dobavljaca\nGenerisani ID: " + dobavljac.getId(), "Dodavanje Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
             int izbor = JOptionPane.showConfirmDialog(this, "Da li zelite da nastavite sa dodavanjem dobavljaca?", "Dodavanje Dobavljaca", JOptionPane.YES_NO_OPTION);
@@ -200,8 +185,8 @@ public class FrmDobavljac extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Dobavljac nije ucitan!", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        dobavljac.setGrad((Grad) cmbGradovi.getSelectedItem());
         try {
+            dobavljac.setGrad((Grad) cmbGradovi.getSelectedItem());
             KontrolerKlijent.vratiInstancu().izmeniDobavljaca(dobavljac);
             JOptionPane.showMessageDialog(this, "Sistem je sacuvao dobavljaca\n" + dobavljac, "Izmena Dobavljaca", JOptionPane.INFORMATION_MESSAGE);
             this.getTopLevelAncestor().setVisible(false);

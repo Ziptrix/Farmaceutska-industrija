@@ -12,14 +12,12 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  *
  * @author milos
  */
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Narudzbenica implements OpstaDomenskaKlasa {
@@ -30,6 +28,48 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
     private Korisnik korisnik;
     private Dobavljac dobavljac;
     private List<StavkaNarudzbenice> listaStavki;
+
+    public void setSifra(Long sifra) throws Exception {
+        if (sifra == null) {
+            throw new Exception("Sifra narudzbenice mora da postoji!");
+        }
+        if (sifra <= 0) {
+            throw new Exception("Sifra narudzbenice mora biti pozitivna!");
+        }
+        this.sifra = sifra;
+    }
+
+    public void setDatum(LocalDate datum) throws Exception {
+        if (datum == null) {
+            throw new Exception("Datum narudzbenice mora da postoji!");
+        }
+        if (datum.isAfter(LocalDate.now())) {
+            throw new Exception("Datum narudzbenice ne sme biti nakon danasnjeg datuma!");
+        }
+        this.datum = datum;
+    }
+
+    public void setUkupanIznos(Long ukupanIznos) throws Exception {
+        if (ukupanIznos == null) {
+            throw new Exception("Ukupan iznos narudzbenice mora da postoji!");
+        }
+        if (ukupanIznos <= 0) {
+            throw new Exception("Ukupan iznos narudzbenice mora biti pozitivan!");
+        }
+        this.ukupanIznos = ukupanIznos;
+    }
+
+    public void setKorisnik(Korisnik korisnik) throws Exception {
+        this.korisnik = korisnik;
+    }
+
+    public void setDobavljac(Dobavljac dobavljac) throws Exception {
+        this.dobavljac = dobavljac;
+    }
+
+    public void setListaStavki(List<StavkaNarudzbenice> listaStavki) throws Exception {
+        this.listaStavki = listaStavki;
+    }
 
     @Override
     public String toString() {

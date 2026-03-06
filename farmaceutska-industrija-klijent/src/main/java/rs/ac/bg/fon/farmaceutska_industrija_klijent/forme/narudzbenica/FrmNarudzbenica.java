@@ -235,23 +235,27 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
                 .findFirst()
                 .orElse(null);
 
-        if (postojeca != null) {
-            long novaKolicina = postojeca.getKolicinaSupstance() + kolicinaPoruceneSupstance;
-            postojeca.setKolicinaSupstance(novaKolicina);
-            postojeca.setIznosStavke(novaKolicina * supstanca.getCena());
-        } else {
-            StavkaNarudzbenice nova = new StavkaNarudzbenice();
-            nova.setSupstanca(supstanca);
-            nova.setKolicinaSupstance(kolicinaPoruceneSupstance);
-            nova.setIznosStavke(kolicinaPoruceneSupstance * supstanca.getCena());
-
-            if (stavkeNarudzbenice.isEmpty()) {
-                nova.setRedniBroj(1L);
+        try {
+            if (postojeca != null) {
+                long novaKolicina = postojeca.getKolicinaSupstance() + kolicinaPoruceneSupstance;
+                postojeca.setKolicinaSupstance(novaKolicina);
+                postojeca.setIznosStavke(novaKolicina * supstanca.getCena());
             } else {
-                nova.setRedniBroj(stavkeNarudzbenice.size() + 1L);
-            }
+                StavkaNarudzbenice nova = new StavkaNarudzbenice();
+                nova.setSupstanca(supstanca);
+                nova.setKolicinaSupstance(kolicinaPoruceneSupstance);
+                nova.setIznosStavke(kolicinaPoruceneSupstance * supstanca.getCena());
 
-            stavkeNarudzbenice.add(nova);
+                if (stavkeNarudzbenice.isEmpty()) {
+                    nova.setRedniBroj(1L);
+                } else {
+                    nova.setRedniBroj(stavkeNarudzbenice.size() + 1L);
+                }
+
+                stavkeNarudzbenice.add(nova);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Greska\n" + e.getMessage(), "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
         }
 
         long ukupanIznos = stavkeNarudzbenice.stream()
@@ -264,21 +268,6 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDodajStavkuActionPerformed
 
     private void btnDodajNarudzbenicuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajNarudzbenicuActionPerformed
-        if (txtSifra.getText().trim().equals("") || txtSifra.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Morate uneti sifru Narudzbenice!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        if (cmbDobavljaci.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, "Morate izabrati nekog Dobavljaca!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        if (stavkeNarudzbenice.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Morate uneti barem 1 stavku narudzbenice klikom na dugme Dodaj stavku!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
         try {
             String sifraTekst = txtSifra.getText().trim();
 
@@ -288,7 +277,8 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
             }
 
             Narudzbenica narudzbenica = new Narudzbenica();
-            narudzbenica.setSifra(Long.valueOf(sifraTekst));
+            long sifra = Long.parseLong(sifraTekst);
+            narudzbenica.setSifra(sifra);
 
             String datumTekst = txtDatum.getText();
             DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
@@ -300,7 +290,13 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
             narudzbenica.setDobavljac((Dobavljac) cmbDobavljaci.getSelectedItem());
             narudzbenica.setListaStavki(stavkeNarudzbenice);
 
-            stavkeNarudzbenice.forEach(stavka -> stavka.setNarudzbenica(narudzbenica));
+            stavkeNarudzbenice.forEach(stavka -> {
+                try {
+                    stavka.setNarudzbenica(narudzbenica);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Greska\n" + e.getMessage(), "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+                }
+            });
 
             KontrolerKlijent.vratiInstancu().dodajNarudzbenicu(narudzbenica);
             JOptionPane.showMessageDialog(this, "Sistem je sacuvao narudzbenicu:\n" + narudzbenica + " sa stavkama:\n" + stavkeNarudzbenice);
@@ -317,8 +313,6 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
             } else {
                 this.getTopLevelAncestor().setVisible(false);
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Uneta sifra mora biti broj!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Sistem ne moze da sacuva narudzbenicu", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
             System.out.println("Greska " + e.getMessage());
@@ -336,7 +330,11 @@ public class FrmNarudzbenica extends javax.swing.JPanel {
 
             for (StavkaNarudzbenice stavkaNarudzbenice : stavkeNarudzbenice) {
                 if (uklonjena.getRedniBroj() < stavkaNarudzbenice.getRedniBroj()) {
-                    stavkaNarudzbenice.setRedniBroj(stavkaNarudzbenice.getRedniBroj() - 1);
+                    try {
+                        stavkaNarudzbenice.setRedniBroj(stavkaNarudzbenice.getRedniBroj() - 1);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Greska\n" + e.getMessage(), "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
 

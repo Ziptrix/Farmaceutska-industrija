@@ -215,42 +215,46 @@ public class FrmLek extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDodajSupstancuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajSupstancuActionPerformed
-        int red = tblDostupneSupstance.getSelectedRow();
-        ModelSupstance modelDostupne = (ModelSupstance) tblDostupneSupstance.getModel();
-        if (red >= 0) {
-            Supstanca supstanca = modelDostupne.getSupstanca(red);
-            String unosKolicine = JOptionPane.showInputDialog(this, "Unesite zeljenu kolicinu supstance " + supstanca);
-            long unetaKolicina = Long.parseLong(unosKolicine);
-            if (unetaKolicina <= 0 || unetaKolicina > supstanca.getKolicinaZaliha()) {
-                JOptionPane.showMessageDialog(this, "Uneta kolicina mora biti izmedju 1 i trenutne kolicine zaliha!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-            supstanca.setKolicinaZaliha(supstanca.getKolicinaZaliha() - unetaKolicina);
+        try {
+            int red = tblDostupneSupstance.getSelectedRow();
+            ModelSupstance modelDostupne = (ModelSupstance) tblDostupneSupstance.getModel();
+            if (red >= 0) {
+                Supstanca supstanca = modelDostupne.getSupstanca(red);
+                String unosKolicine = JOptionPane.showInputDialog(this, "Unesite zeljenu kolicinu supstance " + supstanca);
+                long unetaKolicina = Long.parseLong(unosKolicine);
+                if (unetaKolicina <= 0 || unetaKolicina > supstanca.getKolicinaZaliha()) {
+                    JOptionPane.showMessageDialog(this, "Uneta kolicina mora biti izmedju 1 i trenutne kolicine zaliha!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                supstanca.setKolicinaZaliha(supstanca.getKolicinaZaliha() - unetaKolicina);
 
-            Supstanca postojeca = supstanceZaLek.stream()
-                    .filter(s -> s.getSifra().equals(supstanca.getSifra()))
-                    .findFirst()
-                    .orElse(null);
+                Supstanca postojeca = supstanceZaLek.stream()
+                        .filter(s -> s.getSifra().equals(supstanca.getSifra()))
+                        .findFirst()
+                        .orElse(null);
 
-            if (postojeca != null) {
-                postojeca.setKolicinaZaliha(postojeca.getKolicinaZaliha() + unetaKolicina);
+                if (postojeca != null) {
+                    postojeca.setKolicinaZaliha(postojeca.getKolicinaZaliha() + unetaKolicina);
+                } else {
+                    Supstanca supstancaZaLek = new Supstanca();
+                    supstancaZaLek.setSifra(supstanca.getSifra());
+                    supstancaZaLek.setNaziv(supstanca.getNaziv());
+                    supstancaZaLek.setCena(supstanca.getCena());
+                    supstancaZaLek.setKolicinaZaliha(unetaKolicina);
+
+                    supstanceZaLek.add(supstancaZaLek);
+                }
+
+                ModelSupstance modelZaLek = new ModelSupstance(supstanceZaLek);
+                tblSupstanceZaLek.setModel(modelZaLek);
+
+                ModelSupstance azuriraniModelSupstance = new ModelSupstance(modelDostupne.getSupstance());
+                tblDostupneSupstance.setModel(azuriraniModelSupstance);
             } else {
-                Supstanca supstancaZaLek = new Supstanca();
-                supstancaZaLek.setSifra(supstanca.getSifra());
-                supstancaZaLek.setNaziv(supstanca.getNaziv());
-                supstancaZaLek.setCena(supstanca.getCena());
-                supstancaZaLek.setKolicinaZaliha(unetaKolicina);
-
-                supstanceZaLek.add(supstancaZaLek);
+                JOptionPane.showMessageDialog(this, "Morate izabrati neku od supstanci!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
             }
-
-            ModelSupstance modelZaLek = new ModelSupstance(supstanceZaLek);
-            tblSupstanceZaLek.setModel(modelZaLek);
-
-            ModelSupstance azuriraniModelSupstance = new ModelSupstance(modelDostupne.getSupstance());
-            tblDostupneSupstance.setModel(azuriraniModelSupstance);
-        } else {
-            JOptionPane.showMessageDialog(this, "Morate izabrati neku od supstanci!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Greska\n" + e.getMessage(), "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnDodajSupstancuActionPerformed
 
@@ -263,7 +267,13 @@ public class FrmLek extends javax.swing.JPanel {
             modelDostupne.getSupstance().stream()
                     .filter(s -> s.getSifra().equals(supstancaZaLek.getSifra()))
                     .findFirst()
-                    .ifPresent(s -> s.setKolicinaZaliha(s.getKolicinaZaliha() + supstancaZaLek.getKolicinaZaliha()));
+                    .ifPresent(s -> {
+                        try {
+                            s.setKolicinaZaliha(s.getKolicinaZaliha() + supstancaZaLek.getKolicinaZaliha());
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(this, "Greska\n" + e.getMessage(), "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
+                        }
+                    });
 
             supstanceZaLek.remove(red);
 
@@ -278,24 +288,7 @@ public class FrmLek extends javax.swing.JPanel {
     }//GEN-LAST:event_btnUkloniSupstancuActionPerformed
 
     private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
-        if (txtSerijskiBroj.getText().isEmpty() || txtSerijskiBroj.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Morate uneti serijski broj leka!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        if (txtNaziv.getText().isEmpty() || txtNaziv.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Morate uneti naziv leka!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        if (txtDoziranje.getText().isEmpty() || txtDoziranje.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Morate uneti doziranje leka!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
         ModelSupstance model = (ModelSupstance) tblSupstanceZaLek.getModel();
-        if (model.getSupstance() == null || model.getSupstance().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Morate uneti bar 1 supstancu za lek!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
         try {
             String sBroj = txtSerijskiBroj.getText().trim();
 
@@ -337,13 +330,8 @@ public class FrmLek extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Lek nije ucitan!", "GRESKA!!!", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        if (txtDoziranje.getText().trim().isEmpty() || txtDoziranje.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(this, "Morate uneti tekst za novo doziranje!", "GRESKA!!!", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        lek.setDoziranje(txtDoziranje.getText().trim());
         try {
+            lek.setDoziranje(txtDoziranje.getText().trim());
             KontrolerKlijent.vratiInstancu().izmeniLek(lek);
             JOptionPane.showMessageDialog(this, "Sistem je sacuvao lek:\n" + lek, "Izmena Leka", JOptionPane.INFORMATION_MESSAGE);
             this.getTopLevelAncestor().setVisible(false);

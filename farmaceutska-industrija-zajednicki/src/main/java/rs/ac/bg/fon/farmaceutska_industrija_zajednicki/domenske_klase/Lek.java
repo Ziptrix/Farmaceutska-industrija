@@ -11,14 +11,12 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  *
  * @author milos
  */
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Lek implements OpstaDomenskaKlasa {
@@ -27,6 +25,40 @@ public class Lek implements OpstaDomenskaKlasa {
     private String naziv;
     private String doziranje;
     private List<Supstanca> sastav;
+
+    public void setSerijskiBroj(Long serijskiBroj) throws Exception {
+        if (serijskiBroj == null) {
+            throw new Exception("Serijski broj leka mora da postoji!");
+        }
+        if (serijskiBroj <= 0) {
+            throw new Exception("Serijski broj leka mora biti pozitivan!");
+        }
+        this.serijskiBroj = serijskiBroj;
+    }
+
+    public void setNaziv(String naziv) throws Exception {
+        if (naziv == null) {
+            throw new Exception("Naziv leka mora da postoji!");
+        }
+        if (naziv.isEmpty() || naziv.equals("")) {
+            throw new Exception("Naziv leka ne sme biti prazan!");
+        }
+        this.naziv = naziv;
+    }
+
+    public void setDoziranje(String doziranje) throws Exception {
+        if (doziranje == null) {
+            throw new Exception("Doziranje leka mora da postoji!");
+        }
+        if (doziranje.isEmpty() || doziranje.equals("")) {
+            throw new Exception("Doziranje leka ne sme biti prazno!");
+        }
+        this.doziranje = doziranje;
+    }
+
+    public void setSastav(List<Supstanca> sastav) throws Exception {
+        this.sastav = sastav;
+    }
 
     @Override
     public String toString() {

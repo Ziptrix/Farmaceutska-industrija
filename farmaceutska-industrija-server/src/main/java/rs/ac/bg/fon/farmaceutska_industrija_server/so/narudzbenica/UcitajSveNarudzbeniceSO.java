@@ -4,7 +4,6 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_server.so.narudzbenica;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstraktnaSO;

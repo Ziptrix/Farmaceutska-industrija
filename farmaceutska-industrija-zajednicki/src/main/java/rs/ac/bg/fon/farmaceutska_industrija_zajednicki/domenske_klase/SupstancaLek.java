@@ -11,14 +11,12 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  *
  * @author milos
  */
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class SupstancaLek implements OpstaDomenskaKlasa {
@@ -26,6 +24,30 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
     private Lek lek;
     private Supstanca supstanca;
     private Long upotrebljenaKolicina;
+
+    public void setLek(Lek lek) throws Exception {
+        if (lek == null || !(lek instanceof Lek)) {
+            throw new Exception("Lek u klasi SupstancaLek mora da postoji!");
+        }
+        this.lek = lek;
+    }
+
+    public void setSupstanca(Supstanca supstanca) throws Exception {
+        if (supstanca == null || !(supstanca instanceof Supstanca)) {
+            throw new Exception("Supstanca u klasi SupstancaLek mora da postoji!");
+        }
+        this.supstanca = supstanca;
+    }
+
+    public void setUpotrebljenaKolicina(Long upotrebljenaKolicina) throws Exception {
+        if (upotrebljenaKolicina == null) {
+            throw new Exception("Upotrebljena kolicina supstance u sastavu leka mora da postoji!");
+        }
+        if (upotrebljenaKolicina <= 0) {
+            throw new Exception("Upotrebljena kolicina supstance u sastavu leka mora biti pozitivna!");
+        }
+        this.upotrebljenaKolicina = upotrebljenaKolicina;
+    }
 
     @Override
     public String toString() {

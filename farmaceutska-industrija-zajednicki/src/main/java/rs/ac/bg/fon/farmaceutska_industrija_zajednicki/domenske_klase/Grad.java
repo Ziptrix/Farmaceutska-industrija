@@ -8,29 +8,67 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  *
  * @author milos
  */
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Grad implements OpstaDomenskaKlasa {
 
     private Long postanskiBroj;
     private String naziv;
 
+    public void setPostanskiBroj(Long postanskiBroj) throws Exception {
+        if (postanskiBroj == null) {
+            throw new Exception("Postanski broj grada mora da postoji!");
+        }
+        if (postanskiBroj <= 0) {
+            throw new Exception("Postanski broj grada mora biti pozitivan!");
+        }
+        this.postanskiBroj = postanskiBroj;
+    }
+
+    public void setNaziv(String naziv) throws Exception {
+        if (naziv == null) {
+            throw new Exception("Naziv grada mora da postoji!");
+        }
+        if (naziv.isEmpty() || naziv.equals("")) {
+            throw new Exception("Naziv grada ne sme biti prazan!");
+        }
+        this.naziv = naziv;
+    }
+
     @Override
     public String toString() {
         return postanskiBroj + ", " + naziv;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Grad other = (Grad) obj;
+        return Objects.equals(this.postanskiBroj, other.postanskiBroj);
     }
 
     @Override

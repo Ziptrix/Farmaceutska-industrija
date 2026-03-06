@@ -10,14 +10,12 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  *
  * @author milos
  */
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
@@ -27,6 +25,50 @@ public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
     private Long kolicinaSupstance;
     private Long iznosStavke;
     private Supstanca supstanca;
+
+    public void setRedniBroj(Long redniBroj) throws Exception {
+        if (redniBroj == null) {
+            throw new Exception("Redni broj stavke narudzbenice mora da postoji!");
+        }
+        if (redniBroj <= 0) {
+            throw new Exception("Redni broj stavke narudzbenice mora biti pozitivan!");
+        }
+        this.redniBroj = redniBroj;
+    }
+
+    public void setNarudzbenica(Narudzbenica narudzbenica) throws Exception {
+        if (narudzbenica == null || !(narudzbenica instanceof Narudzbenica)) {
+            throw new Exception("Narudzbenica u kojoj se nalazi njena stavka mora da postoji!");
+        }
+        this.narudzbenica = narudzbenica;
+    }
+
+    public void setKolicinaSupstance(Long kolicinaSupstance) throws Exception {
+        if (kolicinaSupstance == null) {
+            throw new Exception("Kolicina supstance stavke narudzbenice mora da postoji!");
+        }
+        if (kolicinaSupstance <= 0) {
+            throw new Exception("Kolicina supstance stavke narudzbenice mora biti pozitivna!");
+        }
+        this.kolicinaSupstance = kolicinaSupstance;
+    }
+
+    public void setIznosStavke(Long iznosStavke) throws Exception {
+        if (iznosStavke == null) {
+            throw new Exception("Iznos stavke narudzbenice mora da postoji!");
+        }
+        if (iznosStavke <= 0) {
+            throw new Exception("Iznos stavke narudzbenice mora biti pozitivna!");
+        }
+        this.iznosStavke = iznosStavke;
+    }
+
+    public void setSupstanca(Supstanca supstanca) throws Exception, Exception {
+        if (supstanca == null || !(supstanca instanceof Supstanca)) {
+            throw new Exception("Supstanca koja se nalazi u stavci mora da postoji!");
+        }
+        this.supstanca = supstanca;
+    }
 
     @Override
     public String toString() {

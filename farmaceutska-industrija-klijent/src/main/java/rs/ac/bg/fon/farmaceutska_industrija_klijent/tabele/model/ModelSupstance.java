@@ -83,9 +83,15 @@ public class ModelSupstance extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Supstanca supstanca = supstance.get(rowIndex);
         switch (columnIndex) {
-            case 2:
-                supstanca.setKolicinaZaliha((Long) aValue);
-                break;
+            case 2: {
+                try {
+                    supstanca.setKolicinaZaliha((Long) aValue);
+                } catch (Exception e) {
+                    System.out.println("Greska " + e.getMessage());
+                }
+            }
+            break;
+
             default:
                 throw new AssertionError();
         }
