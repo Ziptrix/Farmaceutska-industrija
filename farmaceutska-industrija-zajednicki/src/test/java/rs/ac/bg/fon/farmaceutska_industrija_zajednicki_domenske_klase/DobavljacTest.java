@@ -5,9 +5,7 @@
 package rs.ac.bg.fon.farmaceutska_industrija_zajednicki_domenske_klase;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
@@ -137,6 +135,11 @@ public class DobavljacTest {
     @Test
     void testVratiJoin() {
         assertEquals(" s JOIN city c ON s.city = c.zip_code", dobavljac.vratiJoin());
+    }
+
+    @Test
+    void testVratiVrednostiSelectUpita() {
+        assertEquals("s.id, s.first_name, s.last_name, c.zip_code, c.name", dobavljac.vratiVrednostiSelectUpita());
     }
 
     @Test
