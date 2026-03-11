@@ -28,7 +28,7 @@ public abstract class ApstraktnaSO {
             preduslovi(objekat);
             zapocniTransakciju();
             izvrsiOperaciju(objekat, kljuc);
-            potvrdiTransakciju();
+            potvrdiTransakcijuZaTest();
             System.out.println("Operacija je uspesno izvrsena!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,6 +63,12 @@ public abstract class ApstraktnaSO {
     private void zatvoriTransakcijuZaTest() throws SQLException {
         if (!testMode) {
             DBBrokerKonekcija.vratiInstancu().zatvoriKonekciju();
+        }
+    }
+
+    private void potvrdiTransakcijuZaTest() throws SQLException {
+        if (!testMode) {
+            DBBrokerKonekcija.vratiInstancu().potvrdiTransakciju();
         }
     }
 }
