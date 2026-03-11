@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 
@@ -38,24 +37,24 @@ public class LekTest {
     }
 
     @Test
-    void testSetSifra() throws Exception {
+    void testSetSerijskiBroj() throws Exception {
         lek.setSerijskiBroj(123L);
 
         assertEquals(123L, lek.getSerijskiBroj());
     }
 
     @Test
-    void testSetSifraNull() throws Exception {
+    void testSetSerijskiBrojNull() throws Exception {
         assertThrows(Exception.class, () -> lek.setSerijskiBroj(null));
     }
 
     @Test
-    void testSetSifraNula() throws Exception {
+    void testSetSerijskiBrojNula() throws Exception {
         assertThrows(Exception.class, () -> lek.setSerijskiBroj(0L));
     }
 
     @Test
-    void testSetSifraNegativna() throws Exception {
+    void testSetSerijskiBrojNegativan() throws Exception {
         assertThrows(Exception.class, () -> lek.setSerijskiBroj(-1L));
     }
 
@@ -100,6 +99,7 @@ public class LekTest {
         sastavLeka.add(supstanca);
 
         lek.setSastav(sastavLeka);
+        assertEquals(1, lek.getSastav().size());
         assertEquals(sastavLeka, lek.getSastav());
     }
 
@@ -153,17 +153,17 @@ public class LekTest {
                 + " JOIN substance s ON s.code = sl.id_substance",
                 lek.vratiJoin());
     }
-    
+
     @Test
     void testVratiUslovZaDelete() {
         assertEquals("WHERE serial_number = ?", lek.vratiUslovZaDelete());
     }
-    
+
     @Test
     void testVratiNazivKoloneZaPretragu() {
         assertEquals("l.name", lek.vratiNazivKoloneZaPretragu());
     }
-    
+
     @Test
     void testVratiNazivKoloneZaGroupBy() {
         assertEquals("serial_number", lek.vratiNazivKoloneZaGroupBy());
