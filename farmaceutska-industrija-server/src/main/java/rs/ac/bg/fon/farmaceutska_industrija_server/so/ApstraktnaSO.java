@@ -17,6 +17,12 @@ public abstract class ApstraktnaSO {
 
     protected static DBBrokerOpstaDomenskaKlasa broker = new DBBrokerOpstaDomenskaKlasa();
 
+    private boolean testMode = false;
+
+    public void setTestMode(boolean testMode) {
+        this.testMode = testMode;
+    }
+
     public void izvrsi(Object objekat, String kljuc) throws Exception {
         try {
             preduslovi(objekat);
@@ -30,7 +36,7 @@ public abstract class ApstraktnaSO {
             ponistiTransakciju();
             throw e;
         } finally {
-            zatvoriTransakciju();
+            zatvoriTransakcijuZaTest();
         }
     }
 
@@ -52,5 +58,11 @@ public abstract class ApstraktnaSO {
 
     private void zatvoriTransakciju() throws SQLException {
         DBBrokerKonekcija.vratiInstancu().zatvoriKonekciju();
+    }
+
+    private void zatvoriTransakcijuZaTest() throws SQLException {
+        if (!testMode) {
+            DBBrokerKonekcija.vratiInstancu().zatvoriKonekciju();
+        }
     }
 }
