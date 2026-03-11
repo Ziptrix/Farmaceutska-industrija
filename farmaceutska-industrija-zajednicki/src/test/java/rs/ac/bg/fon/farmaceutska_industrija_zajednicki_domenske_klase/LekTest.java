@@ -40,7 +40,7 @@ public class LekTest {
     void testSetSerijskiBroj() throws Exception {
         lek.setSerijskiBroj(123L);
 
-        assertEquals(123L, lek.getSerijskiBroj());
+        assertEquals(123, lek.getSerijskiBroj());
     }
 
     @Test
@@ -101,6 +101,7 @@ public class LekTest {
         lek.setSastav(sastavLeka);
         assertEquals(1, lek.getSastav().size());
         assertEquals(sastavLeka, lek.getSastav());
+        assertTrue(lek.getSastav().contains(supstanca));
     }
 
     @Test

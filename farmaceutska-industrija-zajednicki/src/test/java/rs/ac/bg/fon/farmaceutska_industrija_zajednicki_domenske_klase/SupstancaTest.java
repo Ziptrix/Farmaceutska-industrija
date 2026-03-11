@@ -39,7 +39,7 @@ public class SupstancaTest {
     void testSetSifra() throws Exception {
         supstanca.setSifra(1L);
 
-        assertEquals(1L, supstanca.getSifra());
+        assertEquals(1, supstanca.getSifra());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class SupstancaTest {
     void testSetKolicinaZaliha() throws Exception {
         supstanca.setKolicinaZaliha(100L);
 
-        assertEquals(100L, supstanca.getKolicinaZaliha());
+        assertEquals(100, supstanca.getKolicinaZaliha());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class SupstancaTest {
     void testSetCena() throws Exception {
         supstanca.setCena(50L);
 
-        assertEquals(50L, supstanca.getCena());
+        assertEquals(50, supstanca.getCena());
     }
 
     @Test

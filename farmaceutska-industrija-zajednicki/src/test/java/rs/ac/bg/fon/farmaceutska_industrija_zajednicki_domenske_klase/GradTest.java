@@ -39,7 +39,7 @@ public class GradTest {
     void testSetPostanskiBroj() throws Exception {
         grad.setPostanskiBroj(12000L);
 
-        assertEquals(12000L, grad.getPostanskiBroj());
+        assertEquals(12000, grad.getPostanskiBroj());
     }
 
     @Test

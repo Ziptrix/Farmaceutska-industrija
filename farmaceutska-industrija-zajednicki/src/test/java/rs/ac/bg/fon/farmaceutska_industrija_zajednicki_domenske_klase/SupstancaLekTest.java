@@ -65,7 +65,7 @@ public class SupstancaLekTest {
     void testSetUpotrebljenaKolicina() throws Exception {
         supstancaLek.setUpotrebljenaKolicina(50L);
 
-        assertEquals(50L, supstancaLek.getUpotrebljenaKolicina());
+        assertEquals(50, supstancaLek.getUpotrebljenaKolicina());
     }
 
     @Test

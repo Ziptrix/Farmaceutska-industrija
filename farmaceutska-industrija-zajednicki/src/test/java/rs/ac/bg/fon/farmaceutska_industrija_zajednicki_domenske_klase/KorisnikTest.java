@@ -48,7 +48,7 @@ public class KorisnikTest {
     void testSetID() throws Exception {
         korisnik.setId(1L);
 
-        assertEquals(1L, korisnik.getId());
+        assertEquals(1, korisnik.getId());
     }
     
     @Test

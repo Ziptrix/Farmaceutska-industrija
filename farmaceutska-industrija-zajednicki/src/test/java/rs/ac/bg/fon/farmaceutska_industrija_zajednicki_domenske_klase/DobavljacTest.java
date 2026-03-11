@@ -38,7 +38,7 @@ public class DobavljacTest {
     void testSetID() throws Exception {
         dobavljac.setId(1L);
 
-        assertEquals(1L, dobavljac.getId());
+        assertEquals(1, dobavljac.getId());
     }
 
     @Test
