@@ -4,17 +4,14 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_server.lek;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import rs.ac.bg.fon.farmaceutska_industrija_server.repozitorijum.DBBrokerKonekcija;
-import rs.ac.bg.fon.farmaceutska_industrija_server.repozitorijum.DBBrokerOpstaDomenskaKlasa;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.DodajLekSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
-import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.OpstaDomenskaKlasa;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 
 /**

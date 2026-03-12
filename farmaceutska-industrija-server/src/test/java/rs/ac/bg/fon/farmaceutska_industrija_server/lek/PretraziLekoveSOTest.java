@@ -12,9 +12,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import rs.ac.bg.fon.farmaceutska_industrija_server.repozitorijum.DBBrokerKonekcija;
 import rs.ac.bg.fon.farmaceutska_industrija_server.repozitorijum.DBBrokerOpstaDomenskaKlasa;
-import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.ObrisiLekSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.lek.PretraziLekoveSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Lek;
-import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.OpstaDomenskaKlasa;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.SupstancaLek;
 
@@ -22,36 +21,37 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.SupstancaL
  *
  * @author milos
  */
-public class ObrisiLekSOTest {
+public class PretraziLekoveSOTest {
 
     private DBBrokerOpstaDomenskaKlasa broker;
-    private ObrisiLekSO obrisiLek;
+    private PretraziLekoveSO pretrazi;
     private Lek testLek;
 
     @BeforeEach
     void setUp() throws Exception {
         broker = new DBBrokerOpstaDomenskaKlasa();
-        obrisiLek = new ObrisiLekSO();
-        obrisiLek.setTestMode(true);
+        pretrazi = new PretraziLekoveSO();
+        pretrazi.setTestMode(true);
+
         DBBrokerKonekcija.vratiInstancu().uspostaviKonekcijuZaTest();
 
-        // Napravi lek za test
+        // Dodavanje leka
         testLek = new Lek();
-        testLek.setSerijskiBroj(100100L);
-        testLek.setNaziv("TestLek");
-        testLek.setDoziranje("TestDoziranje");
-        List<Supstanca> sastavLeka = new ArrayList<>();
-        sastavLeka.add(new Supstanca(100L, "Kalijum", 20L, 10L));
+        testLek.setSerijskiBroj(222L);
+        testLek.setNaziv("Paracetamol");
+        testLek.setDoziranje("500mg");
+        List<Supstanca> sastav = new ArrayList<>();
+        sastav.add(new Supstanca(100L, "Kalcijum", 20L, 10L));
+        testLek.setSastav(sastav);
 
         broker.dodaj(testLek);
 
-        List<OpstaDomenskaKlasa> supstance = broker.ucitajSve(new Supstanca());
-        for (OpstaDomenskaKlasa op : supstance) {
-            Supstanca sup = (Supstanca) op;
+        // Dodavanje veze u SupstancaLek
+        for (Supstanca s : sastav) {
             SupstancaLek sl = new SupstancaLek();
             sl.setLek(testLek);
-            sl.setSupstanca(sup);
-            sl.setUpotrebljenaKolicina(20L);
+            sl.setSupstanca(s);
+            sl.setUpotrebljenaKolicina(s.getKolicinaZaliha());
             broker.dodaj(sl);
         }
     }
@@ -63,21 +63,19 @@ public class ObrisiLekSOTest {
     }
 
     @Test
-    void testObrisiLek() throws Exception {
-        obrisiLek.izvrsi(testLek, null);
+    void testPretraziLekPoNazivu() throws Exception {
+        // Pretrazi lek po nazivu
+        pretrazi.izvrsi(new Lek(), "Paracetamol");
 
-        List<Lek> lekovi = broker.ucitajSve(new Lek()).stream()
-                .map(o -> (Lek) o)
-                .filter(l -> l.getSerijskiBroj()== testLek.getSerijskiBroj())
-                .toList();
+        assertNotNull(pretrazi.getLekovi(), "Rezultat pretrage ne sme biti null");
+        assertFalse(pretrazi.getLekovi().isEmpty(), "Treba da postoji bar jedan lek u rezultatu");
 
-        assertTrue(lekovi.isEmpty(), "Lek mora biti obrisan iz baze");
+        Lek lek = pretrazi.getLekovi().get(0);
+        assertEquals("Paracetamol", lek.getNaziv(), "Naziv leka mora se poklapati");
 
-        List<SupstancaLek> slovi = broker.ucitajSve(new SupstancaLek()).stream()
-                .map(o -> (SupstancaLek) o)
-                .filter(sl -> sl.getLek().getSerijskiBroj()== testLek.getSerijskiBroj())
-                .toList();
-
-        assertTrue(slovi.isEmpty(), "Svi zapisi u SupstancaLek moraju biti obrisani");
+        // Proveri da li je sastav popunjen
+        assertNotNull(lek.getSastav(), "Sastav leka ne sme biti null");
+        assertFalse(lek.getSastav().isEmpty(), "Sastav leka ne sme biti prazan");
+        assertEquals("Kalcijum", lek.getSastav().get(0).getNaziv(), "Naziv supstance mora se poklapati");
     }
 }
