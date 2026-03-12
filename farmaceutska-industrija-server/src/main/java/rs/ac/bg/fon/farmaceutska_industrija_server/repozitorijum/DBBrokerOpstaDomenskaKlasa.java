@@ -17,6 +17,12 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Korisnik;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.OpstaDomenskaKlasa;
 
 /**
+ * Predstavlja klasu koja sadrži metode za generičke crud operacije.
+ * Na ovaj način se obezbešuje da jednu istu metodu možemo koristiti za
+ * izvršavanje operacije nad svim domenskim objektima.
+ * <p>
+ * Izuzetak je metoda vratiKorisnika koja nije generička već radi sa domenskim objektom.
+ * </p>
  *
  * @author milos
  */
@@ -24,8 +30,31 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.OpstaDomen
 @AllArgsConstructor
 public class DBBrokerOpstaDomenskaKlasa {
 
+    /**
+     * Konekcija za povezivanje sa bazom kao Connection.
+     */
     private Connection konekcija;
 
+    /**
+     * Pretražuje bazu podataka i vraća korisnika na osnovu prosleđenih kredencijala (korisničko ime i šifra).
+     * <p>
+     * Metoda izvršava SQL upit nad tabelom čiji naziv se dobija pozivom
+     * {@link Korisnik#vratiNazivTabele()}, koristeći {@link java.sql.PreparedStatement}
+     * kako bi se bezbedno prosledili parametri za korisničko ime i šifru.
+     * Ako korisnik postoji u bazi, popunjavaju se njegova osnovna polja
+     * (id, ime i prezime) i vraća se ažurirani objekat {@link Korisnik}.
+     * </p>
+     * <p>
+     * Ukoliko korisnik sa zadatim kredencijalima ne postoji u bazi, metoda baca izuzetak.
+     * </p>
+     *
+     * @param korisnik objekat {@link Korisnik} koji sadrži korisničko ime i šifru
+     * na osnovu kojih se vrši pretraga u bazi.
+     * 
+     * @return {@link Korisnik} objekat popunjen podacima iz baze podataka.
+     * @throws SQLException ako dođe do greške prilikom izvršavanja SQL upita.
+     * @throws Exception ako korisnik sa prosleđenim kredencijalima nije pronađen.
+     */
     public Korisnik vratiKorisnika(Korisnik korisnik) throws Exception {
         String upit = "SELECT * FROM " + korisnik.vratiNazivTabele() + " WHERE username = ? AND password = ?";
         System.out.println("UPIT " + upit);
@@ -56,6 +85,28 @@ public class DBBrokerOpstaDomenskaKlasa {
         }
     }
 
+    /**
+     * Učitava sve zapise iz baze podataka za prosleđeni tip domenskog objekta.
+     * <p>
+     * SQL upit se dinamički formira korišćenjem metoda definisanih u interfejsu
+     * {@link OpstaDomenskaKlasa}, kao što su:
+     * {@link OpstaDomenskaKlasa#vratiNazivTabele()},
+     * {@link OpstaDomenskaKlasa#vratiVrednostiSelectUpita()} i
+     * {@link OpstaDomenskaKlasa#vratiJoin()}.
+     * </p>
+     * <p>
+     * Nakon izvršavanja upita, rezultat iz {@link java.sql.ResultSet} objekta
+     * se mapira u listu domenskih objekata pozivom metode
+     * {@link OpstaDomenskaKlasa#vratiListuZaSelectUpit(java.sql.ResultSet)}.
+     * </p>
+     *
+     * @param objekat instanca koja implementira {@link OpstaDomenskaKlasa} i
+     * sadrži informacije potrebne za formiranje SQL upita i mapiranje rezultata.
+     * 
+     * @return lista objekata tipa {@link OpstaDomenskaKlasa} učitanih iz baze.
+     * @throws SQLException ako dođe do greške prilikom izvršavanja SQL upita.
+     * @throws Exception ako dođe do greške tokom obrade rezultata.
+     */
     public List<OpstaDomenskaKlasa> ucitajSve(OpstaDomenskaKlasa objekat) throws Exception {
         List<OpstaDomenskaKlasa> objekti = new ArrayList<>();
         String upit = "SELECT " + objekat.vratiVrednostiSelectUpita()
@@ -80,6 +131,27 @@ public class DBBrokerOpstaDomenskaKlasa {
         }
     }
 
+    /**
+     * Dodaje novi zapis u bazu podataka za prosleđeni domenski objekat.
+     * <p>
+     * SQL {@code INSERT} upit se dinamički formira korišćenjem metoda definisanih
+     * u interfejsu {@link OpstaDomenskaKlasa}, kao što su:
+     * {@link OpstaDomenskaKlasa#vratiNazivTabele()},
+     * {@link OpstaDomenskaKlasa#vratiNaziveKolonaZaInsertUpit()} i
+     * {@link OpstaDomenskaKlasa#vratiVrednostiInsertUpita()}.
+     * </p>
+     * <p>
+     * Nakon uspešnog izvršavanja upita, metoda preuzima generisani primarni ključ
+     * iz baze podataka i postavlja ga u objekat pozivom metode
+     * {@link OpstaDomenskaKlasa#postaviId(long)}.
+     * </p>
+     *
+     * @param objekat instanca koja implementira {@link OpstaDomenskaKlasa} i 
+     * sadrži podatke koji se upisuju u bazu.
+     * 
+     * @throws SQLException ako dođe do greške prilikom izvršavanja SQL upita.
+     * @throws Exception ako dođe do greške tokom obrade operacije.
+     */
     public void dodaj(OpstaDomenskaKlasa objekat) throws Exception {
         String upit = "INSERT INTO "
                 + objekat.vratiNazivTabele() + " ("
@@ -105,6 +177,25 @@ public class DBBrokerOpstaDomenskaKlasa {
         }
     }
 
+    /**
+     * Briše zapis iz baze podataka koji odgovara prosleđenom domenskom objektu.
+     * <p>
+     * SQL {@code DELETE} upit se dinamički formira korišćenjem metoda definisanih
+     * u interfejsu {@link OpstaDomenskaKlasa}.
+     * Naziv tabele se dobija pozivom {@link OpstaDomenskaKlasa#vratiNazivTabele()},
+     * dok se uslov za brisanje dobija pozivom {@link OpstaDomenskaKlasa#vratiUslovZaDelete()}.
+     * </p>
+     * <p>
+     * Parametri za {@link java.sql.PreparedStatement} postavljaju se pozivom
+     * metode {@link OpstaDomenskaKlasa#postaviVrednostiZaDeleteUpit(java.sql.PreparedStatement)}.
+     * </p>
+     *
+     * @param objekat instanca koja implementira {@link OpstaDomenskaKlasa} i
+     * sadrži podatke potrebne za formiranje uslova brisanja.
+     * 
+     * @throws SQLException ako dođe do greške prilikom izvršavanja SQL upita.
+     * @throws Exception ako dođe do greške tokom izvršavanja operacije.
+     */
     public void obrisi(OpstaDomenskaKlasa objekat) throws Exception {
         String upit = "DELETE FROM " + objekat.vratiNazivTabele()
                 + " " + objekat.vratiUslovZaDelete();
@@ -123,6 +214,25 @@ public class DBBrokerOpstaDomenskaKlasa {
         }
     }
 
+    /**
+     * Menja postojeći zapis u bazi podataka koji odgovara prosleđenom domenskom objektu.
+     * <p>
+     * SQL {@code UPDATE} upit se dinamički formira korišćenjem metoda definisanih
+     * u interfejsu {@link OpstaDomenskaKlasa}.
+     * Naziv tabele se dobija pozivom {@link OpstaDomenskaKlasa#vratiNazivTabele()},
+     * dok se vrednosti koje se ažuriraju dobijaju pozivom {@link OpstaDomenskaKlasa#vratiVrednostiUpdateUpita()}.
+     * </p>
+     * <p>
+     * Uslov za izmenu zapisa formira se na osnovu primarnog ključa koji se dobija
+     * pozivom {@link OpstaDomenskaKlasa#vratiNazivPrimarnogKljuca()} i identifikatora
+     * objekta {@link OpstaDomenskaKlasa#vratiId()}.
+     * </p>
+     *
+     * @param objekat instanca koja implementira {@link OpstaDomenskaKlasa} i
+     * sadrži podatke koji se ažuriraju u bazi.
+     * 
+     * @throws Exception ako dođe do greške prilikom izvršavanja SQL upita.
+     */
     public void izmeni(OpstaDomenskaKlasa objekat) throws Exception {
         String upit = "UPDATE " + objekat.vratiNazivTabele()
                 + " SET " + objekat.vratiVrednostiUpdateUpita()
@@ -142,6 +252,38 @@ public class DBBrokerOpstaDomenskaKlasa {
         }
     }
 
+    /**
+     * Pretražuje zapise u bazi podataka na osnovu prosleđenog kriterijuma
+     * za dati tip domenskog objekta.
+     * <p>
+     * SQL {@code SELECT} upit se dinamički formira korišćenjem metoda definisanih
+     * u interfejsu {@link OpstaDomenskaKlasa}.
+     * Naziv tabele, potrebni {@code JOIN} izrazi i kolone za {@code SELECT} dobijaju se pozivima metoda
+     * {@link OpstaDomenskaKlasa#vratiNazivTabele()},
+     * {@link OpstaDomenskaKlasa#vratiJoin()} i
+     * {@link OpstaDomenskaKlasa#vratiVrednostiSelectUpita()}.
+     * </p>
+     * <p>
+     * Pretraga se vrši korišćenjem {@code LIKE} operatora nad kolonom koja se dobija
+     * pozivom metode {@link OpstaDomenskaKlasa#vratiNazivKoloneZaPretragu()},
+     * dok se grupisanje rezultata vrši po koloni definisanoj metodom
+     * {@link OpstaDomenskaKlasa#vratiNazivKoloneZaGroupBy()}.
+     * </p>
+     * <p>
+     * Dobijeni rezultat iz {@link java.sql.ResultSet} objekta mapira se u listu
+     * domenskih objekata pozivom metode
+     * {@link OpstaDomenskaKlasa#vratiListuZaSelectUpit(java.sql.ResultSet)}.
+     * </p>
+     *
+     * @param objekat instanca koja implementira {@link OpstaDomenskaKlasa} i
+     * sadrži informacije potrebne za formiranje SQL upita i mapiranje rezultata.
+     * 
+     * @param kriterijum tekstualni kriterijum koji se koristi u {@code LIKE} uslovu za pretragu zapisa.
+     * 
+     * @return lista objekata tipa {@link OpstaDomenskaKlasa} koji zadovoljavaju zadati kriterijum pretrage.
+     * 
+     * @throws Exception ako dođe do greške prilikom izvršavanja SQL upita.
+     */
     public List<OpstaDomenskaKlasa> pretrazi(OpstaDomenskaKlasa objekat, String kriterijum) throws Exception {
         List<OpstaDomenskaKlasa> rezultat = new ArrayList<>();
         String upit = "SELECT " + objekat.vratiVrednostiSelectUpita()

@@ -155,9 +155,6 @@ public class FrmServer extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnStopActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStart;

@@ -12,24 +12,54 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
+ * Predstavlja klasu koja sadrži metode za osnovne akcije rada sa bazom podataka.
+ * Te metode su uspostavljanje konekcije sa bazom, zatvaranje konekcije sa bazom,
+ * potvrda transakcije i ponštavanje transakcije.
  *
  * @author milos
  */
 public class DBBrokerKonekcija {
 
+    /**
+     * Konekcija za povezivanje sa bazom kao Connection.
+     */
     private Connection konekcija;
+
+    /**
+     * Instanca klase koja služi za omogućavanje Singleton paterna kao DBBrokerKonekcija.
+     */
     private static DBBrokerKonekcija instanca;
 
+    /**
+     * Privatni bezparametarski konstruktor koji služi za omogućavanje Singleton paterna.
+     */
     private DBBrokerKonekcija() {
     }
 
+    /**
+     * Vraća aktivnu instancu klase kao DBBrokerKonekcija.
+     *
+     * @return
+     */
     public static DBBrokerKonekcija vratiInstancu() {
         if (instanca == null) {
             instanca = new DBBrokerKonekcija();
         }
         return instanca;
     }
-    
+
+    /**
+     * Uspostavlja konekciju sa test bazom podataka koristeći konfiguracioni fajl
+     * <code>konfiguracija/broker-konfiguracija-test.properties</code>.
+     * <p>
+     * Ako konekcija već postoji i nije zatvorena, metoda vraća postojeću konekciju.
+     * Inače, učitava se konfiguracija i kreira se nova konekcija.
+     * </p>
+     *
+     * @return {@link java.sql.Connection} objekat koji predstavlja konekciju ka test bazi podataka.
+     * @throws SQLException ako dođe do greške prilikom uspostavljanja konekcije sa bazom.
+     * @throws IOException ako dođe do greške prilikom učitavanja konfiguracionog fajla.
+     */
     public Connection uspostaviKonekcijuZaTest() throws SQLException, IOException {
         if (konekcija == null || konekcija.isClosed()) {
             try {
@@ -71,6 +101,18 @@ public class DBBrokerKonekcija {
         return konekcija;
     }
 
+    /**
+     * Uspostavlja konekciju sa produkcionom bazom podataka koristeći konfiguracioni fajl
+     * <code>konfiguracija/broker-konfiguracija.properties</code>.
+     * <p>
+     * Ako konekcija već postoji i nije zatvorena, metoda vraća postojeću konekciju.
+     * Inače, učitava se konfiguracija i kreira se nova konekcija.
+     * </p>
+     *
+     * @return {@link java.sql.Connection} objekat koji predstavlja konekciju ka produkcionoj bazi podataka.
+     * @throws SQLException ako dođe do greške prilikom uspostavljanja konekcije sa bazom.
+     * @throws IOException ako dođe do greške prilikom učitavanja konfiguracionog fajla.
+     */
     public Connection uspostaviKonekciju() throws SQLException, IOException {
         if (konekcija == null || konekcija.isClosed()) {
             try {
@@ -112,6 +154,16 @@ public class DBBrokerKonekcija {
         return konekcija;
     }
 
+    /**
+     * Zatvara aktivnu konekciju sa bazom podataka.
+     * <p>
+     * Ako konekcija postoji i nije već zatvorena,
+     * metoda poziva {@link java.sql.Connection#close()} kako bi zatvorila konekciju.
+     * U slučaju greške prilikom zatvaranja konekcije, izuzetak se prosleđuje dalje.
+     * </p>
+     *
+     * @throws SQLException ako dođe do greške prilikom zatvaranja konekcije.
+     */
     public void zatvoriKonekciju() throws SQLException {
         try {
             if (konekcija != null && !konekcija.isClosed()) {
@@ -124,7 +176,17 @@ public class DBBrokerKonekcija {
             throw e;
         }
     }
-
+    
+    /**
+     * Potvrđuje trenutnu transakciju nad aktivnom konekcijom sa bazom podataka.
+     * <p>
+     * Metoda poziva {@link java.sql.Connection#commit()} nad postojećom konekcijom
+     * kako bi trajno sačuvala sve izmene napravljene u okviru trenutne transakcije.
+     * Ukoliko dođe do greške tokom potvrđivanja transakcije, izuzetak se prosleđuje dalje.
+     * </p>
+     *
+     * @throws SQLException ako dođe do greške prilikom potvrđivanja transakcije.
+     */
     public void potvrdiTransakciju() throws SQLException {
         try {
             konekcija.commit();
@@ -136,6 +198,17 @@ public class DBBrokerKonekcija {
         }
     }
 
+    /**
+     * Poništava trenutnu transakciju nad aktivnom konekcijom sa bazom podataka.
+     * <p>
+     * Metoda poziva {@link java.sql.Connection#rollback()} kako bi vratila bazu
+     * podataka u stanje pre započete transakcije, čime se poništavaju sve izmene
+     * napravljene u okviru te transakcije.
+     * Ukoliko dođe do greške prilikom poništavanja transakcije, izuzetak se prosleđuje dalje.
+     * </p>
+     *
+     * @throws SQLException ako dođe do greške prilikom poništavanja transakcije.
+     */
     public void ponistiTransakciju() throws SQLException {
         try {
             konekcija.rollback();
