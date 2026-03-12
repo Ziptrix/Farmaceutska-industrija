@@ -4,14 +4,13 @@
  */
 package rs.ac.bg.fon.farmaceutska_industrija_server.dobavljac;
 
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import rs.ac.bg.fon.farmaceutska_industrija_server.repozitorijum.DBBrokerKonekcija;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.DodajDobavljacaSO;
-import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.UcitajSveDobavljaceSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.IzmeniDobavljacaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 
@@ -19,14 +18,15 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
  *
  * @author milos
  */
-public class UcitajSveDobavljaceSOTest {
+public class IzmeniDobavljacaSOTest {
 
-    private UcitajSveDobavljaceSO ucitajSve;
+    private IzmeniDobavljacaSO izmeniDobavljaca;
+//    private Connection konekcija;
 
     @BeforeEach
     void setUp() throws Exception {
-        ucitajSve = new UcitajSveDobavljaceSO();
-        ucitajSve.setTestMode(true);
+        izmeniDobavljaca = new IzmeniDobavljacaSO();
+        izmeniDobavljaca.setTestMode(true);
 
         DBBrokerKonekcija.vratiInstancu().uspostaviKonekcijuZaTest();
     }
@@ -35,10 +35,15 @@ public class UcitajSveDobavljaceSOTest {
     void tearDown() throws Exception {
         DBBrokerKonekcija.vratiInstancu().ponistiTransakciju();
         DBBrokerKonekcija.vratiInstancu().zatvoriKonekciju();
+//        if (konekcija != null) {
+//            konekcija.rollback();
+//            konekcija.close();
+//        }
     }
 
     @Test
-    void testUcitajSveDobavljace() throws Exception {
+    void testIzmeniDobavljacaGrad() throws Exception {
+
         DodajDobavljacaSO dodajSO = new DodajDobavljacaSO();
         dodajSO.setTestMode(true);
 
@@ -49,40 +54,32 @@ public class UcitajSveDobavljaceSOTest {
 
         dodajSO.izvrsi(d, null);
 
-        ucitajSve.izvrsi(new Dobavljac(), null);
+        // promena grada
+        Grad noviGrad = new Grad(21000L, "Novi Sad");
+        d.setGrad(noviGrad);
 
-        List<Dobavljac> lista = ucitajSve.getDobavljaci();
+        izmeniDobavljaca.izvrsi(d, null);
 
-        assertTrue(lista.stream()
-                .anyMatch(d1 -> d1.getIme().equals("TestIme")));
-        assertNotNull(lista);
-        assertFalse(lista.isEmpty());
+        assertEquals(21000, d.getGrad().getPostanskiBroj());
     }
 
     @Test
-    void testUcitajSveDobavljaceNull() {
+    void testIzmeniDobavljacaNull() {
+
         Exception e = assertThrows(Exception.class, () -> {
-            ucitajSve.izvrsi(null, null);
+            izmeniDobavljaca.izvrsi(null, null);
         });
 
         assertTrue(e.getMessage().contains("Dobavljac"));
     }
 
     @Test
-    void testUcitajSveDobavljacePogresanTip() {
+    void testIzmeniDobavljacaPogresanTip() {
+
         Exception e = assertThrows(Exception.class, () -> {
-            ucitajSve.izvrsi(new Grad(), null);
+            izmeniDobavljaca.izvrsi(new Grad(), null);
         });
 
         assertTrue(e.getMessage().contains("Dobavljac"));
     }
-
-//    @Test
-//    void testUcitajSveDobavljacePraznaLista() {
-//        Exception e = assertThrows(Exception.class, () -> {
-//            ucitajSve.izvrsi(new Dobavljac(), null);
-//        });
-//
-//        assertTrue(e.getMessage().contains("Lista ucitanih dobavljaca je prazna"));
-//    }
 }
