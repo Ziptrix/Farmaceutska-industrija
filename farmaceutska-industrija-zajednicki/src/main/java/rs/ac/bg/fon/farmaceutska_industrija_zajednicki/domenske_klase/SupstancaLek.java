@@ -13,6 +13,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
+ * Predstavlja asocijativnu klasu između klasa {@link Supstanca} i {@link Lek}.
+ * <p>
+ * U njoj se nalaze podaci o tome od koje supstance (ili više njih) je napravljen neki lek
+ * kao i koja je količina te supstance (ili više njih) upotrebljena za pravljenje tog leka.
+ * </p>
+ * Ova domenska klasa implementira interfejs {@link OpstaDomenskaKlasa}.
  *
  * @author milos
  */
@@ -21,10 +27,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SupstancaLek implements OpstaDomenskaKlasa {
 
+    /**
+     * Lek koji je napravljen kao {@link Lek}.
+     */
     private Lek lek;
+    
+    /**
+     * Supstanca od koje je neki lek napravljen kao {@link Supstanca}.
+     */
     private Supstanca supstanca;
+    
+    /**
+     * Upotrebljena količina neke supstance za pravljenje nekog leka kao Long.
+     */
     private Long upotrebljenaKolicina;
 
+    /**
+     * Postavlja novi lek koji je napravljen.
+     * Uneti lek ne sme biti null.
+     *
+     * @param lek Lek koji je napravljen kao {@link Lek}.
+     *
+     * @throws java.lang.Exception Ako je uneti lek null.
+     */
     public void setLek(Lek lek) throws Exception {
         if (lek == null || !(lek instanceof Lek)) {
             throw new Exception("Lek u klasi SupstancaLek mora da postoji!");
@@ -32,6 +57,14 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
         this.lek = lek;
     }
 
+    /**
+     * Postavlja novu supstancu od koje je neki lek napravljen.
+     * Uneta supstanca ne sme biti null.
+     *
+     * @param supstanca Supstanca od koje je neki lek napravljen kao {@link Supstanca}.
+     *
+     * @throws java.lang.Exception Ako je uneta supstanca null.
+     */
     public void setSupstanca(Supstanca supstanca) throws Exception {
         if (supstanca == null || !(supstanca instanceof Supstanca)) {
             throw new Exception("Supstanca u klasi SupstancaLek mora da postoji!");
@@ -39,6 +72,14 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
         this.supstanca = supstanca;
     }
 
+    /**
+     * Postavlja novu upotrebljenu količinu neke supstance od koje je neki lek napravljen.
+     * Uneta upotrebljena količina ne sme biti null, manja od ili jednaka nuli.
+     *
+     * @param upotrebljenaKolicina Upotrebljena količina neke supstance za pravljenje nekog leka kao Long.
+     *
+     * @throws java.lang.Exception Ako je uneta upotrebljena količina null, manja od ili jednaka nuli.
+     */
     public void setUpotrebljenaKolicina(Long upotrebljenaKolicina) throws Exception {
         if (upotrebljenaKolicina == null) {
             throw new Exception("Upotrebljena kolicina supstance u sastavu leka mora da postoji!");
@@ -49,6 +90,13 @@ public class SupstancaLek implements OpstaDomenskaKlasa {
         this.upotrebljenaKolicina = upotrebljenaKolicina;
     }
 
+    /**
+     * Vraća String sa svim podacima o klasi.
+     * 
+     * @return String sa svim podacima u formatu
+     * #####, #####, #### odnosno, na primer
+     * Febricet tri puta dnevno, Paracetamol, kolicina: 100, 20
+     */
     @Override
     public String toString() {
         return lek + ", " + supstanca + ", " + upotrebljenaKolicina;

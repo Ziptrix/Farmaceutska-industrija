@@ -13,7 +13,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- *
+ * Predstavlja korisnika, odnosno, <b>farmaceuta</b> koji koristi aplikaciju.
+ * Ova domenska klasa implementira interfejs {@link OpstaDomenskaKlasa}.
+ * 
  * @author milos
  */
 @Getter
@@ -21,17 +23,50 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Korisnik implements OpstaDomenskaKlasa {
 
+    /**
+     * Id korisnika kao Long.
+     */
     private Long id;
+    
+    /**
+     * Korisničko ime korisnika kao String.
+     */
     private String korisnickoIme;
+    
+    /**
+     * Šifra korisnika kao String.
+     */
     private String sifra;
+    
+    /**
+     * Ime korisnika kao String.
+     */
     private String ime;
+    
+    /**
+     * Prezime korisnika kao String.
+     */
     private String prezime;
 
+    /**
+     * Inicijalizuje instancu korisnika sa unetim korisničkim imenom i šifrom.
+     * 
+     * @param korisnickoIme Korisničko ime korisnika koje se unosi u objekat. Korisničko ime ne sme biti null niti prazno.
+     * @param sifra Šifra korisnika koja se unosi u objekat. Šifra ne sme biti null niti prazna.
+     */
     public Korisnik(String korisnickoIme, String sifra) {
         this.korisnickoIme = korisnickoIme;
         this.sifra = sifra;
     }
 
+    /**
+     * Postavlja novi id korisnika.
+     * Uneti id ne sme biti null, manji od ili jednak nuli.
+     * 
+     * @param id Id korisnika kao Long.
+     * 
+     * @throws java.lang.Exception Ako je uneti id null, manji od ili jednak nuli. 
+     */
     public void setId(Long id) throws Exception {
         if (id == null) {
             throw new Exception("ID korisnika mora da postoji!");
@@ -42,6 +77,14 @@ public class Korisnik implements OpstaDomenskaKlasa {
         this.id = id;
     }
 
+    /**
+     * Postavlja novo korisničko ime korisnika.
+     * Uneto korisničko ime ne sme biti null ili prazno.
+     * 
+     * @param korisnickoIme Korisničko ime korisnika kao String.
+     * 
+     * @throws java.lang.Exception Ako je uneto korisničko ime null ili prazno. 
+     */
     public void setKorisnickoIme(String korisnickoIme) throws Exception {
         if (korisnickoIme == null) {
             throw new Exception("Korisnicko ime korisnika mora da postoji!");
@@ -52,6 +95,14 @@ public class Korisnik implements OpstaDomenskaKlasa {
         this.korisnickoIme = korisnickoIme;
     }
 
+    /**
+     * Postavlja novu šifru korisnika.
+     * Uneta šifra ne sme biti null ili prazna.
+     * 
+     * @param sifra Šifra korisnika kao String.
+     * 
+     * @throws java.lang.Exception Ako je uneta šifra null ili prazna. 
+     */
     public void setSifra(String sifra) throws Exception {
         if (sifra == null) {
             throw new Exception("Sifra korisnika mora da postoji!");
@@ -62,6 +113,14 @@ public class Korisnik implements OpstaDomenskaKlasa {
         this.sifra = sifra;
     }
 
+    /**
+     * Postavlja novo ime korisnika.
+     * Uneto ime ne sme biti null ili prazno.
+     * 
+     * @param ime Ime korisnika kao String.
+     * 
+     * @throws java.lang.Exception Ako je uneto ime null ili prazno. 
+     */
     public void setIme(String ime) throws Exception {
         if (ime == null) {
             throw new Exception("Ime korisnika mora da postoji!");
@@ -72,6 +131,14 @@ public class Korisnik implements OpstaDomenskaKlasa {
         this.ime = ime;
     }
 
+    /**
+     * Postavlja novo prezime korisnika.
+     * Uneto prezime ne sme biti null ili prazno.
+     * 
+     * @param prezime Prezime korisnika kao String.
+     * 
+     * @throws java.lang.Exception Ako je uneto prezime null ili prazno. 
+     */
     public void setPrezime(String prezime) throws Exception {
         if (prezime == null) {
             throw new Exception("Prezime korisnika mora da postoji!");
@@ -82,17 +149,41 @@ public class Korisnik implements OpstaDomenskaKlasa {
         this.prezime = prezime;
     }
 
+    /**
+     * Vraća String sa osnovnim podacima o korisniku.
+     * 
+     * @return String sa osnovnim podacima u formatu
+     * ##### #####, korisnicko ime: ##### odnosno, na primer
+     * Miloš Korda, korisnicko ime: admin
+     */
     @Override
     public String toString() {
         return ime + " " + prezime + ", korisnicko ime: " + korisnickoIme;
     }
 
+    /**
+     * Vraća hash code koji nije zasnovan na atributima korisnika
+     * 
+     * @return hash code
+     */
     @Override
     public int hashCode() {
         int hash = 5;
         return hash;
     }
 
+    /**
+     * Poredi dva korisnika prema korisničkom imenu.
+     * 
+     * @param obj Drugi korisnik sa kojim se poredi.
+     * 
+     * @return
+     * <ul>
+     * <li>true - ako je uneti objekat različit od null, ako je klase {@link Korisnik}
+     * i ako je korisničko ime isto kao i kod prvog korisnika.</li>
+     * <li>false - u svim ostalim slučajevima.
+     * </ul>
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

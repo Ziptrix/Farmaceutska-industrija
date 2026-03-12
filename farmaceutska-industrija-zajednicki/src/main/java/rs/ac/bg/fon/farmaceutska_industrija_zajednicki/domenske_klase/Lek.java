@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
+ * Predstavlja lek koji se pravi u aplikaciji.
+ * Ova domenska klasa implementira interfejs {@link OpstaDomenskaKlasa}.
  *
  * @author milos
  */
@@ -21,11 +23,34 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Lek implements OpstaDomenskaKlasa {
 
+    /**
+     * Serijski broj leka kao Long.
+     */
     private Long serijskiBroj;
+    
+    /**
+     * Naziv leka kao String.
+     */
     private String naziv;
+    
+    /**
+     * Doziranje leka kao String.
+     */
     private String doziranje;
+    
+    /**
+     * Lista supstanci od kojih je lek napravljen.
+     */
     private List<Supstanca> sastav;
 
+    /**
+     * Postavlja novi serijski broj leka.
+     * Uneti serijski broj ne sme biti null, manji od ili jednak nuli.
+     *
+     * @param serijskiBroj Serijski broj leka kao Long.
+     *
+     * @throws java.lang.Exception Ako je uneti serijski broj null, manji od ili jednak nuli.
+     */
     public void setSerijskiBroj(Long serijskiBroj) throws Exception {
         if (serijskiBroj == null) {
             throw new Exception("Serijski broj leka mora da postoji!");
@@ -36,6 +61,14 @@ public class Lek implements OpstaDomenskaKlasa {
         this.serijskiBroj = serijskiBroj;
     }
 
+    /**
+     * Postavlja novi naziv leka.
+     * Uneti naziv ne sme biti null ili prazan.
+     *
+     * @param naziv Naziv leka kao Long.
+     *
+     * @throws java.lang.Exception Ako je uneti naziv null ili prazan.
+     */
     public void setNaziv(String naziv) throws Exception {
         if (naziv == null) {
             throw new Exception("Naziv leka mora da postoji!");
@@ -46,6 +79,14 @@ public class Lek implements OpstaDomenskaKlasa {
         this.naziv = naziv;
     }
 
+    /**
+     * Postavlja novo doziranje leka.
+     * Uneto doziranje ne sme biti null ili prazno.
+     *
+     * @param doziranje Doziranje leka kao Long.
+     *
+     * @throws java.lang.Exception Ako je uneto doziranje null ili prazno.
+     */
     public void setDoziranje(String doziranje) throws Exception {
         if (doziranje == null) {
             throw new Exception("Doziranje leka mora da postoji!");
@@ -56,10 +97,22 @@ public class Lek implements OpstaDomenskaKlasa {
         this.doziranje = doziranje;
     }
 
-    public void setSastav(List<Supstanca> sastav) throws Exception {
+    /**
+     * Postavlja novu listu supstanci od kojih je lek napravljen.
+     * 
+     * @param sastav Lista supstanci od kojih je lek napravljen.
+     */
+    public void setSastav(List<Supstanca> sastav) {
         this.sastav = sastav;
     }
 
+    /**
+     * Vraća String sa nazivom i doziranjem leka.
+     *
+     * @return String sa nazivom i doziranjem u formatu
+     * ##### ##### odnosno, na primer
+     * Febricet tri puta dnevno
+     */
     @Override
     public String toString() {
         return naziv + " " + doziranje;

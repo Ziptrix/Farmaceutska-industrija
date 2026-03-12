@@ -12,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
+ * Predstavlja jednu stavku narudžbenice u kojoj se nalazi nova količina jedne supstance (objekat klase {@link Supstanca}).
+ * Ova domenska klasa implementira interfejs {@link OpstaDomenskaKlasa}.
  *
  * @author milos
  */
@@ -20,12 +22,39 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
 
+    /**
+     * Redni broj stavke narudžbenice kao Long.
+     */
     private Long redniBroj;
+    
+    /**
+     * Narudžbenica u kojoj se stavka narudžbenice nalazi kao {@link Narudzbenica}.
+     */
     private Narudzbenica narudzbenica;
+    
+    /**
+     * Količina poručene supstance stavke narudžbenice kao Long.
+     */
     private Long kolicinaSupstance;
+    
+    /**
+     * Iznos jedne stavke narudžbenice kao Long.
+     */
     private Long iznosStavke;
+    
+    /**
+     * Supstanca čija se nova količina poručuje u stavci narudžbenice kao {@link Supstanca}.
+     */
     private Supstanca supstanca;
 
+    /**
+     * Postavlja novi redni broj stavke narudžbenice.
+     * Uneti redni broj ne sme biti null, manji od ili jednak nuli.
+     *
+     * @param redniBroj Redni broj stavke narudžbenice kao Long.
+     *
+     * @throws java.lang.Exception Ako je uneti redni broj null, manji od ili jednak nuli.
+     */
     public void setRedniBroj(Long redniBroj) throws Exception {
         if (redniBroj == null) {
             throw new Exception("Redni broj stavke narudzbenice mora da postoji!");
@@ -36,6 +65,14 @@ public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
         this.redniBroj = redniBroj;
     }
 
+    /**
+     * Postavlja novu narudžbenicu u kojoj se stavka narudžbenice nalazi.
+     * Uneta narudžbenica ne sme biti null.
+     *
+     * @param narudzbenica Narudžbenica u kojoj se stavka narudžbenice nalazi kao {@link Narudzbenica}.
+     *
+     * @throws java.lang.Exception Ako je uneta narudzbenica null.
+     */
     public void setNarudzbenica(Narudzbenica narudzbenica) throws Exception {
         if (narudzbenica == null || !(narudzbenica instanceof Narudzbenica)) {
             throw new Exception("Narudzbenica u kojoj se nalazi njena stavka mora da postoji!");
@@ -43,6 +80,14 @@ public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
         this.narudzbenica = narudzbenica;
     }
 
+    /**
+     * Postavlja novu količinu poručene supstance stavke narudžbenice.
+     * Uneta količina supstance ne sme biti null, manja od ili jednaka nuli.
+     *
+     * @param kolicinaSupstance Količina poručene supstance stavke narudžbenice kao Long.
+     *
+     * @throws java.lang.Exception Ako je uneta količina supstance null, manja od ili jednaka nuli.
+     */
     public void setKolicinaSupstance(Long kolicinaSupstance) throws Exception {
         if (kolicinaSupstance == null) {
             throw new Exception("Kolicina supstance stavke narudzbenice mora da postoji!");
@@ -53,6 +98,14 @@ public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
         this.kolicinaSupstance = kolicinaSupstance;
     }
 
+    /**
+     * Postavlja novi iznos jedne stavke narudžbenice.
+     * Uneti iznos stavke ne sme biti null, manji od ili jednak nuli.
+     *
+     * @param iznosStavke Iznos jedne stavke narudžbenice kao Long.
+     *
+     * @throws java.lang.Exception Ako je uneti iznos stavke null, manji od ili jednak nuli.
+     */
     public void setIznosStavke(Long iznosStavke) throws Exception {
         if (iznosStavke == null) {
             throw new Exception("Iznos stavke narudzbenice mora da postoji!");
@@ -63,6 +116,14 @@ public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
         this.iznosStavke = iznosStavke;
     }
 
+    /**
+     * Postavlja novu supstancu čija se nova količina poručuje u  stavci narudžbenice.
+     * Uneta supstanca ne sme biti null.
+     *
+     * @param supstanca Supstanca čija se nova količina poručuje u stavci narudžbenice kao {@link Supstanca}.
+     *
+     * @throws java.lang.Exception Ako je uneta supstanca null.
+     */
     public void setSupstanca(Supstanca supstanca) throws Exception, Exception {
         if (supstanca == null || !(supstanca instanceof Supstanca)) {
             throw new Exception("Supstanca koja se nalazi u stavci mora da postoji!");
@@ -70,6 +131,13 @@ public class StavkaNarudzbenice implements OpstaDomenskaKlasa {
         this.supstanca = supstanca;
     }
 
+    /**
+     * Vraća String sa količinom poručene supstance i supstancom stavke narudžbenice.
+     * 
+     * @return String sa količinom poručene supstance i supstancom u formatu
+     * ##### jedinica supstance ##### odnosno, na primer
+     * 10 jedinica supstance Paracetamol
+     */
     @Override
     public String toString() {
         return kolicinaSupstance + " jedinica supstance " + supstanca;

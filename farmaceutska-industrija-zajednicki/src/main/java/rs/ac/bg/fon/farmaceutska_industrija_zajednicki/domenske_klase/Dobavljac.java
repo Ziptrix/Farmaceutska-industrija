@@ -14,7 +14,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- *
+ * Predstavlja dobavljača od kojeg se poručuje {@link Supstanca}.
+ * Ova domenska klasa implementira interfejs {@link OpstaDomenskaKlasa}.
+ * 
  * @author milos
  */
 @Getter
@@ -22,11 +24,34 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Dobavljac implements OpstaDomenskaKlasa {
 
+    /**
+     * Id dobavljača kao Long.
+     */
     private Long id;
+    
+    /**
+     * Ime dobavljača kao String.
+     */
     private String ime;
+    
+    /**
+     * Prezime dobavljača kao String.
+     */
     private String prezime;
+    
+    /**
+     * Grad iz kojeg dobavljač dolazi kao {@link Grad}
+     */
     private Grad grad;
 
+    /**
+     * Postavlja novi id dobavljača.
+     * Uneti id ne sme biti null, manji od ili jednak nuli.
+     * 
+     * @param id Id dobavljača kao Long.
+     * 
+     * @throws java.lang.Exception Ako je uneti id null, manji od ili jednak nuli. 
+     */
     public void setId(Long id) throws Exception {
         if (id == null) {
             throw new Exception("ID dobavljaca mora da postoji!");
@@ -37,6 +62,14 @@ public class Dobavljac implements OpstaDomenskaKlasa {
         this.id = id;
     }
 
+    /**
+     * Postavlja novo ime dobavljača.
+     * Uneto ime ne sme biti null ili prazno.
+     * 
+     * @param ime Ime dobavljača kao String.
+     * 
+     * @throws java.lang.Exception Ako je uneto ime null ili prazno. 
+     */
     public void setIme(String ime) throws Exception {
         if (ime == null) {
             throw new Exception("Ime dobavljaca mora da postoji!");
@@ -47,6 +80,14 @@ public class Dobavljac implements OpstaDomenskaKlasa {
         this.ime = ime;
     }
 
+    /**
+     * Predstavlja novo prezime dobavljača.
+     * Uneto prezime ne sme biti null ili prazno.
+     * 
+     * @param prezime Prezime dobavljača kao String.
+     * 
+     * @throws java.lang.Exception Ako je uneto prezime null ili prazno. 
+     */
     public void setPrezime(String prezime) throws Exception {
         if (prezime == null) {
             throw new Exception("Prezime dobavljaca mora da postoji!");
@@ -57,6 +98,14 @@ public class Dobavljac implements OpstaDomenskaKlasa {
         this.prezime = prezime;
     }
 
+    /**
+     * Predstavlja novi grad iz kojeg dobavljač dolazi.
+     * Uneti grad ne sme biti null.
+     * 
+     * @param grad Grad iz kojeg dobavljač dolazi kao {@link Grad}
+     * 
+     * @throws java.lang.Exception Ako je uneti grad null. 
+     */
     public void setGrad(Grad grad) throws Exception {
         if (grad == null || !(grad instanceof Grad)) {
             throw new Exception("Grad dobavljaca mora da postoji!");
@@ -64,6 +113,13 @@ public class Dobavljac implements OpstaDomenskaKlasa {
         this.grad = grad;
     }
 
+    /**
+     * Vraća String sa osnovnim podacima o dobavljaču.
+     * 
+     * @return String sa osnovnim podacima u formatu
+     * ##### #####, iz grada: ##### odnosno, na primer
+     * Mika Mikic iz grada: Pozarevac
+     */
     @Override
     public String toString() {
         return ime + " " + prezime + ", iz grada: " + grad.getNaziv();

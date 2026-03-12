@@ -14,6 +14,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
+ * Predstavlja narudžbenicu kojom naručujemo novu količinu supstanci (objekat klase {@link Supstanca}).
+ * Ova domenska klasa implementira interfejs {@link OpstaDomenskaKlasa}.
  *
  * @author milos
  */
@@ -22,13 +24,44 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Narudzbenica implements OpstaDomenskaKlasa {
 
+    /**
+     * Šifra narudžbenice kao Long.
+     */
     private Long sifra;
+    
+    /**
+     * Datum kreiranja narudžbenice kao LocalDate.
+     */
     private LocalDate datum;
+    
+    /**
+     * Ukupan iznos narudžbenice kao Long.
+     */
     private Long ukupanIznos;
+    
+    /**
+     * Korisnik koji je kreirao narudžbenicu kao {@link Korisnik}.
+     */
     private Korisnik korisnik;
+    
+    /**
+     * Dobavljač od kojeg se poručuje {@link Supstanca} kao {@link Dobavljac}.
+     */
     private Dobavljac dobavljac;
+    
+    /**
+     * Lista stavki narudžbenice kao {@link StavkaNarudzbenice}.
+     */
     private List<StavkaNarudzbenice> listaStavki;
 
+    /**
+     * Postavlja novu šifru narudžbenice.
+     * Uneta šifra ne sme biti null, manja od ili jednaka nuli.
+     *
+     * @param sifra Šifra narudžbenice kao Long.
+     *
+     * @throws java.lang.Exception Ako je uneta šifra null, manja od ili jednaka nuli.
+     */
     public void setSifra(Long sifra) throws Exception {
         if (sifra == null) {
             throw new Exception("Sifra narudzbenice mora da postoji!");
@@ -39,6 +72,14 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
         this.sifra = sifra;
     }
 
+    /**
+     * Postavlja novi datum kreiranja narudžbenice.
+     * Uneti datum ne sme biti null i ne sme biti nakon današnjeg datuma.
+     *
+     * @param datum Datum narudžbenice kao LocalDate.
+     *
+     * @throws java.lang.Exception Ako je uneti datum null ili ako je nakon današnjeg datuma.
+     */
     public void setDatum(LocalDate datum) throws Exception {
         if (datum == null) {
             throw new Exception("Datum narudzbenice mora da postoji!");
@@ -49,6 +90,14 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
         this.datum = datum;
     }
 
+    /**
+     * Postavlja novi ukupan iznos narudžbenice.
+     * Uneti ukupan iznos ne sme biti null, manji od ili jednak nuli.
+     *
+     * @param ukupanIznos Ukupan iznos narudžbenice kao Long.
+     *
+     * @throws java.lang.Exception Ako je uneti ukupan iznos null, manji od ili jednak nuli.
+     */
     public void setUkupanIznos(Long ukupanIznos) throws Exception {
         if (ukupanIznos == null) {
             throw new Exception("Ukupan iznos narudzbenice mora da postoji!");
@@ -59,18 +108,40 @@ public class Narudzbenica implements OpstaDomenskaKlasa {
         this.ukupanIznos = ukupanIznos;
     }
 
-    public void setKorisnik(Korisnik korisnik) throws Exception {
+    /**
+     * Postavlja novog korisnika koji je kreirao narudžbenicu.
+     * 
+     * @param korisnik Korisnik koji je kreirao narudžbenicu kao {@link Korisnik}.
+     */
+    public void setKorisnik(Korisnik korisnik) {
         this.korisnik = korisnik;
     }
 
-    public void setDobavljac(Dobavljac dobavljac) throws Exception {
+    /**
+     * Postavlja novog dobavljača od kojeg se poručuje supstanca.
+     * 
+     * @param dobavljac Dobavljač od kojeg se poručuje {@link Supstanca} kao {@link Dobavljac}.
+     */
+    public void setDobavljac(Dobavljac dobavljac) {
         this.dobavljac = dobavljac;
     }
 
-    public void setListaStavki(List<StavkaNarudzbenice> listaStavki) throws Exception {
+    /**
+     * Postavlja novu listu stavki narudžbenica.
+     * 
+     * @param listaStavki Lista stavki narudžbenice kao {@link StavkaNarudzbenice}.
+     */
+    public void setListaStavki(List<StavkaNarudzbenice> listaStavki) {
         this.listaStavki = listaStavki;
     }
 
+    /**
+     * Vraća String sa datumom kreiranja i ukupnim iznosom narudžbenice.
+     * 
+     * @return String sa datumom kreiranja i ukupnim iznosom u formatu
+     * Datum kreiranja: #####, ukupan iznos: ##### odnosno, na primer
+     * Datum kreiranja: 12.03.2026., ukupan iznos: 1000
+     */
     @Override
     public String toString() {
         return "Datum kreiranja: " + datum + ", ukupan iznos: " + ukupanIznos;

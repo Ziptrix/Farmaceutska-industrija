@@ -14,7 +14,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- *
+ * Predstavlja grad iz kojeg {@link Dobavljac} dolazi.
+ * Ova domenska klasa implementira interfejs {@link OpstaDomenskaKlasa}.
+ * 
  * @author milos
  */
 @Getter
@@ -22,9 +24,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Grad implements OpstaDomenskaKlasa {
 
+    /**
+     * Poštanski broj grada kao Long.
+     */
     private Long postanskiBroj;
+    
+    /**
+     * Naziv grada kao String.
+     */
     private String naziv;
 
+    /**
+     * Postavlja novi poštanski broj grada.
+     * Uneti poštanski broj ne sme biti null, manji od ili jednak nuli.
+     * 
+     * @param postanskiBroj Poštanski broj grada kao Long.
+     * 
+     * @throws java.lang.Exception Ako je uneti poštanski broj null, manji od ili jednak nuli.
+     */
     public void setPostanskiBroj(Long postanskiBroj) throws Exception {
         if (postanskiBroj == null) {
             throw new Exception("Postanski broj grada mora da postoji!");
@@ -35,6 +52,14 @@ public class Grad implements OpstaDomenskaKlasa {
         this.postanskiBroj = postanskiBroj;
     }
 
+    /**
+     * Postavlja novi naziv grada.
+     * Uneti naziv ne sme biti null ili prazan.
+     * 
+     * @param naziv Naziv grada kao String.
+     * 
+     * @throws java.lang.Exception Ako je uneti naziv null ili prazan.
+     */
     public void setNaziv(String naziv) throws Exception {
         if (naziv == null) {
             throw new Exception("Naziv grada mora da postoji!");
@@ -45,17 +70,41 @@ public class Grad implements OpstaDomenskaKlasa {
         this.naziv = naziv;
     }
 
+    /**
+     * Vraća String sa svim podacima o gradu.
+     * 
+     * @return String sa svim podacima u formatu
+     * #####, ##### odnosno, na primer:
+     * 11000, Beograd
+     */
     @Override
     public String toString() {
         return postanskiBroj + ", " + naziv;
     }
 
+    /**
+     * Vraća hash code koji nije zasnovan na atributima grada
+     * 
+     * @return hash code
+     */
     @Override
     public int hashCode() {
         int hash = 7;
         return hash;
     }
 
+    /**
+     * Poredi dva grada prema poštanskom broju.
+     * 
+     * @param obj Drugi grad sa kojim se poredi.
+     * 
+     * @return
+     * <ul>
+     * <li>true - ako je uneti objekat različit od null, ako je klase {@link Grad}
+     * i ako je poštanski broj isti kao i kod prvog grada.</li>
+     * <li>false - u svim ostalim slučajevima.
+     * </ul>
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
