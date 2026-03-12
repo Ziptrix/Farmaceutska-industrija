@@ -76,13 +76,4 @@ public class UcitajSveDobavljaceSOTest {
 
         assertTrue(e.getMessage().contains("Dobavljac"));
     }
-
-//    @Test
-//    void testUcitajSveDobavljacePraznaLista() {
-//        Exception e = assertThrows(Exception.class, () -> {
-//            ucitajSve.izvrsi(new Dobavljac(), null);
-//        });
-//
-//        assertTrue(e.getMessage().contains("Lista ucitanih dobavljaca je prazna"));
-//    }
 }
