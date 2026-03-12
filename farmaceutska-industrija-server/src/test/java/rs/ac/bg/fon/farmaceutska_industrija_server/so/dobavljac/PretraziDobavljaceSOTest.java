@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
  */
-package rs.ac.bg.fon.farmaceutska_industrija_server.dobavljac;
+package rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac;
 
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import rs.ac.bg.fon.farmaceutska_industrija_server.repozitorijum.DBBrokerKonekcija;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.DodajDobavljacaSO;
-import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.UcitajSveDobavljaceSO;
+import rs.ac.bg.fon.farmaceutska_industrija_server.so.dobavljac.PretraziDobavljaceSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Dobavljac;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
 
@@ -19,14 +19,14 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Grad;
  *
  * @author milos
  */
-public class UcitajSveDobavljaceSOTest {
+public class PretraziDobavljaceSOTest {
 
-    private UcitajSveDobavljaceSO ucitajSve;
+    private PretraziDobavljaceSO pretrazi;
 
     @BeforeEach
     void setUp() throws Exception {
-        ucitajSve = new UcitajSveDobavljaceSO();
-        ucitajSve.setTestMode(true);
+        pretrazi = new PretraziDobavljaceSO();
+        pretrazi.setTestMode(true);
 
         DBBrokerKonekcija.vratiInstancu().uspostaviKonekcijuZaTest();
     }
@@ -38,42 +38,54 @@ public class UcitajSveDobavljaceSOTest {
     }
 
     @Test
-    void testUcitajSveDobavljace() throws Exception {
+    void testPretraziDobavljace() throws Exception {
+
         DodajDobavljacaSO dodajSO = new DodajDobavljacaSO();
         dodajSO.setTestMode(true);
 
         Dobavljac d = new Dobavljac();
-        d.setIme("TestIme");
-        d.setPrezime("TestPrezime");
+        d.setIme("Marko");
+        d.setPrezime("Markovic");
         d.setGrad(new Grad(11000L, "Beograd"));
 
         dodajSO.izvrsi(d, null);
 
-        ucitajSve.izvrsi(new Dobavljac(), null);
+        pretrazi.izvrsi(new Dobavljac(), "Marko");
 
-        List<Dobavljac> lista = ucitajSve.getDobavljaci();
+        List<Dobavljac> lista = pretrazi.getDobavljaci();
 
-        assertTrue(lista.stream()
-                .anyMatch(d1 -> d1.getIme().equals("TestIme")));
         assertNotNull(lista);
         assertFalse(lista.isEmpty());
+        assertTrue(lista.stream().anyMatch(x -> x.getIme().equals("Marko")));
     }
 
     @Test
-    void testUcitajSveDobavljaceNull() {
+    void testPretraziDobavljaceNull() {
+
         Exception e = assertThrows(Exception.class, () -> {
-            ucitajSve.izvrsi(null, null);
+            pretrazi.izvrsi(null, "Marko");
         });
 
         assertTrue(e.getMessage().contains("Dobavljac"));
     }
 
     @Test
-    void testUcitajSveDobavljacePogresanTip() {
+    void testPretraziDobavljacePogresanTip() {
+
         Exception e = assertThrows(Exception.class, () -> {
-            ucitajSve.izvrsi(new Grad(), null);
+            pretrazi.izvrsi(new Grad(), "Marko");
         });
 
         assertTrue(e.getMessage().contains("Dobavljac"));
+    }
+
+    @Test
+    void testPretraziDobavljaceNemaRezultata() {
+
+        Exception e = assertThrows(Exception.class, () -> {
+            pretrazi.izvrsi(new Dobavljac(), "NEPOSTOJECEIME123");
+        });
+
+        assertTrue(e.getMessage().contains("ne moze da pronadje"));
     }
 }
