@@ -12,11 +12,33 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.SupstancaLek;
 
 /**
- *
+ * Sistemska operacija za dodavanje leka u sistem.
+ * <p>
+ * Nasleđuje {@link ApstraktnaSO} i implementira konkretne metode
+ * za proveru preduslova i izvršenje operacije dodavanja leka.
+ * <p>
+ * Preduslovi: prosleđeni objekat mora biti instanca klase {@link Lek}.
+ * Izvršenje operacije uključuje:
+ * <ul>
+ *   <li>Dodavanje leka u bazu putem {@link #broker}.</li>
+ *   <li>Dodavanje svih supstanci koje lek sadrži u tabelu {@link SupstancaLek}.</li>
+ *   <li>Ažuriranje količine zaliha supstanci u bazi.</li>
+ * </ul>
+ * 
  * @author milos
  */
 public class DodajLekSO extends ApstraktnaSO {
 
+    /**
+     * Proverava preduslove pre izvršenja dodavanja leka.
+     * <p>
+     * Ova metoda baca izuzetak ako prosleđeni objekat nije instanca {@link Lek}
+     * ili je {@code null}.
+     *
+     * @param objekat objekat koji se proverava.
+     * 
+     * @throws java.lang.Exception ako objekat nije tipa {@link Lek} ili je {@code null}.
+     */
     @Override
     protected void preduslovi(Object objekat) throws Exception {
         if (objekat == null || !(objekat instanceof Lek)) {
@@ -24,6 +46,17 @@ public class DodajLekSO extends ApstraktnaSO {
         }
     }
 
+    /**
+     * Izvršava operaciju dodavanja leka u sistem.
+     * <p>
+     * Operacija dodaje lek u bazu, povezuje ga sa supstancama koje sadrži
+     * i ažurira količine zaliha supstanci u bazi.
+     *
+     * @param objekat objekat tipa {@link Lek} koji se dodaje.
+     * @param kljuc   ključ koji se koristi (nije obavezan za ovu operaciju).
+     * 
+     * @throws java.lang.Exception ako dođe do greške pri dodavanju leka ili ažuriranju supstanci.
+     */
     @Override
     protected void izvrsiOperaciju(Object objekat, String kljuc) throws Exception {
         Lek lek = (Lek) objekat;
