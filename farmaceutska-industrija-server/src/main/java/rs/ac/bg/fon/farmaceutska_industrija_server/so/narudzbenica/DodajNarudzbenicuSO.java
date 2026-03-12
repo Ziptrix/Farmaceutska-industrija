@@ -5,6 +5,7 @@
 package rs.ac.bg.fon.farmaceutska_industrija_server.so.narudzbenica;
 
 import java.util.List;
+import rs.ac.bg.fon.farmaceutska_industrija_server.repozitorijum.DBBrokerOpstaDomenskaKlasa;
 import rs.ac.bg.fon.farmaceutska_industrija_server.so.ApstraktnaSO;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Narudzbenica;
 import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.OpstaDomenskaKlasa;
@@ -16,6 +17,10 @@ import rs.ac.bg.fon.farmaceutska_industrija_zajednicki.domenske_klase.Supstanca;
  * @author milos
  */
 public class DodajNarudzbenicuSO extends ApstraktnaSO {
+
+    public DBBrokerOpstaDomenskaKlasa getBroker() {
+        return broker;
+    }
 
     @Override
     protected void preduslovi(Object objekat) throws Exception {

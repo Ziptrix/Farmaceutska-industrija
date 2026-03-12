@@ -86,7 +86,7 @@ public class DBBrokerOpstaDomenskaKlasa {
                 + objekat.vratiNaziveKolonaZaInsertUpit() + ") VALUES ("
                 + objekat.vratiVrednostiInsertUpita() + ")";
         System.out.println("UPIT " + upit);
-        
+
         try {
             konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
             Statement st = konekcija.createStatement();
@@ -109,7 +109,7 @@ public class DBBrokerOpstaDomenskaKlasa {
         String upit = "DELETE FROM " + objekat.vratiNazivTabele()
                 + " " + objekat.vratiUslovZaDelete();
         System.out.println("UPIT: " + upit);
-        
+
         try {
             konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
             PreparedStatement ps = konekcija.prepareStatement(upit);
@@ -129,7 +129,7 @@ public class DBBrokerOpstaDomenskaKlasa {
                 + " WHERE " + objekat.vratiNazivPrimarnogKljuca()
                 + " = " + objekat.vratiId();
         System.out.println("UPIT: " + upit);
-        
+
         try {
             konekcija = DBBrokerKonekcija.vratiInstancu().uspostaviKonekciju();
             Statement st = konekcija.createStatement();

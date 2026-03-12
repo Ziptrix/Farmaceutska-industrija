@@ -29,10 +29,48 @@ public class DBBrokerKonekcija {
         }
         return instanca;
     }
+    
+    public Connection uspostaviKonekcijuZaTest() throws SQLException, IOException {
+        if (konekcija == null || konekcija.isClosed()) {
+            try {
+                Properties podesavanja = new Properties();
+                podesavanja.load(new FileInputStream("konfiguracija/broker-konfiguracija-test.properties"));
 
-//    public void vratiKonekciju() throws SQLException, IOException {
-//
-//    }
+                String url = podesavanja.stringPropertyNames()
+                        .stream()
+                        .filter(k -> k.equals("url"))
+                        .map(k -> podesavanja.getProperty(k))
+                        .findFirst()
+                        .orElse(null);
+
+                String user = podesavanja.stringPropertyNames()
+                        .stream()
+                        .filter(k -> k.equals("username"))
+                        .map(k -> podesavanja.getProperty(k))
+                        .findFirst()
+                        .orElse(null);
+
+                String pass = podesavanja.stringPropertyNames()
+                        .stream()
+                        .filter(k -> k.equals("password"))
+                        .map(k -> podesavanja.getProperty(k))
+                        .findFirst()
+                        .orElse(null);
+
+                konekcija = DriverManager.getConnection(url, user, pass);
+                konekcija.setAutoCommit(false);
+
+                System.out.println("Konekcija sa bazom uspesno uspostavljena!");
+            } catch (SQLException e) {
+                System.out.println("Konekcija sa bazom nije uspesno uspostavljena!");
+                e.printStackTrace();
+                throw e;
+            }
+        }
+
+        return konekcija;
+    }
+
     public Connection uspostaviKonekciju() throws SQLException, IOException {
         if (konekcija == null || konekcija.isClosed()) {
             try {

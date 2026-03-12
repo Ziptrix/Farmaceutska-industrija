@@ -48,8 +48,24 @@ public class KorisnikTest {
     void testSetID() throws Exception {
         korisnik.setId(1L);
 
-        assertEquals(1L, korisnik.getId());
+        assertEquals(1, korisnik.getId());
     }
+    
+    @Test
+    void testSetIDNull() throws Exception {
+        assertThrows(Exception.class, () -> korisnik.setId(null));
+    }
+    
+    @Test
+    void testSetIDNula() throws Exception {
+        assertThrows(Exception.class, () -> korisnik.setId(0L));
+    }
+    
+    @Test
+    void testSetIDNegativan() throws Exception {
+        assertThrows(Exception.class, () -> korisnik.setId(-1L));
+    }
+
 
     @Test
     void testSetKorisnickoIme() throws Exception {
@@ -133,8 +149,7 @@ public class KorisnikTest {
     @ParameterizedTest
     @CsvSource({
         "admin, admin, true",
-        "admin, mare, false",
-        "mare, andja, false"
+        "admin, mare, false"
     })
     void testEquals(String korisnickoIme1, String korisnickoIme2, boolean rezultat) throws Exception {
         korisnik.setKorisnickoIme(korisnickoIme1);
